@@ -2,17 +2,17 @@ package backgammon;
 import java.util.ArrayList;
 
 /**
- * This program is the Space class
+ * This program is the BoardSpace class
  * @author Sam Lynch
  *
  */
 
 /**
- * A {@code Space} represents a space on the Backgammon Board.
+ * A {@code BoardSpace} represents a space on the Backgammon Board.
  */
 
 public abstract class BoardSpace {
-	private colour ColourOfSpace;
+	private Colour ColourOfSpace;
 	private ArrayList<Checker> StackOfCheckers = new ArrayList<Checker>();
 	
 	/**
@@ -24,27 +24,39 @@ public abstract class BoardSpace {
 	
 	/**
 	 * Checks if checker can be placed on the space. 
-	 * @param start checker to be moved
-	 * @return whether or not a checker can be placed on this space
+	 * @param start checker to be moved.
+	 * @return Whether or not a checker can be placed on this space.
 	 */
 	public abstract boolean canPlace(Checker start);
 	
 	/**
-	 * Checks if a checker can be taken from this stack.
-	 * @return Whether or not a
+	 * Checks if a checker can be taken from the stack.
+	 * @return Whether or not a checker can be taken from the stack.
 	 */
 	public abstract boolean canTake();
 	
+	/**
+	 * Returns the amount of checkers in the space.
+	 * @return Number of checkers in space.
+	 */
 	public int getNumCheckers() {
-		int Size = StackOfCheckers.getSize();
+		int Size = StackOfCheckers.size();
 		return Size;
 	}
 	
-	public void setColour(colour Colour) {
-		ColourOfSpace = Colour;
+	/**
+	 * Sets the colour of the space.
+	 * @param colour Colour of space.
+	 */
+	public void setColour(Colour colour) {
+		ColourOfSpace = colour;
 	}
 	
-	public colour getColour() {
+	/**
+	 * Returns the colour of the space.
+	 * @return Colour of space.
+	 */
+	public Colour getColour() {
 		return ColourOfSpace;
 	}
 	
