@@ -14,7 +14,14 @@ public class Point extends BoardSpace{
 	/**
 	 * Constructor for this class
 	 */
-	public Point() {
+	public Point(int number) {
+		// unsure if this is correct
+		// basically  using the odd/even rule to colour them
+		if(number%2 == 0) {
+			this.setColour(Colour.BLACK);
+		}else {
+			this.setColour(Colour.WHITE);
+		}
 	}
 	
 	public boolean canPlace(Checker start) {

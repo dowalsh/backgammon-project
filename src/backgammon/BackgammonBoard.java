@@ -35,16 +35,16 @@ public class BackgammonBoard {
 			index++;
 		}
 
-		// create and add bars
-		boardSpaces[index] = new Bar(Colour.BLACK);
-		index++;
-		boardSpaces[index] = new Bar(Colour.WHITE);
-		index++;
-
-		// Create and add bearedOffSpaces
-		boardSpaces[index] = new bearedOffSpace(Colour.BLACK);
-		index++;
-		boardSpaces[index] = new bearedOffSpace(Colour.WHITE);
+//		// create and add bars
+//		boardSpaces[index] = new Bar(Colour.BLACK);
+//		index++;
+//		boardSpaces[index] = new Bar(Colour.WHITE);
+//		index++;
+//
+//		// Create and add bearedOffSpaces
+//		boardSpaces[index] = new bearedOffSpace(Colour.BLACK);
+//		index++;
+//		boardSpaces[index] = new bearedOffSpace(Colour.WHITE);
 
 	}
 }
