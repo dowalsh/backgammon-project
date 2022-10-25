@@ -7,7 +7,7 @@ package backgammon;
  */
 
 /**
- * A Checker object represents a single checker in the game of backgammon
+ * A {@code Checker} object represents a single checker in the game of backgammon
  */
 public class Checker {
 	

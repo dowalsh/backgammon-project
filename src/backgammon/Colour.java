@@ -8,7 +8,7 @@ package backgammon;
  */
 
 /**
- * the Colour enum represents the two colours in backgammon
+ * the {@code Colour} enum represents the two colours in backgammon
  */
 public enum Colour {
 	BLACK,
