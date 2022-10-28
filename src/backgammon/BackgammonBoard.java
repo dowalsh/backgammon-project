@@ -14,7 +14,7 @@ public class BackgammonBoard {
 	private BoardSpace[] boardSpaces = new BoardSpace[24 + 2 + 2];
 	
 	/*
-	 * Might be a good option architecture-wise to store these separately?
+	 * Might be a good option architecture-wise to store these separately? Yes I think so(Sam)
 	private Bar blackBar;
 	private Bar whiteBar;
 	private bearedOffSpace blackBearedOffSpace;

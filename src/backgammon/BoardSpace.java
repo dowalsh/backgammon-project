@@ -60,4 +60,55 @@ public abstract class BoardSpace {
 		return ColourOfSpace;
 	}
 	
+	/**
+	 * Checks if the space is empty or not. 
+	 * @return Whether or not the space is empty.
+	 */
+	public boolean isEmpty() {
+		boolean Empty = false;
+		if(StackOfCheckers.isEmpty()) {
+			Empty = true;
+		}
+		return Empty;
+	}
+	
+	/**
+	 * Gets the full stack in this space.
+	 * @return Stack of Checkers in space.
+	 */
+	public final ArrayList<Checker> getStack(){
+		return StackOfCheckers;
+	}
+	
+	/**
+	 * Adds a checker to the space.
+	 * @param ToAdd Checker to be added to space.
+	 */
+	public void addChecker(Checker ToAdd) {
+		StackOfCheckers.add(ToAdd);
+	}
+	
+	/**
+	 * Gets the checker at the top of the space.
+	 * @return Checker at top of space.
+	 */
+	public Checker getTopChecker() {
+		Checker Top = null;
+		if(!this.isEmpty()) {
+			int Size = this.getNumCheckers();
+			Top = StackOfCheckers.get(Size-1);
+		}
+		return Top;
+	}
+	
+	/**
+	 * Removes the checker at the top of the space and returns this checker.
+	 * @return Checker that was removed.
+	 */
+	public Checker removeChecker() {
+		int Size = this.getNumCheckers();
+		Checker ToRemove = this.getTopChecker();
+		StackOfCheckers.remove(Size-1);
+		return ToRemove;
+	}
 }

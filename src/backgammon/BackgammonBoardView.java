@@ -13,7 +13,7 @@ public class BackgammonBoardView {
 
 	public static void print(BackgammonBoard board) {
 		
-		System.out.println("Hello I'm Backgammon!");
+		System.out.println("Hello I'm Mr.Backgammon/Frundels!");
 
 	}
 
