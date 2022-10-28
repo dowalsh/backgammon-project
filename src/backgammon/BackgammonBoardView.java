@@ -16,5 +16,5 @@ public class BackgammonBoardView {
 		System.out.println("Hello I'm Mr.Backgammon/Frundels!");
 
 	}
-
+	
 }
