@@ -92,8 +92,10 @@ public abstract class BoardSpace {
 	 * Adds a newly created checker to the space.
 	 * @param ToAdd Checker to be added to space.
 	 */
-	public void addNewChecker(Checker ToAdd, Colour colour) {
+	public void addNewCheckers(int number, Colour colour) {
+		for(int i = 0; i<number;i++) {
 		StackOfCheckers.add(new Checker(colour));
+		}
 	}
 	
 	/**
