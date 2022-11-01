@@ -22,6 +22,10 @@ public class BackgammonBoard {
 	*/
 
 
+	public BoardSpace[] getBoardSpaces() {
+		return boardSpaces;
+	}
+
 	/**
 	 * Constructor for the class
 	 */
