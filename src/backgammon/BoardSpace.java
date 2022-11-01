@@ -89,6 +89,14 @@ public abstract class BoardSpace {
 	}
 	
 	/**
+	 * Adds a newly created checker to the space.
+	 * @param ToAdd Checker to be added to space.
+	 */
+	public void addNewChecker(Checker ToAdd, Colour colour) {
+		StackOfCheckers.add(new Checker(colour));
+	}
+	
+	/**
 	 * Gets the checker at the top of the space.
 	 * @return Checker at top of space.
 	 */
