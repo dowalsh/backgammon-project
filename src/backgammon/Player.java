@@ -39,4 +39,15 @@ public class Player {
 	public String toString() {
 		return "Name: "+Name+"\nColour: "+PlayersColour;
 	}
+	
+	public int getPointIndex(int equivalentWhiteIndex) {
+		
+		int index;
+		if(PlayersColour == Colour.WHITE) {
+			index = equivalentWhiteIndex;
+		}else {
+			index = 25 - equivalentWhiteIndex;
+		}
+		return index;
+	}
 }
