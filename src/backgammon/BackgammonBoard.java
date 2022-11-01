@@ -13,6 +13,9 @@ public class BackgammonBoard {
 
 	private BoardSpace[] boardSpaces = new BoardSpace[24 + 2 + 2];
 	
+	private int[] latestDiceRoll= new int[2];
+
+	private boolean isDiceRolled = false;
 	/*
 	 * Might be a good option architecture-wise to store these separately? Yes I think so(Sam)
 	private Bar blackBar;
@@ -55,5 +58,32 @@ public class BackgammonBoard {
 	public boolean isWon() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/**
+	 * @return the latest Dice Roll
+	 */
+	public int[] getLatestDiceRoll() {
+		return latestDiceRoll;
+	}
+
+	/**
+	 * rolls two dice and saves the rolls as the latest roll
+	 */
+	public void rollDice() {
+		this.latestDiceRoll[0] = Dice.roll();
+		this.latestDiceRoll[1] = Dice.roll();
+		isDiceRolled = true;
+		
+	}
+	
+	public void endTurn() {
+		this.latestDiceRoll[0] = 0;
+		this.latestDiceRoll[1] = 0;
+		isDiceRolled = false;
+	}
+
+	public boolean getIsDiceRolled() {
+		return isDiceRolled ;
 	}
 }
