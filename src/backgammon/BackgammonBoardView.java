@@ -12,10 +12,9 @@ package backgammon;
  */
 public class BackgammonBoardView {
 
-	public final static int DISPLAY_WIDTH = 46;
+	public final static int DISPLAY_WIDTH = 50;
 	public final static int MAX_DISPLAY_CHECKERS = 5;
 	public final static int HEADER_FOOTER_SIZE = 2;
-
 
 	/**
 	 * Formats and prints the state of the game of backgammon to the console
@@ -27,9 +26,9 @@ public class BackgammonBoardView {
 
 		// 2D array to display game
 
-		//2 rows for the top, 2 for the bottom, 1 for space and N for each side of checkers
-		int rows = 2*HEADER_FOOTER_SIZE +1 + MAX_DISPLAY_CHECKERS*2; 
-		System.out.println(rows);
+		// 2 rows for the top, 2 for the bottom, 1 for space and N for each side of
+		// checkers
+		int rows = 2 * HEADER_FOOTER_SIZE + 1 + MAX_DISPLAY_CHECKERS * 2;
 		// 1 col for each checker stack, 1 for each edge, 3 for the bar
 		int columns = 12 + 2 + 3;
 		String[][] table = new String[rows][columns];
@@ -43,28 +42,28 @@ public class BackgammonBoardView {
 
 		// Edges and Bar
 		int col_line = 0;
-		for (int row = HEADER_FOOTER_SIZE; row < table.length-HEADER_FOOTER_SIZE; row++) {
+		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
 		col_line += 7;
-		for (int row = HEADER_FOOTER_SIZE; row < table.length-HEADER_FOOTER_SIZE; row++) {
+		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
-		col_line ++;
-			table[0][col_line] = "B";
-			table[table.length-1][col_line] = "B";
+		col_line++;
+		table[0][col_line] = "B";
+		table[table.length - 1][col_line] = "B";
 
-		col_line ++;
-		for (int row = HEADER_FOOTER_SIZE; row < table.length-HEADER_FOOTER_SIZE; row++) {
+		col_line++;
+		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
 		col_line += 7;
-		for (int row = HEADER_FOOTER_SIZE; row < table.length-HEADER_FOOTER_SIZE; row++) {
+		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
 
 		// Top and bottom
-		int row_line = HEADER_FOOTER_SIZE-1;
+		int row_line = HEADER_FOOTER_SIZE - 1;
 		for (int col = 0; col < table[row_line].length; col++) {
 			table[row_line][col] = "===";
 		}
@@ -73,33 +72,32 @@ public class BackgammonBoardView {
 			table[row_line][col] = "===";
 		}
 
-		
 		BoardSpace[] bs = board.getBoardSpaces();
 		// points from whites perspective
-		int point_row = table.length - HEADER_FOOTER_SIZE -1;
+		int point_row = table.length - HEADER_FOOTER_SIZE - 1;
 		int point_col = table[0].length - 2;
 		for (int i = 1; i <= 6; i++) {
 			fillCheckers(table, point_row, point_col, false, bs[i - 1]);
-			table[point_row+2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row + 2][point_col] = Integer.toString(player.getPointIndex(i));
 			point_col--;
 		}
 		point_col -= 3;
 		for (int i = 7; i <= 12; i++) {
 			fillCheckers(table, point_row, point_col, false, bs[i - 1]);
-			table[point_row+2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row + 2][point_col] = Integer.toString(player.getPointIndex(i));
 			point_col--;
 		}
 		point_col = 1;
 		point_row = HEADER_FOOTER_SIZE;
 		for (int i = 13; i <= 18; i++) {
 			fillCheckers(table, point_row, point_col, true, bs[i - 1]);
-			table[point_row-2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row - 2][point_col] = Integer.toString(player.getPointIndex(i));
 			point_col++;
 		}
 		point_col += 3;
 		for (int i = 19; i <= 24; i++) {
 			fillCheckers(table, point_row, point_col, true, bs[i - 1]);
-			table[point_row-2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row - 2][point_col] = Integer.toString(player.getPointIndex(i));
 			point_col++;
 		}
 
@@ -114,6 +112,15 @@ public class BackgammonBoardView {
 			}
 			formatString.append("\n");
 		}
+		if(board.getIsDiceRolled()) {
+		int[] diceRoll = board.getLatestDiceRoll();
+		formatString.append(Dice.toString(diceRoll));
+		}else {
+			formatString.append("To roll the dice enter command 'R'");
+
+		}
+
+		
 		System.out.println(formatString.toString());
 
 	}
@@ -123,7 +130,7 @@ public class BackgammonBoardView {
 		// table is the 2D array
 		// index is where to begin filling from
 		// fillDownwards indicates if the checkers should be filled starting at the top
-		//this can be used to fill the bars as well
+		// this can be used to fill the bars as well
 		int numCheckers = b.getNumCheckers();
 		if (numCheckers > 0) {
 			String checkerString = b.getTopChecker().toString(); // this can be updated to depend on colour
@@ -164,7 +171,8 @@ public class BackgammonBoardView {
 
 	/**
 	 * Formats and prints an error message to the console
-	 * @param errorMessage String explanation of the error 
+	 * 
+	 * @param errorMessage String explanation of the error
 	 */
 	public static void printError(String errorMessage) {
 		printGenericMessage("ERROR: " + errorMessage, "*");
@@ -172,7 +180,8 @@ public class BackgammonBoardView {
 
 	/**
 	 * Formats and prints an informational message to the console
-	 * @param message String informational message  
+	 * 
+	 * @param message String informational message
 	 */
 	public static void printInfo(String message) {
 		printGenericMessage(message, "=");
@@ -180,8 +189,9 @@ public class BackgammonBoardView {
 
 	/**
 	 * Formats and prints a message to the console
-	 * @param message String message 
-	 * @param symbol String symbol to print at front and end of formatted message 
+	 * 
+	 * @param message String message
+	 * @param symbol  String symbol to print at front and end of formatted message
 	 */
 	private static void printGenericMessage(String message, String symbol) {
 		int numSymbols = (DISPLAY_WIDTH - message.length()) / 2;
@@ -192,11 +202,17 @@ public class BackgammonBoardView {
 	}
 
 	public static void printInputOptions() {
-		// TODO Auto-generated method stub
-		
+		printGenericMessage("INPUT OPTIONS", "%");
+		System.out.println("Q = quit");
+		System.out.println("R = roll the dice");
+	}
+
+	public static void promptForPlayerName(int i) {
+		Colour colour;
+		if(i ==1) colour = Colour.WHITE;
+		else colour = Colour.BLACK;
+		System.out.print("Enter the name for player " + i + " ("+colour+"): ");
 	}
 	
-	
 
-	
 }
