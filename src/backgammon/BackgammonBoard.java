@@ -51,4 +51,9 @@ public class BackgammonBoard {
 //		boardSpaces[index] = new bearedOffSpace(Colour.WHITE);
 
 	}
+
+	public boolean isWon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

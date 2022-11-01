@@ -12,8 +12,9 @@ package backgammon;
  */
 public class BackgammonBoardView {
 
-	static int MAX_DISPLAY_CHECKERS = 5;
-	static int HEADER_FOOTER_SIZE = 2;
+	public final static int DISPLAY_WIDTH = 46;
+	public final static int MAX_DISPLAY_CHECKERS = 5;
+	public final static int HEADER_FOOTER_SIZE = 2;
 
 
 	/**
@@ -156,6 +157,46 @@ public class BackgammonBoardView {
 		}
 
 	}
+
+	public static void promptPlayerForInput() {
+		System.out.println("\nPlease Enter Input: ");
+	}
+
+	/**
+	 * Formats and prints an error message to the console
+	 * @param errorMessage String explanation of the error 
+	 */
+	public static void printError(String errorMessage) {
+		printGenericMessage("ERROR: " + errorMessage, "*");
+	}
+
+	/**
+	 * Formats and prints an informational message to the console
+	 * @param message String informational message  
+	 */
+	public static void printInfo(String message) {
+		printGenericMessage(message, "=");
+	}
+
+	/**
+	 * Formats and prints a message to the console
+	 * @param message String message 
+	 * @param symbol String symbol to print at front and end of formatted message 
+	 */
+	private static void printGenericMessage(String message, String symbol) {
+		int numSymbols = (DISPLAY_WIDTH - message.length()) / 2;
+		if (numSymbols <= 0)
+			numSymbols = 3;
+		String symbols = symbol.repeat(numSymbols);
+		System.out.println("\n" + symbols + " " + message + " " + symbols);
+	}
+
+	public static void printInputOptions() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 	
 }
