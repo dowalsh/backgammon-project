@@ -51,7 +51,7 @@ public class Backgammon {
 						// roll the dice
 						board.rollDice();
 						int[] roll = board.getLatestDiceRoll();
-						BackgammonBoardView.printInfo("Rolled Dice - result: " + Integer.toString(roll[0]) + " & "
+						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
 					}
