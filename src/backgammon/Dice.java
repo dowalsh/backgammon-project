@@ -65,39 +65,41 @@ public class Dice {
 		
 		String[][] diceFace = { {" "," "," "},{" "," "," "},{" "," "," "} };
 		
+		String dot = "o";
+		
 		switch(n) {
 		case 1:
-			diceFace[1][1] = "o";
+			diceFace[1][1] = dot;
 			break;
 		case 2:
-			diceFace[0][0] = "o";
-			diceFace[2][2] = "o";
+			diceFace[0][0] = dot;
+			diceFace[2][2] = dot;
 			break;
 		case 3:
-			diceFace[0][0] = "o";
-			diceFace[1][1] = "o";
-			diceFace[2][2] = "o";
+			diceFace[0][0] = dot;
+			diceFace[1][1] = dot;
+			diceFace[2][2] = dot;
 			break;
 		case 4:
-			diceFace[0][0] = "o";
-			diceFace[0][2] = "o";
-			diceFace[2][0] = "o";
-			diceFace[2][2] = "o";
+			diceFace[0][0] = dot;
+			diceFace[0][2] = dot;
+			diceFace[2][0] = dot;
+			diceFace[2][2] = dot;
 			break;
 		case 5:
-			diceFace[0][0] = "o";
-			diceFace[0][2] = "o";
-			diceFace[1][1] = "o";
-			diceFace[2][0] = "o";
-			diceFace[2][2] = "o";
+			diceFace[0][0] = dot;
+			diceFace[0][2] = dot;
+			diceFace[1][1] = dot;
+			diceFace[2][0] = dot;
+			diceFace[2][2] = dot;
 			break;
 		case 6:
-			diceFace[0][0] = "o";
-			diceFace[1][0] = "o";
-			diceFace[2][0] = "o";
-			diceFace[0][2] = "o";
-			diceFace[1][2] = "o";
-			diceFace[2][2] = "o";
+			diceFace[0][0] = dot;
+			diceFace[1][0] = dot;
+			diceFace[2][0] = dot;
+			diceFace[0][2] = dot;
+			diceFace[1][2] = dot;
+			diceFace[2][2] = dot;
 			break;
 		}
 		
