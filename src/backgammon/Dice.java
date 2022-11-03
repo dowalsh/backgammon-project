@@ -39,7 +39,7 @@ public class Dice {
 		final StringBuilder formatString = new StringBuilder("");
 		//header line
 		formatString.append(indent);
-		formatString.append("_______"+ gap+ "_______\n");
+		formatString.append("+-----+"+ gap+ "+-----+\n");
 		for(int i = 0; i<3;i++) {
 			formatString.append(indent);
 			formatString.append("|");
@@ -55,7 +55,7 @@ public class Dice {
 			formatString.append("|\n");
 		}
 		formatString.append(indent);
-		formatString.append("¯¯¯¯¯¯¯"+gap+"¯¯¯¯¯¯¯");
+		formatString.append("+-----+"+gap+"+-----+");
 
 		
 		return formatString.toString();
