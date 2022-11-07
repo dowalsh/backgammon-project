@@ -118,7 +118,9 @@ public abstract class BoardSpace {
 	public Checker removeChecker() {
 		int Size = this.getNumCheckers();
 		Checker ToRemove = this.getTopChecker();
-		StackOfCheckers.remove(Size-1);
+		if(!this.isEmpty()) {
+			StackOfCheckers.remove(Size-1);
+		}
 		return ToRemove;
 	}
 }
