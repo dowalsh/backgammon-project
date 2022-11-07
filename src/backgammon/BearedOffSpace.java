@@ -35,6 +35,11 @@ public class BearedOffSpace extends BoardSpace {
 		return false;
 	}
 	
+	@Override
+	public int getPipValue(Player player) {
+		return 0;
+	}
+	
 	/**
 	 * Checks if the beared off space is full, thus if the player has won.
 	 * @return Whether or not the beared off space is full.

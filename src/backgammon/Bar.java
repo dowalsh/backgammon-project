@@ -38,4 +38,9 @@ public class Bar extends BoardSpace {
 		return Take;
 	}
 	
+	@Override
+	public int getPipValue(Player player) {
+		return 25;
+	}
+	
 }

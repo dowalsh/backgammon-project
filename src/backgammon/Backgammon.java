@@ -36,7 +36,7 @@ public class Backgammon {
 				BackgammonBoardView.print(board, activePlayer);
 
 				BackgammonBoardView.promptPlayerForInput();
-				
+
 				// convert input string to upper case in order to accept lower case inputs
 				String input = stringScanner.next().toUpperCase();
 				if (input.equals("Q")) {
@@ -55,6 +55,9 @@ public class Backgammon {
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
 					}
+				} else if (input.equals("P")) {
+					// "pip" command to report the pip count for both players
+					BackgammonBoardView.printPipCounts(board,player1,player2);
 				} else if (input.equals("E")) {
 					board.endTurn();
 					isTurnOver = true; // TODO temporary option to 'E'nd turn - this will be replaced by actual move

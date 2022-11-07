@@ -35,6 +35,8 @@ public abstract class BoardSpace {
 	 */
 	public abstract boolean canTake();
 	
+	public abstract int getPipValue(Player player);
+	
 	/**
 	 * Returns the amount of checkers in the space.
 	 * @return Number of checkers in space.
@@ -123,4 +125,5 @@ public abstract class BoardSpace {
 		}
 		return ToRemove;
 	}
+
 }

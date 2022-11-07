@@ -40,4 +40,9 @@ public class Player {
 		}
 		return index;
 	}
+
+	public Colour getColour() {
+		return colour;
+	}
+
 }

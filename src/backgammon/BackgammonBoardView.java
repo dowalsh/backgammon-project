@@ -121,7 +121,7 @@ public class BackgammonBoardView {
 		}
 
 		
-		System.out.println(formatString.toString());
+		print(formatString.toString());
 
 	}
 
@@ -166,7 +166,7 @@ public class BackgammonBoardView {
 	}
 
 	public static void promptPlayerForInput() {
-		System.out.println("\nPlease Enter Input: ");
+		print("\nPlease Enter Input: ");
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class BackgammonBoardView {
 	 * @param errorMessage String explanation of the error
 	 */
 	public static void printError(String errorMessage) {
-		printGenericMessage("ERROR: " + errorMessage, "*");
+		printBanner("ERROR: " + errorMessage, "*");
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class BackgammonBoardView {
 	 * @param message String informational message
 	 */
 	public static void printInfo(String message) {
-		printGenericMessage(message, "=");
+		printBanner(message, "=");
 	}
 
 	/**
@@ -193,25 +193,43 @@ public class BackgammonBoardView {
 	 * @param message String message
 	 * @param symbol  String symbol to print at front and end of formatted message
 	 */
-	private static void printGenericMessage(String message, String symbol) {
+	private static void printBanner(String message, String symbol) {
 		int numSymbols = (DISPLAY_WIDTH - message.length()) / 2;
 		if (numSymbols <= 0)
 			numSymbols = 3;
 		String symbols = symbol.repeat(numSymbols);
-		System.out.println("\n" + symbols + " " + message + " " + symbols);
+		print("\n" + symbols + " " + message + " " + symbols);
+	}
+	
+	/**
+	 * Print string to console
+	 * 
+	 * @param message String message
+	 */
+	private static void print(String message) {
+		System.out.println(message);
+
 	}
 
 	public static void printInputOptions() {
-		printGenericMessage("INPUT OPTIONS", "%");
-		System.out.println("Q = quit");
-		System.out.println("R = roll the dice");
+		printBanner("INPUT OPTIONS", "%");
+		print("Q = Quit");
+		print("R = Roll the Dice");
+		print("P = Display Pip Counts");
+
 	}
 
 	public static void promptForPlayerName(int i) {
 		Colour colour;
 		if(i ==1) colour = Colour.WHITE;
 		else colour = Colour.BLACK;
-		System.out.print("Enter the name for player " + i + " ("+colour+"): ");
+		print("Enter the name for player " + i + " ("+colour+"): ");
+	}
+
+	public static void printPipCounts(BackgammonBoard board, Player player1, Player player2) {
+		printInfo("Pip Counts");		
+		print(player1 + ": " + board.getPipCount(player1));	
+		print(player2 + ": " + board.getPipCount(player2));		
 	}
 	
 

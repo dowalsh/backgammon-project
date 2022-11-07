@@ -12,23 +12,22 @@ package backgammon;
  */
 public class Point extends BoardSpace {
 
+	private int whiteIndex;
+	
 	/**
 	 * Constructor for this class
 	 */
-	public Point(int white_index) {
-		// unsure if this is correct (Looks Good to me(Sam))
-		// basically using the odd/even rule to colour them
-		// Do we want to add starting checkers in here?(2 white in 1, 5 black in 6, 3
-		// black in 8, 5 white in 12,
-		// 5 black in 13, 3 white in 17, 5 white in 19, 2 black in 24) Maybe separate
-		// constructor? Maybe in Board class?
-		if (white_index % 2 == 0) {
+	public Point(int n) {
+		
+		this.whiteIndex = n;
+		
+		if (n % 2 == 0) {
 			this.setColour(Colour.BLACK);
 		} else {
 			this.setColour(Colour.WHITE);
 		}
 
-		switch (white_index) {
+		switch (n) {
 		case 24:
 			addNewCheckers(2,Colour.WHITE);
 			break;
@@ -78,6 +77,11 @@ public class Point extends BoardSpace {
 		return Take;
 	}
 
+	@Override
+	public int getPipValue(Player player) {
+		return player.getPointIndex(whiteIndex);
+	}
+	
 	/**
 	 * Checks if moving a checker onto this point will result in a hit.
 	 * 

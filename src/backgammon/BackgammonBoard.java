@@ -12,18 +12,16 @@ package backgammon;
 public class BackgammonBoard {
 
 	private BoardSpace[] boardSpaces = new BoardSpace[24 + 2 + 2];
-	
-	private int[] latestDiceRoll= new int[2];
+
+	private int[] latestDiceRoll = new int[2];
 
 	private boolean isDiceRolled = false;
 	/*
-	 * Might be a good option architecture-wise to store these separately? Yes I think so(Sam)
-	private Bar blackBar;
-	private Bar whiteBar;
-	private bearedOffSpace blackBearedOffSpace;
-	private bearedOffSpace whiteBearedOffSpace;
-	*/
-
+	 * Might be a good option architecture-wise to store these separately? Yes I
+	 * think so(Sam) private Bar blackBar; private Bar whiteBar; private
+	 * bearedOffSpace blackBearedOffSpace; private bearedOffSpace
+	 * whiteBearedOffSpace;
+	 */
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
@@ -42,16 +40,16 @@ public class BackgammonBoard {
 			index++;
 		}
 
-//		// create and add bars
-//		boardSpaces[index] = new Bar(Colour.BLACK);
-//		index++;
-//		boardSpaces[index] = new Bar(Colour.WHITE);
-//		index++;
-//
-//		// Create and add bearedOffSpaces
-//		boardSpaces[index] = new bearedOffSpace(Colour.BLACK);
-//		index++;
-//		boardSpaces[index] = new bearedOffSpace(Colour.WHITE);
+		// create and add bars
+		boardSpaces[index] = new Bar(Colour.BLACK);
+		index++;
+		boardSpaces[index] = new Bar(Colour.WHITE);
+		index++;
+
+		// Create and add bearedOffSpaces
+		boardSpaces[index] = new BearedOffSpace(Colour.BLACK);
+		index++;
+		boardSpaces[index] = new BearedOffSpace(Colour.WHITE);
 
 	}
 
@@ -74,11 +72,11 @@ public class BackgammonBoard {
 		this.latestDiceRoll[0] = Dice.roll();
 		this.latestDiceRoll[1] = Dice.roll();
 		isDiceRolled = true;
-		
+
 		// TODO set available Dice Roll List here
-		
+
 	}
-	
+
 	public void endTurn() {
 		this.latestDiceRoll[0] = 0;
 		this.latestDiceRoll[1] = 0;
@@ -86,6 +84,31 @@ public class BackgammonBoard {
 	}
 
 	public boolean getIsDiceRolled() {
-		return isDiceRolled ;
+		return isDiceRolled;
+	}
+
+	/**
+	 * Gets the pip count for a player
+	 * 
+	 * @param player the player to calculate the pip count for
+	 */
+	public int getPipCount(Player player) {
+		int pipCount = 0;
+
+		// For Every Boardspace
+		for (BoardSpace b : boardSpaces) {
+			int numCheckers = b.getNumCheckers();
+			// Get number of player's checkers on that space
+			if (numCheckers > 0) {
+				if(b.getTopChecker().getColour()== player.getColour()) {
+					// multiply this number this space's pip value
+					// and add to running total
+					pipCount += numCheckers * b.getPipValue(player);
+				}
+			}
+
+		}
+
+		return pipCount;
 	}
 }
