@@ -75,6 +75,8 @@ public class BackgammonBoard {
 		this.latestDiceRoll[1] = Dice.roll();
 		isDiceRolled = true;
 		
+		// TODO set available Dice Roll List here
+		
 	}
 	
 	public void endTurn() {
