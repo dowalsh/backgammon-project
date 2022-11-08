@@ -96,4 +96,14 @@ public class Point extends BoardSpace {
 		return Hit;
 	}
 
+	/**
+	 * Returns a string of the point from the active players perspective.
+	 * @param player Active player.
+	 * @return String of point.
+	 */
+	public String toString(Player player) {
+		int index = this.getPipValue(player);
+		return "Point " + index;
+	}
+
 }

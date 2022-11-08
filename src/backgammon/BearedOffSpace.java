@@ -52,4 +52,9 @@ public class BearedOffSpace extends BoardSpace {
 		return Full;
 	}
 
+	@Override
+	public String toString(Player player) {
+		return this.getColour() + " Beared off space";
+	}
+
 }

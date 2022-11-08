@@ -35,6 +35,18 @@ public abstract class BoardSpace {
 	 */
 	public abstract boolean canTake();
 	
+	/**
+	 * Returns a string of the space.
+	 * @param player Active player.
+	 * @return String of space.
+	 */
+	public abstract String toString(Player player);
+	
+	/**
+	 * Gets how far the space is away from the beared off space for the active player.
+	 * @param player Active player.
+	 * @return Value of how far the space is from beared off space.
+	 */
 	public abstract int getPipValue(Player player);
 	
 	/**
