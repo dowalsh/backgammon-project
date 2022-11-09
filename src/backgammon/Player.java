@@ -30,7 +30,7 @@ public class Player {
 		return name + " (" + colour + ")";
 	}
 
-	public int getPointIndex(int equivalentWhiteIndex) {
+	public int getAlternateIndex(int equivalentWhiteIndex) {
 
 		int index;
 		if (colour == Colour.WHITE) {

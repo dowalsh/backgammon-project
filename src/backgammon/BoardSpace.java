@@ -33,7 +33,7 @@ public abstract class BoardSpace {
 	 * Checks if a checker can be taken from the stack.
 	 * @return Whether or not a checker can be taken from the stack.
 	 */
-	public abstract boolean canTake();
+	public abstract boolean canTake(Player player);
 	
 	/**
 	 * Returns a string of the space.

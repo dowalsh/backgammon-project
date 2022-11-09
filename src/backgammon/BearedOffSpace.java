@@ -29,9 +29,9 @@ public class BearedOffSpace extends BoardSpace {
 		}
 		return place;
 	}
-
+	
 	@Override
-	public boolean canTake() {
+	public boolean canTake(Player player) {
 		return false;
 	}
 	

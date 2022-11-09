@@ -69,17 +69,21 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public boolean canTake() {
-		boolean take = true;
+	public boolean canTake(Player player) {
+		boolean take;
 		if (this.isEmpty()) {
 			take = false;
+		} else if(!player.getColour().equals(this.getTopChecker().getColour())) {
+			take = false;
+		} else {
+			take = true;
 		}
 		return take;
 	}
 
 	@Override
 	public int getPipValue(Player player) {
-		return player.getPointIndex(whiteIndex);
+		return player.getAlternateIndex(whiteIndex);
 	}
 	
 	/**

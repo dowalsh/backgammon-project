@@ -78,26 +78,26 @@ public class BackgammonBoardView {
 		int point_col = table[0].length - 2;
 		for (int i = 1; i <= 6; i++) {
 			fillCheckers(table, point_row, point_col, false, bs[i - 1]);
-			table[point_row + 2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row + 2][point_col] = Integer.toString(player.getAlternateIndex(i));
 			point_col--;
 		}
 		point_col -= 3;
 		for (int i = 7; i <= 12; i++) {
 			fillCheckers(table, point_row, point_col, false, bs[i - 1]);
-			table[point_row + 2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row + 2][point_col] = Integer.toString(player.getAlternateIndex(i));
 			point_col--;
 		}
 		point_col = 1;
 		point_row = HEADER_FOOTER_SIZE;
 		for (int i = 13; i <= 18; i++) {
 			fillCheckers(table, point_row, point_col, true, bs[i - 1]);
-			table[point_row - 2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row - 2][point_col] = Integer.toString(player.getAlternateIndex(i));
 			point_col++;
 		}
 		point_col += 3;
 		for (int i = 19; i <= 24; i++) {
 			fillCheckers(table, point_row, point_col, true, bs[i - 1]);
-			table[point_row - 2][point_col] = Integer.toString(player.getPointIndex(i));
+			table[point_row - 2][point_col] = Integer.toString(player.getAlternateIndex(i));
 			point_col++;
 		}
 

@@ -1,5 +1,6 @@
 package backgammon;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Backgammon {
@@ -54,6 +55,7 @@ public class Backgammon {
 						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
+						board.updateLegalMoves(activePlayer);
 					}
 				} else if (input.equals("P")) {
 					// "pip" command to report the pip count for both players

@@ -30,10 +30,14 @@ public class Bar extends BoardSpace {
 	}
 	
 	@Override
-	public boolean canTake() {
-		boolean take = true;
-		if(this.isEmpty()) {
+	public boolean canTake(Player player) {
+		boolean take;
+		if (this.isEmpty()) {
 			take = false;
+		} else if(!player.getColour().equals(this.getColour())) {
+			take = false;
+		} else {
+			take = true;
 		}
 		return take;
 	}

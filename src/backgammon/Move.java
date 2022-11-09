@@ -56,6 +56,6 @@ public class Move {
 	 * @return String of the move.
 	 */
 	public String toString(Player player) {
-		return "Move checker " + moveDistance + " spaces, from " + source.toString(player) + " to " + destination.toString();
+		return "Move checker " + moveDistance + " spaces, from " + source.toString(player) + " to " + destination.toString(player);
 	}
 }
