@@ -16,26 +16,26 @@ public class Bar extends BoardSpace {
 	 * Constructor for this Class.
 	 * @param ColourOfBar Colour of the bar.
 	 */
-	public Bar(Colour ColourOfBar) {
-		this.setColour(ColourOfBar);
+	public Bar(Colour colourOfBar) {
+		this.setColour(colourOfBar);
 	}
 	
 	@Override
 	public boolean canPlace(Checker start) {
-		boolean Place = false;
+		boolean place = false;
 		if(start.getColour().equals(this.getColour())) {
-			Place = true;
+			place = true;
 		}
-		return Place;
+		return place;
 	}
 	
 	@Override
 	public boolean canTake() {
-		boolean Take = true;
+		boolean take = true;
 		if(this.isEmpty()) {
-			Take = false;
+			take = false;
 		}
-		return Take;
+		return take;
 	}
 	
 	@Override

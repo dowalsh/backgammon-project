@@ -57,24 +57,24 @@ public class Point extends BoardSpace {
 
 	@Override
 	public boolean canPlace(Checker start) {
-		boolean Place = false;
+		boolean place = false;
 		if (this.isEmpty()) {
-			Place = true;
+			place = true;
 		} else if (start.getColour().equals(getTopChecker().getColour())) {
-			Place = true;
+			place = true;
 		} else if (this.getNumCheckers() == 1) {
-			Place = true;
+			place = true;
 		}
-		return Place;
+		return place;
 	}
 
 	@Override
 	public boolean canTake() {
-		boolean Take = true;
+		boolean take = true;
 		if (this.isEmpty()) {
-			Take = false;
+			take = false;
 		}
-		return Take;
+		return take;
 	}
 
 	@Override
@@ -89,11 +89,11 @@ public class Point extends BoardSpace {
 	 * @return Whether or not a hit occurs.
 	 */
 	public boolean isAHit(Checker start) {
-		boolean Hit = false;
+		boolean hit = false;
 		if (this.getNumCheckers() == 1 && !start.getColour().equals(getTopChecker().getColour())) {
-			Hit = true;
+			hit = true;
 		}
-		return Hit;
+		return hit;
 	}
 
 	/**

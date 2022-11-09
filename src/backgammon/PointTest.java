@@ -6,88 +6,88 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PointTest {
-	private Point PopulatedWhitePoint;
-	private Point EmptyPoint;
-	private Point OneBlackCheckerPoint;
+	private Point populatedWhitePoint;
+	private Point emptyPoint;
+	private Point oneBlackCheckerPoint;
 	private Checker white = new Checker(Colour.WHITE);
 	private Checker black = new Checker(Colour.BLACK);
 
 	@BeforeEach
 	void setUp() throws Exception {
-		PopulatedWhitePoint = new Point(13);
-		EmptyPoint = new Point(2);
-		OneBlackCheckerPoint = new Point(3);
+		populatedWhitePoint = new Point(13);
+		emptyPoint = new Point(2);
+		oneBlackCheckerPoint = new Point(3);
 		Checker added = new Checker(Colour.BLACK);
-		OneBlackCheckerPoint.addChecker(added);
+		oneBlackCheckerPoint.addChecker(added);
 	}
 
 	@Test
 	void testCanPlace() {
-		assertEquals(true, PopulatedWhitePoint.canPlace(white));
-		assertEquals(false, PopulatedWhitePoint.canPlace(black));
-		assertEquals(true, EmptyPoint.canPlace(black));
+		assertEquals(true, populatedWhitePoint.canPlace(white));
+		assertEquals(false, populatedWhitePoint.canPlace(black));
+		assertEquals(true, emptyPoint.canPlace(black));
 	}
 
 	@Test
 	void testCanTake() {
-		assertEquals(false, EmptyPoint.canTake());
-		assertEquals(true, PopulatedWhitePoint.canTake());
+		assertEquals(false, emptyPoint.canTake());
+		assertEquals(true, populatedWhitePoint.canTake());
 	}
 
 	@Test
 	void testIsAHit() {
-		assertEquals(true, OneBlackCheckerPoint.isAHit(white));
-		assertEquals(false, OneBlackCheckerPoint.isAHit(black));
-		assertEquals(false, EmptyPoint.isAHit(black));
-		assertEquals(false, PopulatedWhitePoint.isAHit(black));
-		assertEquals(false, PopulatedWhitePoint.isAHit(white));
+		assertEquals(true, oneBlackCheckerPoint.isAHit(white));
+		assertEquals(false, oneBlackCheckerPoint.isAHit(black));
+		assertEquals(false, emptyPoint.isAHit(black));
+		assertEquals(false, populatedWhitePoint.isAHit(black));
+		assertEquals(false, populatedWhitePoint.isAHit(white));
 	}
 
 	@Test
 	void testGetNumCheckers() {
-		assertEquals(5, PopulatedWhitePoint.getNumCheckers());
-		assertEquals(1, OneBlackCheckerPoint.getNumCheckers());
-		assertEquals(0, EmptyPoint.getNumCheckers());
+		assertEquals(5, populatedWhitePoint.getNumCheckers());
+		assertEquals(1, oneBlackCheckerPoint.getNumCheckers());
+		assertEquals(0, emptyPoint.getNumCheckers());
 	}
 
 	@Test
 	void testGetColour() {
-		assertEquals(Colour.WHITE, PopulatedWhitePoint.getColour());
-		assertEquals(Colour.BLACK, EmptyPoint.getColour());
-		assertEquals(Colour.WHITE, OneBlackCheckerPoint.getColour());
+		assertEquals(Colour.WHITE, populatedWhitePoint.getColour());
+		assertEquals(Colour.BLACK, emptyPoint.getColour());
+		assertEquals(Colour.WHITE, oneBlackCheckerPoint.getColour());
 	}
 
 	@Test
 	void testIsEmpty() {
-		assertEquals(false, OneBlackCheckerPoint.isEmpty());
-		assertEquals(false, PopulatedWhitePoint.isEmpty());
-		assertEquals(true, EmptyPoint.isEmpty());
+		assertEquals(false, oneBlackCheckerPoint.isEmpty());
+		assertEquals(false, populatedWhitePoint.isEmpty());
+		assertEquals(true, emptyPoint.isEmpty());
 	}
 
 	@Test
 	void testAddChecker() {
-		EmptyPoint.addChecker(white);
-		assertEquals(white, EmptyPoint.getTopChecker());
+		emptyPoint.addChecker(white);
+		assertEquals(white, emptyPoint.getTopChecker());
 	}
 
 	@Test
 	void testAddNewCheckers() {
-		EmptyPoint.addNewCheckers(2, Colour.BLACK);
-		assertEquals(2,EmptyPoint.getNumCheckers());
+		emptyPoint.addNewCheckers(2, Colour.BLACK);
+		assertEquals(2,emptyPoint.getNumCheckers());
 	}
 
 	@Test
 	void testGetTopChecker() {
-		assertEquals(null,EmptyPoint.getTopChecker());
-		EmptyPoint.addChecker(white);
-		assertEquals(white, EmptyPoint.getTopChecker());
+		assertEquals(null,emptyPoint.getTopChecker());
+		emptyPoint.addChecker(white);
+		assertEquals(white, emptyPoint.getTopChecker());
 	}
 
 	@Test
 	void testRemoveChecker() {
-		assertEquals(null,EmptyPoint.removeChecker());
-		Checker removed = PopulatedWhitePoint.removeChecker();
-		assertEquals(4,PopulatedWhitePoint.getNumCheckers());
+		assertEquals(null,emptyPoint.removeChecker());
+		Checker removed = populatedWhitePoint.removeChecker();
+		assertEquals(4,populatedWhitePoint.getNumCheckers());
 	}
 
 }

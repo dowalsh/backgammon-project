@@ -6,38 +6,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BearedOffSpaceTest {
-	private BearedOffSpace WhiteBearedOffSpace;
-	private BearedOffSpace BlackBearedOffSpace;
+	private BearedOffSpace whiteBearedOffSpace;
+	private BearedOffSpace blackBearedOffSpace;
 	private Checker white = new Checker(Colour.WHITE);
 	private Checker black = new Checker(Colour.BLACK);
 
 	@BeforeEach
 	void setUp() throws Exception {
-		WhiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
-		BlackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		whiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
+		blackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
 	}
 
 	@Test
 	void testCanPlace() {
-		assertEquals(true, WhiteBearedOffSpace.canPlace(white));
-		assertEquals(false, WhiteBearedOffSpace.canPlace(black));
-		assertEquals(true, BlackBearedOffSpace.canPlace(black));
-		assertEquals(false, BlackBearedOffSpace.canPlace(white));
+		assertEquals(true, whiteBearedOffSpace.canPlace(white));
+		assertEquals(false, whiteBearedOffSpace.canPlace(black));
+		assertEquals(true, blackBearedOffSpace.canPlace(black));
+		assertEquals(false, blackBearedOffSpace.canPlace(white));
 	}
 
 	@Test
 	void testCanTake() {
-		WhiteBearedOffSpace.addChecker(white);
-		assertEquals(false, WhiteBearedOffSpace.canTake());
-		assertEquals(false, BlackBearedOffSpace.canTake());
+		whiteBearedOffSpace.addChecker(white);
+		assertEquals(false, whiteBearedOffSpace.canTake());
+		assertEquals(false, blackBearedOffSpace.canTake());
 	}
 
 	@Test
 	void testIsFull() {
-		BlackBearedOffSpace.addNewCheckers(15, Colour.BLACK);
-		WhiteBearedOffSpace.addNewCheckers(8, Colour.WHITE);
-		assertEquals(true, BlackBearedOffSpace.isFull());
-		assertEquals(false, WhiteBearedOffSpace.isFull());
+		blackBearedOffSpace.addNewCheckers(15, Colour.BLACK);
+		whiteBearedOffSpace.addNewCheckers(8, Colour.WHITE);
+		assertEquals(true, blackBearedOffSpace.isFull());
+		assertEquals(false, whiteBearedOffSpace.isFull());
 	}
 
 }

@@ -17,17 +17,17 @@ public class BearedOffSpace extends BoardSpace {
 	 * @param ColourOfSpace Colour of the space.
 	 */
 
-	public BearedOffSpace(Colour ColourOfSpace) {
-		this.setColour(ColourOfSpace);
+	public BearedOffSpace(Colour colourOfSpace) {
+		this.setColour(colourOfSpace);
 	}
 
 	@Override
 	public boolean canPlace(Checker start) {
-		boolean Place = false;
+		boolean place = false;
 		if(start.getColour().equals(this.getColour())) {
-			Place = true;
+			place = true;
 		}
-		return Place;
+		return place;
 	}
 
 	@Override
@@ -45,11 +45,11 @@ public class BearedOffSpace extends BoardSpace {
 	 * @return Whether or not the beared off space is full.
 	 */
 	public boolean isFull() {
-		boolean Full = false;
+		boolean full = false;
 		if(this.getNumCheckers() == 15) {
-			Full = true;
+			full = true;
 		}
-		return Full;
+		return full;
 	}
 
 	@Override

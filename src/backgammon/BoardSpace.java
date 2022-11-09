@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 
 public abstract class BoardSpace {
-	private Colour ColourOfSpace;
-	private ArrayList<Checker> StackOfCheckers = new ArrayList<Checker>();
+	private Colour colourOfSpace;
+	private ArrayList<Checker>stackOfCheckers = new ArrayList<Checker>();
 	
 	/**
 	 * Constructor for the class
@@ -54,8 +54,8 @@ public abstract class BoardSpace {
 	 * @return Number of checkers in space.
 	 */
 	public int getNumCheckers() {
-		int Size = StackOfCheckers.size();
-		return Size;
+		int size = stackOfCheckers.size();
+		return size;
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public abstract class BoardSpace {
 	 * @param colour Colour of space.
 	 */
 	public void setColour(Colour colour) {
-		ColourOfSpace = colour;
+		colourOfSpace = colour;
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public abstract class BoardSpace {
 	 * @return Colour of space.
 	 */
 	public Colour getColour() {
-		return ColourOfSpace;
+		return colourOfSpace;
 	}
 	
 	/**
@@ -79,11 +79,11 @@ public abstract class BoardSpace {
 	 * @return Whether or not the space is empty.
 	 */
 	public boolean isEmpty() {
-		boolean Empty = false;
-		if(StackOfCheckers.isEmpty()) {
-			Empty = true;
+		boolean empty = false;
+		if(stackOfCheckers.isEmpty()) {
+			empty = true;
 		}
-		return Empty;
+		return empty;
 	}
 	
 	/**
@@ -91,15 +91,15 @@ public abstract class BoardSpace {
 	 * @return Stack of Checkers in space.
 	 */
 	public final ArrayList<Checker> getStack(){
-		return StackOfCheckers;
+		return stackOfCheckers;
 	}
 	
 	/**
 	 * Adds a checker to the space.
 	 * @param ToAdd Checker to be added to space.
 	 */
-	public void addChecker(Checker ToAdd) {
-		StackOfCheckers.add(ToAdd);
+	public void addChecker(Checker toAdd) {
+		stackOfCheckers.add(toAdd);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public abstract class BoardSpace {
 	 */
 	public void addNewCheckers(int number, Colour colour) {
 		for(int i = 0; i<number;i++) {
-		StackOfCheckers.add(new Checker(colour));
+		stackOfCheckers.add(new Checker(colour));
 		}
 	}
 	
@@ -117,12 +117,12 @@ public abstract class BoardSpace {
 	 * @return Checker at top of space.
 	 */
 	public Checker getTopChecker() {
-		Checker Top = null;
+		Checker top = null;
 		if(!this.isEmpty()) {
-			int Size = this.getNumCheckers();
-			Top = StackOfCheckers.get(Size-1);
+			int size = this.getNumCheckers();
+			top = stackOfCheckers.get(size-1);
 		}
-		return Top;
+		return top;
 	}
 	
 	/**
@@ -130,12 +130,12 @@ public abstract class BoardSpace {
 	 * @return Checker that was removed.
 	 */
 	public Checker removeChecker() {
-		int Size = this.getNumCheckers();
-		Checker ToRemove = this.getTopChecker();
+		int size = this.getNumCheckers();
+		Checker toRemove = this.getTopChecker();
 		if(!this.isEmpty()) {
-			StackOfCheckers.remove(Size-1);
+			stackOfCheckers.remove(size-1);
 		}
-		return ToRemove;
+		return toRemove;
 	}
 
 }
