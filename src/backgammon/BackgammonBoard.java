@@ -1,5 +1,8 @@
 package backgammon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This program is the BackgammonBoard class
  * @author dylan
@@ -12,16 +15,14 @@ package backgammon;
 public class BackgammonBoard {
 
 	private BoardSpace[] boardSpaces = new BoardSpace[24 + 2 + 2];
-
+	private Map<Colour, Bar> bars_dict = new HashMap<Colour, Bar>();
+	private Map<Colour, BearedOffSpace> bearedOffSpaces_dict = new HashMap<Colour, BearedOffSpace>();
+	
 	private int[] latestDiceRoll = new int[2];
 
 	private boolean isDiceRolled = false;
-	/*
-	 * Might be a good option architecture-wise to store these separately? Yes I
-	 * think so(Sam) private Bar blackBar; private Bar whiteBar; private
-	 * bearedOffSpace blackBearedOffSpace; private bearedOffSpace
-	 * whiteBearedOffSpace;
-	 */
+
+	
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
@@ -41,16 +42,24 @@ public class BackgammonBoard {
 		}
 
 		// create and add bars
-		boardSpaces[index] = new Bar(Colour.BLACK);
+		Bar blackBar = new Bar(Colour.BLACK);
+		boardSpaces[index] = blackBar;
+		bars_dict.put(Colour.BLACK, blackBar);
 		index++;
-		boardSpaces[index] = new Bar(Colour.WHITE);
+		Bar whiteBar = new Bar(Colour.WHITE);
+		boardSpaces[index] = whiteBar;
+		bars_dict.put(Colour.WHITE, whiteBar);
 		index++;
 
 		// Create and add bearedOffSpaces
-		boardSpaces[index] = new BearedOffSpace(Colour.BLACK);
+		BearedOffSpace blackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		boardSpaces[index] = blackBearedOffSpace;
+		bearedOffSpaces_dict.put(Colour.BLACK, blackBearedOffSpace);
 		index++;
-		boardSpaces[index] = new BearedOffSpace(Colour.WHITE);
-
+		BearedOffSpace whiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
+		boardSpaces[index] = whiteBearedOffSpace;
+		bearedOffSpaces_dict.put(Colour.WHITE, whiteBearedOffSpace);
+		index++;
 	}
 
 	public boolean isWon() {
@@ -110,5 +119,12 @@ public class BackgammonBoard {
 		}
 
 		return pipCount;
+	}
+	
+	private Bar getBarForPlayer(Player player) {
+		return bars_dict.get(player.getColour());
+	}
+	private BearedOffSpace getBearedOffSpaceForPlayer(Player player) {
+		return bearedOffSpaces_dict.get(player.getColour());
 	}
 }
