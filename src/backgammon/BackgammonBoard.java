@@ -97,6 +97,7 @@ public class BackgammonBoard {
 				for(int i=0;i<NUMBER_OF_POINTS;i++) {
 					if(boardSpaces[i].canTake(player)) {
 						destSpace = getDestinationBoardSpace(player, boardSpaces[i], roll);
+						//TODO remove test of != null ; not goot practice according to notes I think
 						if(destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
 							Move legalMove = new Move(roll, boardSpaces[i], destSpace);
 							legalMoves.put(charIndex, legalMove);
