@@ -28,8 +28,12 @@ class BarTest {
 
 	@Test
 	void testCanTake() {
-		assertEquals(false, whiteBar.canTake());
-		assertEquals(true, blackBar.canTake());
+		//cannot take from empty
+		assertEquals(false, whiteBar.canTake(new Player(Colour.WHITE, "Dummy")));
+		
+		//can only take if checker same colour as player
+		assertEquals(true, blackBar.canTake(new Player(Colour.BLACK, "Dummy")));
+		assertEquals(false, blackBar.canTake(new Player(Colour.WHITE, "Dummy")));
 	}
 
 }
