@@ -1,5 +1,7 @@
 package backgammon;
 
+import java.util.Arrays;
+
 /**
  * This program is the BackgammonBoardView class
  * @author dylan
@@ -216,7 +218,6 @@ public class BackgammonBoardView {
 		print("Q = Quit");
 		print("R = Roll the Dice");
 		print("P = Display Pip Counts");
-
 	}
 
 	public static void promptForPlayerName(int i) {
