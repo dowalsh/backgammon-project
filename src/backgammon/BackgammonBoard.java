@@ -129,15 +129,14 @@ public class BackgammonBoard {
 	
 	public BoardSpace getDestinationBoardSpace(Player player, BoardSpace source, int roll) {
 		int start = source.getPipValue(player);
-		// Why +1 here but works
-		int dest = start - (roll+1);
+		int dest = start - (roll);
 		BoardSpace destination;
 		
 		//TODO Bear off functionality
-		if(dest<0) {
+		if(dest<=0) {
 			destination  = null;
 		} else {
-			destination = boardSpaces[player.getAlternateIndex(dest)];
+			destination = boardSpaces[player.getAlternateIndex(dest)-1];
 		}
 		return destination;
 	}
