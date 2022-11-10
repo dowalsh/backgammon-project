@@ -141,6 +141,14 @@ public class BackgammonBoard {
 		return destination;
 	}
 	
+	public void resetLegalMoves(){
+		this.legalMoves.clear();
+	}
+	
+	public void resetAvailableRolls() {
+		this.availableRolls.clear();
+	}
+	
 	public boolean canBearOff(Player player) {
 		//TODO Bear off logic
 		return false;
@@ -181,6 +189,8 @@ public class BackgammonBoard {
 		this.latestDiceRoll[0] = 0;
 		this.latestDiceRoll[1] = 0;
 		isDiceRolled = false;
+		resetLegalMoves();
+		resetAvailableRolls();
 	}
 
 	public boolean getIsDiceRolled() {
