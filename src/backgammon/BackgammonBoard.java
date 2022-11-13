@@ -18,6 +18,7 @@ public class BackgammonBoard {
 
 	private static final int NUMBER_OF_POINTS = 24;
 	private BoardSpace[] boardSpaces = new BoardSpace[NUMBER_OF_POINTS + 2 + 2];
+	//TODO update bars and bearedOff storage to be simpler data structure than dictionary
 	private Map<Colour, Bar> bars_dict = new HashMap<Colour, Bar>();
 	private Map<Colour, BearedOffSpace> bearedOffSpaces_dict = new HashMap<Colour, BearedOffSpace>();
 

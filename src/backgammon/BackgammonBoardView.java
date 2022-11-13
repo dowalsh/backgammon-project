@@ -1,6 +1,5 @@
 package backgammon;
 
-import java.util.Arrays;
 
 /**
  * This program is the BackgammonBoardView class
