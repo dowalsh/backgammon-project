@@ -55,6 +55,10 @@ public class Backgammon {
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
 						board.updateLegalMoves(activePlayer);
+						String[] moves = board.legalMovesToString(activePlayer);
+						for(int i=0;i<moves.length;i++) {
+							System.out.println(moves[i]);
+						}
 					}
 				} else if (input.equals("P")) {
 					// "pip" command to report the pip count for both players

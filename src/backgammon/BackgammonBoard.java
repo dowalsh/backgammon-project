@@ -172,19 +172,26 @@ public class BackgammonBoard {
 
 	public BoardSpace getDestinationBoardSpace(Player player, BoardSpace source, int roll) {
 		int start = source.getPipValue(player);
-		// Why +1 here but works
-		int dest = start - (roll + 1);
+		int dest = start - (roll);
 		BoardSpace destination;
-
-		// TODO Bear off functionality
-		if (dest < 0) {
-			destination = null;
+		
+		//TODO Bear off functionality
+		if(dest<=0) {
+			destination  = null;
 		} else {
-			destination = boardSpaces[player.getAlternateIndex(dest)];
+			destination = boardSpaces[player.getAlternateIndex(dest)-1];
 		}
 		return destination;
 	}
-
+	
+	public void resetLegalMoves(){
+		this.legalMoves.clear();
+	}
+	
+	public void resetAvailableRolls() {
+		this.availableRolls.clear();
+	}
+	
 	public boolean canBearOff(Player player) {
 		// TODO Bear off logic
 		return false;
@@ -225,6 +232,8 @@ public class BackgammonBoard {
 		this.latestDiceRoll[0] = 0;
 		this.latestDiceRoll[1] = 0;
 		isDiceRolled = false;
+		resetLegalMoves();
+		resetAvailableRolls();
 	}
 
 	public boolean getIsDiceRolled() {
