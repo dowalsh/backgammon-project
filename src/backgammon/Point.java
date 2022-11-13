@@ -13,14 +13,14 @@ package backgammon;
 public class Point extends BoardSpace {
 
 	private int whiteIndex;
-	
+
 	/**
 	 * Constructor for this class
 	 */
 	public Point(int n) {
-		
+
 		this.whiteIndex = n;
-		
+
 		if (n % 2 == 0) {
 			this.setColour(Colour.BLACK);
 		} else {
@@ -29,30 +29,36 @@ public class Point extends BoardSpace {
 
 		switch (n) {
 		case 24:
-			addNewCheckers(2,Colour.WHITE);
+			addNewCheckers(2, Colour.WHITE);
 			break;
 		case 13:
-			addNewCheckers(5,Colour.WHITE);
+			addNewCheckers(5, Colour.WHITE);
 			break;
 		case 8:
-			addNewCheckers(3,Colour.WHITE);
+			addNewCheckers(3, Colour.WHITE);
 			break;
 		case 6:
-			addNewCheckers(5,Colour.WHITE);
-			break;	
-		case 25-24:
-			addNewCheckers(2,Colour.BLACK);
+			addNewCheckers(5, Colour.WHITE);
 			break;
-		case 25-13:
-			addNewCheckers(5,Colour.BLACK);
+		case 25 - 24:
+			addNewCheckers(2, Colour.BLACK);
 			break;
-		case 25-8:
-			addNewCheckers(3,Colour.BLACK);
+		case 25 - 13:
+			addNewCheckers(5, Colour.BLACK);
 			break;
-		case 25-6:
-			addNewCheckers(5,Colour.BLACK);
-			break;	
+		case 25 - 8:
+			addNewCheckers(3, Colour.BLACK);
+			break;
+		case 25 - 6:
+			addNewCheckers(5, Colour.BLACK);
+			break;
 		}
+	}
+
+	// copy constructor
+	public Point(int n, Point point) {
+		super(point);
+		this.whiteIndex = n;
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class Point extends BoardSpace {
 		boolean take;
 		if (this.isEmpty()) {
 			take = false;
-		} else if(!player.getColour().equals(this.getTopChecker().getColour())) {
+		} else if (!player.getColour().equals(this.getTopChecker().getColour())) {
 			take = false;
 		} else {
 			take = true;
@@ -85,7 +91,7 @@ public class Point extends BoardSpace {
 	public int getPipValue(Player player) {
 		return player.getAlternateIndex(whiteIndex);
 	}
-	
+
 	/**
 	 * Checks if moving a checker onto this point will result in a hit.
 	 * 
@@ -102,6 +108,7 @@ public class Point extends BoardSpace {
 
 	/**
 	 * Returns a string of the point from the active players perspective.
+	 * 
 	 * @param player Active player.
 	 * @return String of point.
 	 */

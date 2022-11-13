@@ -20,58 +20,101 @@ public class BackgammonBoard {
 	private BoardSpace[] boardSpaces = new BoardSpace[NUMBER_OF_POINTS + 2 + 2];
 	private Map<Colour, Bar> bars_dict = new HashMap<Colour, Bar>();
 	private Map<Colour, BearedOffSpace> bearedOffSpaces_dict = new HashMap<Colour, BearedOffSpace>();
-	
+
 	private int[] latestDiceRoll = new int[2];
 	private List<Integer> availableRolls = new ArrayList<Integer>();
-	
-	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
-	
-	private boolean isDiceRolled = false;
 
-	
+	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
+
+	private boolean isDiceRolled = false;
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
 	}
 
 	/**
-	 * Constructor for the class
+	 * Default Constructor for the class
 	 */
 	public BackgammonBoard() {
+		this(createInitialPoints(), 
+				new Bar(Colour.WHITE), 
+				new Bar(Colour.BLACK), 
+				new BearedOffSpace(Colour.WHITE),
+				new BearedOffSpace(Colour.BLACK));
+	}
 
+	private static Point[] createInitialPoints() {
 		int index = 0;
-
+		Point[] points = new Point[NUMBER_OF_POINTS];
 		// create and add points
 		while (index < NUMBER_OF_POINTS) {
-			boardSpaces[index] = new Point(index + 1);
+			points[index] = new Point(index + 1);
+			index++;
+		}
+		return points;
+	}
+
+	/**
+	 * Copy Constructor for the class
+	 */
+	private BackgammonBoard(BackgammonBoard board) {
+		this(copyPoints(board), 
+				new Bar(board.getBarByColour(Colour.WHITE)),
+				new Bar(board.getBarByColour(Colour.BLACK)),
+				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.WHITE)),
+				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.BLACK)));
+	}
+	
+	private static Point[] copyPoints(BackgammonBoard board) {
+		int index = 0;
+		Point[] points = new Point[NUMBER_OF_POINTS];
+		// create and add points
+		while (index < NUMBER_OF_POINTS) {
+			points[index] = new Point(index + 1, board.getPoint(index));
+			index++;
+		}
+		return points;
+	}
+
+	/*
+	 * Largest generic constructor for class
+	 */
+	private BackgammonBoard(Point[] points, Bar whiteBar, Bar blackBar, BearedOffSpace whiteBearedOffSpace,
+			BearedOffSpace blackBearedOffSpace) {
+		int index = 0;
+
+		// Add Points
+		while (index < NUMBER_OF_POINTS) {
+			boardSpaces[index] = points[index];
 			index++;
 		}
 
-		// create and add bars
-		Bar blackBar = new Bar(Colour.BLACK);
+		// add bars
 		boardSpaces[index] = blackBar;
 		bars_dict.put(Colour.BLACK, blackBar);
 		index++;
-		Bar whiteBar = new Bar(Colour.WHITE);
 		boardSpaces[index] = whiteBar;
 		bars_dict.put(Colour.WHITE, whiteBar);
 		index++;
 
-		// Create and add bearedOffSpaces
-		BearedOffSpace blackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		// add BearedOffSpaces
 		boardSpaces[index] = blackBearedOffSpace;
 		bearedOffSpaces_dict.put(Colour.BLACK, blackBearedOffSpace);
 		index++;
-		BearedOffSpace whiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
 		boardSpaces[index] = whiteBearedOffSpace;
 		bearedOffSpaces_dict.put(Colour.WHITE, whiteBearedOffSpace);
 		index++;
+
 	}
-	
-	public List<Integer> getUniqueAvailableRolls(){
+
+	private Point getPoint(int index) {
+		return (Point) boardSpaces[index];
+	}
+
+	public List<Integer> getUniqueAvailableRolls() {
 		List<Integer> uniqueRolls = new ArrayList<Integer>();
 		boolean doubleRoll = this.availableRolls.stream().allMatch(i -> i.equals(this.availableRolls.get(0)));
-		if(doubleRoll) {
+		if (doubleRoll) {
 			uniqueRolls.add(this.availableRolls.get(0));
 		} else {
 			uniqueRolls.add(this.availableRolls.get(0));
@@ -79,26 +122,26 @@ public class BackgammonBoard {
 		}
 		return uniqueRolls;
 	}
-	
+
 	public void updateLegalMoves(Player player) {
 		List<Integer> uniqueRolls = getUniqueAvailableRolls();
-		char  charIndex = 'a';
-		Bar playersBar = getBarForPlayer(player);
+		char charIndex = 'a';
+		Bar playersBar = getBarByColour(player.getColour());
 		BoardSpace destSpace;
-		for(int roll: uniqueRolls) {
-			if(playersBar.canTake(player)) {
+		for (int roll : uniqueRolls) {
+			if (playersBar.canTake(player)) {
 				destSpace = getDestinationBoardSpace(player, playersBar, roll);
-				if(destSpace.canPlace(playersBar.getTopChecker())) {
+				if (destSpace.canPlace(playersBar.getTopChecker())) {
 					Move legalMove = new Move(roll, playersBar, destSpace);
 					legalMoves.put(charIndex, legalMove);
 					charIndex++;
 				}
 			} else {
-				for(int i=0;i<NUMBER_OF_POINTS;i++) {
-					if(boardSpaces[i].canTake(player)) {
+				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
+					if (boardSpaces[i].canTake(player)) {
 						destSpace = getDestinationBoardSpace(player, boardSpaces[i], roll);
-						//TODO remove test of != null ; not goot practice according to notes I think
-						if(destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
+						// TODO remove test of != null ; not goot practice according to notes I think
+						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
 							Move legalMove = new Move(roll, boardSpaces[i], destSpace);
 							legalMoves.put(charIndex, legalMove);
 							charIndex++;
@@ -107,43 +150,43 @@ public class BackgammonBoard {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public int getNumPossibleMoves() {
 		return legalMoves.size();
 	}
-	
+
 	public String[] legalMovesToString(Player player) {
 		int numMoves = legalMoves.size();
 		String[] moveString = new String[numMoves];
-		int i=0;
-		for(Map.Entry<Character, Move> m : legalMoves.entrySet()) {
+		int i = 0;
+		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
 			char key = m.getKey();
 			Move move = m.getValue();
-			moveString[i] = key+": "+move.toString(player);
+			moveString[i] = key + ": " + move.toString(player);
 			i++;
 		}
 		return moveString;
 	}
-	
+
 	public BoardSpace getDestinationBoardSpace(Player player, BoardSpace source, int roll) {
 		int start = source.getPipValue(player);
 		// Why +1 here but works
-		int dest = start - (roll+1);
+		int dest = start - (roll + 1);
 		BoardSpace destination;
-		
-		//TODO Bear off functionality
-		if(dest<0) {
-			destination  = null;
+
+		// TODO Bear off functionality
+		if (dest < 0) {
+			destination = null;
 		} else {
 			destination = boardSpaces[player.getAlternateIndex(dest)];
 		}
 		return destination;
 	}
-	
+
 	public boolean canBearOff(Player player) {
-		//TODO Bear off logic
+		// TODO Bear off logic
 		return false;
 	}
 
@@ -168,8 +211,8 @@ public class BackgammonBoard {
 		isDiceRolled = true;
 
 		// TODO set available Dice Roll List here
-		if(this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
-			for(int i=0;i<4;i++) {
+		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
+			for (int i = 0; i < 4; i++) {
 				this.availableRolls.add(this.latestDiceRoll[0]);
 			}
 		} else {
@@ -196,12 +239,12 @@ public class BackgammonBoard {
 	public int getPipCount(Player player) {
 		int pipCount = 0;
 
-		// For Every Boardspace
+		// For Every BoardSpace
 		for (BoardSpace b : boardSpaces) {
 			int numCheckers = b.getNumCheckers();
 			// Get number of player's checkers on that space
 			if (numCheckers > 0) {
-				if(b.getTopChecker().getColour()== player.getColour()) {
+				if (b.getTopChecker().getColour() == player.getColour()) {
 					// multiply this number this space's pip value
 					// and add to running total
 					pipCount += numCheckers * b.getPipValue(player);
@@ -212,15 +255,15 @@ public class BackgammonBoard {
 
 		return pipCount;
 	}
-	
-	private Bar getBarForPlayer(Player player) {
-		return bars_dict.get(player.getColour());
+
+	private Bar getBarByColour(Colour c) {
+		return bars_dict.get(c);
 	}
-	
-	private BearedOffSpace getBearedOffSpaceForPlayer(Player player) {
-		return bearedOffSpaces_dict.get(player.getColour());
+
+	private BearedOffSpace getBearedOffSpaceByColour(Colour c) {
+		return bearedOffSpaces_dict.get(c);
 	}
-	
+
 //	public static void main(String args[]) {
 //		char boo = 'Z';
 //		boo++;

@@ -21,6 +21,11 @@ public class BearedOffSpace extends BoardSpace {
 		this.setColour(colourOfSpace);
 	}
 
+	//Copy Constructor
+	public BearedOffSpace(BearedOffSpace b) {
+		super(b);
+	}
+
 	@Override
 	public boolean canPlace(Checker start) {
 		boolean place = false;
