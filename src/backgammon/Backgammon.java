@@ -58,7 +58,7 @@ public class Backgammon {
 						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
-						board.updateLegalMoves(activePlayer);
+//						board.updateLegalMoves(activePlayer);
 						String[] moves = board.legalMovesToString(activePlayer);
 						for (int i = 0; i < moves.length; i++) {
 							System.out.println(moves[i]);

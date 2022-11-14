@@ -128,9 +128,9 @@ public class BackgammonBoard {
 		return uniqueRolls;
 	}
 
-	public void updateLegalMoves(Player player) {
+	private List<Move> getPossibleNextMoves(Player player) {
 		List<Integer> uniqueRolls = getUniqueAvailableRolls();
-		char charIndex = 'a';
+		List<Move> nextPossibleMoves = new ArrayList<Move>();
 		Bar playersBar = getBarByColour(player.getColour());
 		BoardSpace destSpace;
 		for (int roll : uniqueRolls) {
@@ -138,8 +138,7 @@ public class BackgammonBoard {
 				destSpace = getDestinationBoardSpace(player, playersBar, roll);
 				if (destSpace.canPlace(playersBar.getTopChecker())) {
 					Move legalMove = new Move(roll, playersBar, destSpace);
-					legalMoves.put(charIndex, legalMove);
-					charIndex++;
+					nextPossibleMoves.add(legalMove);
 				}
 			} else {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
@@ -148,14 +147,13 @@ public class BackgammonBoard {
 						// TODO remove test of != null ; not goot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
 							Move legalMove = new Move(roll, boardSpaces[i], destSpace);
-							legalMoves.put(charIndex, legalMove);
-							charIndex++;
+							nextPossibleMoves.add(legalMove);
 						}
 					}
 				}
 			}
 		}
-
+		return nextPossibleMoves;
 	}
 
 	public int getNumPossibleMoves() {
@@ -296,17 +294,4 @@ public class BackgammonBoard {
 //		return legalMoves.keySet();
 	}
 
-//	public static void main(String args[]) {
-//		char boo = 'Z';
-//		boo++;
-//		System.out.println(boo);
-//		boo++;
-//		System.out.println(boo);
-//		boo++;
-//		System.out.println(boo);
-//		boo++;
-//		System.out.println(boo);
-//		boo++;
-//		System.out.println(boo);
-//	}
 }
