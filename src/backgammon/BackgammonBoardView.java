@@ -1,6 +1,5 @@
 package backgammon;
 
-
 /**
  * This program is the BackgammonBoardView class
  * @author dylan
@@ -113,15 +112,17 @@ public class BackgammonBoardView {
 			}
 			formatString.append("\n");
 		}
-		if(board.getIsDiceRolled()) {
-		int[] diceRoll = board.getLatestDiceRoll();
-		formatString.append(Dice.toString(diceRoll));
-		}else {
-			formatString.append("To roll the dice enter command 'R'");
 
+		if (!board.isGameOver()) {
+			if (board.isDiceRolled()) {
+				int[] diceRoll = board.getLatestDiceRoll();
+				formatString.append(Dice.toString(diceRoll));
+			} else {
+				formatString.append("To roll the dice enter command 'roll'");
+
+			}
 		}
 
-		
 		print(formatString.toString());
 
 	}
@@ -201,7 +202,7 @@ public class BackgammonBoardView {
 		String symbols = symbol.repeat(numSymbols);
 		print("\n" + symbols + " " + message + " " + symbols);
 	}
-	
+
 	/**
 	 * Print string to console
 	 * 
@@ -214,23 +215,26 @@ public class BackgammonBoardView {
 
 	public static void printInputOptions() {
 		printBanner("INPUT OPTIONS", "%");
-		print("Q = Quit");
-		print("R = Roll the Dice");
-		print("P = Display Pip Counts");
+		print("quit = Quit");
+		print("roll = Roll the Dice");
+		print("pip = Display Pip Counts");
+		print("Choose a letter A,B,C etc to make a move");
+
 	}
 
 	public static void promptForPlayerName(int i) {
 		Colour colour;
-		if(i ==1) colour = Colour.WHITE;
-		else colour = Colour.BLACK;
-		print("Enter the name for player " + i + " ("+colour+"): ");
+		if (i == 1)
+			colour = Colour.WHITE;
+		else
+			colour = Colour.BLACK;
+		print("Enter the name for player " + i + " (" + colour + "): ");
 	}
 
 	public static void printPipCounts(BackgammonBoard board, Player player1, Player player2) {
-		printInfo("Pip Counts");		
-		print(player1 + ": " + board.getPipCount(player1));	
-		print(player2 + ": " + board.getPipCount(player2));		
+		printInfo("Pip Counts");
+		print(player1 + ": " + board.getPipCount(player1));
+		print(player2 + ": " + board.getPipCount(player2));
 	}
-	
 
 }

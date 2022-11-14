@@ -1,7 +1,9 @@
 package backgammon;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class BackgammonBoard {
 	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
 
 	private boolean isDiceRolled = false;
+	private boolean isGameOver = false;
+
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
@@ -237,7 +241,7 @@ public class BackgammonBoard {
 		resetAvailableRolls();
 	}
 
-	public boolean getIsDiceRolled() {
+	public boolean isDiceRolled() {
 		return isDiceRolled;
 	}
 
@@ -272,6 +276,24 @@ public class BackgammonBoard {
 
 	private BearedOffSpace getBearedOffSpaceByColour(Colour c) {
 		return bearedOffSpaces_dict.get(c);
+	}
+
+	public boolean isGameOver() {
+		return isGameOver;
+	}
+	
+	public void endGame() {
+		isGameOver = true;
+	}
+
+	public Set<Character> getMoveKeys() {
+		Set<Character> set = new HashSet<Character> (); 
+		set.add('A');
+		set.add('B');
+
+		//TODO temporary test
+		return set;
+//		return legalMoves.keySet();
 	}
 
 //	public static void main(String args[]) {
