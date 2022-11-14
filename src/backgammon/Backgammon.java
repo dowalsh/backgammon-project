@@ -58,11 +58,7 @@ public class Backgammon {
 						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 						diceHasBeenRolled = true;
-//						board.updateLegalMoves(activePlayer);
-						String[] moves = board.legalMovesToString(activePlayer);
-						for (int i = 0; i < moves.length; i++) {
-							System.out.println(moves[i]);
-						}
+						board.createLegalMoves(activePlayer);
 					}
 				} else if (input.equals("PIP")) {
 					// "pip" command to report the pip count for both players
@@ -70,8 +66,11 @@ public class Backgammon {
 				} else if (input.length() ==1 && board.getMoveKeys().contains(input.charAt(0))) {
 					// User single alphabetical input to select a move
 					BackgammonBoardView.printInfo("Selected Move Option: " + input);
+					board.applyMove(input.charAt(0));
 					board.endTurn();
 					isTurnOver = true; // TODO temporary option to choose - this will be replaced by actual move
+				} else if (input.equals("HINT")) {
+					BackgammonBoardView.printInputOptions();
 				}
 				// can add more else if s for other input options here
 				else {

@@ -113,8 +113,7 @@ public class Point extends BoardSpace {
 	 * @return String of point.
 	 */
 	public String toString(Player player) {
-		int index = this.getPipValue(player);
-		return "Point " + index;
+		return Integer.toString(getPipValue(player));
 	}
 
 }

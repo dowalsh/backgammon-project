@@ -19,19 +19,24 @@ import java.util.ArrayList;
 public class BackgammonBoard {
 
 	private static final int NUMBER_OF_POINTS = 24;
+
 	private BoardSpace[] boardSpaces = new BoardSpace[NUMBER_OF_POINTS + 2 + 2];
-	//TODO update bars and bearedOff storage to be simpler data structure than dictionary
+
+	// TODO update bars and bearedOff storage to be simpler data structure than
+	// dictionary
+	// Bars and BearedOffSpaces
 	private Map<Colour, Bar> bars_dict = new HashMap<Colour, Bar>();
 	private Map<Colour, BearedOffSpace> bearedOffSpaces_dict = new HashMap<Colour, BearedOffSpace>();
 
+	// Dice Roll
 	private int[] latestDiceRoll = new int[2];
+	private boolean isDoubles;
 	private List<Integer> availableRolls = new ArrayList<Integer>();
 
 	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
 
 	private boolean isDiceRolled = false;
 	private boolean isGameOver = false;
-
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
@@ -41,10 +46,7 @@ public class BackgammonBoard {
 	 * Default Constructor for the class
 	 */
 	public BackgammonBoard() {
-		this(createInitialPoints(), 
-				new Bar(Colour.WHITE), 
-				new Bar(Colour.BLACK), 
-				new BearedOffSpace(Colour.WHITE),
+		this(createInitialPoints(), new Bar(Colour.WHITE), new Bar(Colour.BLACK), new BearedOffSpace(Colour.WHITE),
 				new BearedOffSpace(Colour.BLACK));
 	}
 
@@ -63,13 +65,12 @@ public class BackgammonBoard {
 	 * Copy Constructor for the class
 	 */
 	private BackgammonBoard(BackgammonBoard board) {
-		this(copyPoints(board), 
-				new Bar(board.getBarByColour(Colour.WHITE)),
+		this(copyPoints(board), new Bar(board.getBarByColour(Colour.WHITE)),
 				new Bar(board.getBarByColour(Colour.BLACK)),
 				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.WHITE)),
 				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.BLACK)));
 	}
-	
+
 	private static Point[] copyPoints(BackgammonBoard board) {
 		int index = 0;
 		Point[] points = new Point[NUMBER_OF_POINTS];
@@ -160,41 +161,40 @@ public class BackgammonBoard {
 		return legalMoves.size();
 	}
 
-	public String[] legalMovesToString(Player player) {
-		int numMoves = legalMoves.size();
-		String[] moveString = new String[numMoves];
-		int i = 0;
+	public String legalMovesToString(Player player) {
+		final StringBuilder moveString = new StringBuilder("");
+
+		moveString.append("MOVE OPTIONS: \n");
 		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
 			char key = m.getKey();
 			Move move = m.getValue();
-			moveString[i] = key + ": " + move.toString(player);
-			i++;
+			moveString.append(key + ") " + move.toString(player) + "\n");
 		}
-		return moveString;
+		return moveString.toString();
 	}
 
 	public BoardSpace getDestinationBoardSpace(Player player, BoardSpace source, int roll) {
 		int start = source.getPipValue(player);
 		int dest = start - (roll);
 		BoardSpace destination;
-		
-		//TODO Bear off functionality
-		if(dest<=0) {
-			destination  = null;
+
+		// TODO Bear off functionality
+		if (dest <= 0) {
+			destination = null;
 		} else {
-			destination = boardSpaces[player.getAlternateIndex(dest)-1];
+			destination = boardSpaces[player.getAlternateIndex(dest) - 1];
 		}
 		return destination;
 	}
-	
-	public void resetLegalMoves(){
+
+	public void resetLegalMoves() {
 		this.legalMoves.clear();
 	}
-	
+
 	public void resetAvailableRolls() {
 		this.availableRolls.clear();
 	}
-	
+
 	public boolean canBearOff(Player player) {
 		// TODO Bear off logic
 		return false;
@@ -222,6 +222,7 @@ public class BackgammonBoard {
 
 		// TODO set available Dice Roll List here
 		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
+			isDoubles = true;
 			for (int i = 0; i < 4; i++) {
 				this.availableRolls.add(this.latestDiceRoll[0]);
 			}
@@ -279,19 +280,45 @@ public class BackgammonBoard {
 	public boolean isGameOver() {
 		return isGameOver;
 	}
-	
+
 	public void endGame() {
 		isGameOver = true;
 	}
 
 	public Set<Character> getMoveKeys() {
-		Set<Character> set = new HashSet<Character> (); 
-		set.add('A');
-		set.add('B');
+		return legalMoves.keySet();
+	}
 
-		//TODO temporary test
-		return set;
-//		return legalMoves.keySet();
+	public void createLegalMoves(Player activePlayer) {
+		char key = 'A';
+		isDoubles = true;
+		if (isDoubles) {
+			for (Move m : getPossibleNextMoves(activePlayer)) {
+				legalMoves.put(key, m);
+				key++;
+			}
+		} else {
+
+		}
+
+	}
+
+	public void applyMove(char c) {
+		Move m = legalMoves.get(c);
+		BoardSpace source = m.getSource();
+		BoardSpace destination = m.getDestination();
+
+		Checker checker = source.removeChecker();
+
+		if (destination instanceof Point) {
+			if (((Point) destination).isAHit(checker)) {
+				Checker removed = destination.removeChecker();
+				Bar bar = getBarByColour(removed.getColour());
+				bar.addChecker(removed);
+			}
+		}
+
+		destination.addChecker(checker);
 	}
 
 }
