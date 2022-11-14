@@ -115,6 +115,22 @@ public class BackgammonBoardView {
 
 		// Create output format String & print
 		final StringBuilder formatString = new StringBuilder("");
+		
+		
+		
+		if (!board.isGameOver()) {
+			if (board.isDiceRolled()) {
+				int[] diceRoll = board.getLatestDiceRoll();
+				formatString.append(board.legalMovesToString(player));
+				formatString.append(Dice.toString(diceRoll));
+
+			} else {
+				formatString.append("To roll the dice enter command 'roll'\n");
+
+			}
+		}
+		
+		
 		// Header
 		formatString.append("\n");
 		// Main Board
@@ -125,16 +141,7 @@ public class BackgammonBoardView {
 			formatString.append("\n");
 		}
 
-		if (!board.isGameOver()) {
-			if (board.isDiceRolled()) {
-				int[] diceRoll = board.getLatestDiceRoll();
-				formatString.append(Dice.toString(diceRoll));
-				formatString.append(board.legalMovesToString(player));
-			} else {
-				formatString.append("To roll the dice enter command 'roll'");
 
-			}
-		}
 
 		print(formatString.toString());
 

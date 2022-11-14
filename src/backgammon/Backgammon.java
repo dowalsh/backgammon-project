@@ -66,9 +66,9 @@ public class Backgammon {
 				} else if (input.length() ==1 && board.getMoveKeys().contains(input.charAt(0))) {
 					// User single alphabetical input to select a move
 					BackgammonBoardView.printInfo("Selected Move Option: " + input);
-					board.applyMove(input.charAt(0));
-					board.endTurn();
-					isTurnOver = true; // TODO temporary option to choose - this will be replaced by actual move
+					board.applyMove(input.charAt(0),activePlayer);
+					isTurnOver = board.isTurnOver();
+					
 				} else if (input.equals("HINT")) {
 					BackgammonBoardView.printInputOptions();
 				}

@@ -10,7 +10,7 @@ package backgammon;
  */
 public class Move {
 
-	private int moveDistance;
+	private int roll;
 	private BoardSpace source;
 	private BoardSpace destination;
 	
@@ -21,18 +21,12 @@ public class Move {
 	 * @param dest Where checker can move to.
 	 */
 	public Move(int distance, BoardSpace src, BoardSpace dest) {
-		this.moveDistance = distance;
+		this.roll = distance;
 		this.source = src;
 		this.destination = dest;
 	}
 	
-	/**
-	 * Returns distance checker is moving.
-	 * @return Distance checker moves.
-	 */
-	public int getMoveDistance() {
-		return this.moveDistance;
-	}
+
 
 	/**
 	 * Returns where checker is moving from.
@@ -56,6 +50,10 @@ public class Move {
 	 * @return String of the move.
 	 */
 	public String toString(Player player) {
-		return  "["+moveDistance+"]  " + source.toString(player) + "->" + destination.toString(player);
+		return  "["+roll+"]  " + source.toString(player) + "->" + destination.toString(player);
+	}
+
+	public Object getRoll() {
+		return this.roll;
 	}
 }

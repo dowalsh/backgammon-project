@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,13 +34,15 @@ public class BackgammonBoard {
 
 	// Dice Roll
 	private int[] latestDiceRoll = new int[2];
-	private boolean isDoubles;
+	private boolean isDoubles = false;
+	private boolean isDiceRolled = false;
+
 	private List<Integer> availableRolls = new ArrayList<Integer>();
 
 	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
 
-	private boolean isDiceRolled = false;
 	private boolean isGameOver = false;
+	private boolean isTurnOver;
 
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
@@ -120,20 +123,14 @@ public class BackgammonBoard {
 		return (Point) boardSpaces[index];
 	}
 
-	public List<Integer> getUniqueAvailableRolls() {
-		List<Integer> uniqueRolls = new ArrayList<Integer>();
-		boolean doubleRoll = this.availableRolls.stream().allMatch(i -> i.equals(this.availableRolls.get(0)));
-		if (doubleRoll) {
-			uniqueRolls.add(this.availableRolls.get(0));
-		} else {
-			uniqueRolls.add(this.availableRolls.get(0));
-			uniqueRolls.add(this.availableRolls.get(1));
-		}
+	public Collection <Integer> getUniqueAvailableRolls() {
+        Collection<Integer> uniqueRolls = new HashSet<Integer>(availableRolls);
+
 		return uniqueRolls;
 	}
 
 	private List<Move> getPossibleNextMoves(Player player) {
-		List<Integer> uniqueRolls = getUniqueAvailableRolls();
+		Collection<Integer> uniqueRolls = getUniqueAvailableRolls();
 		List<Move> nextPossibleMoves = new ArrayList<Move>();
 		Bar playersBar = getBarByColour(player.getColour());
 		BoardSpace destSpace;
@@ -160,13 +157,11 @@ public class BackgammonBoard {
 		return nextPossibleMoves;
 	}
 
-	public int getNumPossibleMoves() {
-		return legalMoves.size();
-	}
-
 	public String legalMovesToString(Player player) {
 		final StringBuilder moveString = new StringBuilder("");
-
+		
+		
+		moveString.append("Remaining Rolls: "+availableRolls+"\n");
 		moveString.append("MOVE OPTIONS: \n");
 		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
 			char key = m.getKey();
@@ -181,15 +176,15 @@ public class BackgammonBoard {
 		int dest = start - (roll);
 		BoardSpace destination;
 		if (dest < 0) {
-			if(canBearOff(player)) {
-				//Check if start is highest pip count of player's points
+			if (canBearOff(player)) {
+				// Check if start is highest pip count of player's points
 				boolean highestPip = true;
-				for(int i=6;i>start;i--) {
-					if(!boardSpaces[player.getAlternateIndex(i)-1].isEmpty()) {
+				for (int i = 6; i > start; i--) {
+					if (!boardSpaces[player.getAlternateIndex(i) - 1].isEmpty()) {
 						highestPip = false;
 					}
 				}
-				if(highestPip) {
+				if (highestPip) {
 					destination = getBearedOffSpaceByColour(player.getColour());
 				} else {
 					destination = null;
@@ -198,7 +193,7 @@ public class BackgammonBoard {
 				destination = null;
 			}
 		} else if (dest == 0) {
-			if(canBearOff(player)) {
+			if (canBearOff(player)) {
 				destination = getBearedOffSpaceByColour(player.getColour());
 			} else {
 				destination = null;
@@ -209,18 +204,14 @@ public class BackgammonBoard {
 		return destination;
 	}
 
-	public void resetLegalMoves() {
-		this.legalMoves.clear();
-	}
-
 	public void resetAvailableRolls() {
 		this.availableRolls.clear();
 	}
 
 	public boolean canBearOff(Player player) {
 		boolean bearOff = true;
-		for(int i=24;i>6;i--) {
-			if(!boardSpaces[player.getAlternateIndex(i)-1].isEmpty()) {
+		for (int i = 24; i > 6; i--) {
+			if (!boardSpaces[player.getAlternateIndex(i) - 1].isEmpty()) {
 				bearOff = false;
 			}
 		}
@@ -247,22 +238,23 @@ public class BackgammonBoard {
 		this.latestDiceRoll[1] = Dice.roll();
 		isDiceRolled = true;
 
-		// TODO set available Dice Roll List here
 		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
 			isDoubles = true;
 			for (int i = 0; i < 4; i++) {
 				this.availableRolls.add(this.latestDiceRoll[0]);
 			}
 		} else {
+			isDoubles = false;
 			this.availableRolls.add(this.latestDiceRoll[0]);
 			this.availableRolls.add(this.latestDiceRoll[1]);
 		}
 	}
 
-	public void endTurn() {
+	private void endTurn() {
 		this.latestDiceRoll[0] = 0;
 		this.latestDiceRoll[1] = 0;
 		isDiceRolled = false;
+		isTurnOver = true;
 		resetLegalMoves();
 		resetAvailableRolls();
 	}
@@ -318,19 +310,41 @@ public class BackgammonBoard {
 
 	public void createLegalMoves(Player activePlayer) {
 		char key = 'A';
-		isDoubles = true;
 		if (isDoubles) {
 			for (Move m : getPossibleNextMoves(activePlayer)) {
 				legalMoves.put(key, m);
 				key++;
 			}
 		} else {
-
+			for (Move m : getPossibleNextMoves(activePlayer)) {
+				legalMoves.put(key, m);
+				key++;
+			}
 		}
 
 	}
 
-	public void applyMove(char c) {
+	private void updateLegalMoves(Player activePlayer) {
+		resetLegalMoves();
+		char key = 'A';
+		if (isDoubles) {
+			for (Move m : getPossibleNextMoves(activePlayer)) {
+				legalMoves.put(key, m);
+				key++;
+			}
+		} else {
+			for (Move m : getPossibleNextMoves(activePlayer)) {
+				legalMoves.put(key, m);
+				key++;
+			}
+		}	
+	}
+	
+	public void resetLegalMoves() {
+		this.legalMoves.clear();
+	}
+
+	public void applyMove(char c, Player activePlayer) {
 		Move m = legalMoves.get(c);
 		BoardSpace source = m.getSource();
 		BoardSpace destination = m.getDestination();
@@ -346,6 +360,20 @@ public class BackgammonBoard {
 		}
 
 		destination.addChecker(checker);
+		
+		//other updates
+		availableRolls.remove(m.getRoll());
+		
+		updateLegalMoves(activePlayer);
+
+		if (availableRolls.isEmpty())
+			this.endTurn();
+	}
+
+	
+
+	public boolean isTurnOver() {
+		return isTurnOver;
 	}
 
 }

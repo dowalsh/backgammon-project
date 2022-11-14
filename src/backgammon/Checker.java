@@ -35,7 +35,7 @@ public class Checker {
 		String checkerString = new String();
 		
 		if(this.colour == Colour.BLACK) {
-			checkerString = "*";
+			checkerString = ".";
 		}else {
 			checkerString = "o";
 		}
