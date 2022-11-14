@@ -17,13 +17,31 @@ public class Backgammon {
 
 		// Game control loop
 		boolean run = true; // to control whether the game should continue running
-		Player activePlayer = player2;
+		Player activePlayer;
 
 		BackgammonBoardView.printInputOptions();
 		
-		//TODO :Logic for first player
+		BackgammonBoardView.printInfo("Rolling Dice to see who goes first");
 		
-
+		int[] initialRolls = new int[2];
+		do {
+			initialRolls[0] = Dice.roll();
+			initialRolls[1] = Dice.roll();
+			
+			BackgammonBoardView.printStart(player1, player2, initialRolls);
+			if (initialRolls[0] == initialRolls[1]) {
+				BackgammonBoardView.printInfo("Rolls are equal, let's roll again");
+			}
+		} while (initialRolls[0] == initialRolls[1]);
+		
+		if (initialRolls[0] > initialRolls[1]) {
+			BackgammonBoardView.printInfo(player1.toString()+" has a higher roll, so goes first");
+			activePlayer = player2;
+		} else {
+			BackgammonBoardView.printInfo(player2.toString()+" has a higher roll, so goes first");
+			activePlayer = player1;
+		}
+		
 		while (run) {
 
 			boolean isTurnOver = false;

@@ -40,6 +40,10 @@ public class Player {
 		}
 		return index;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
 	public Colour getColour() {
 		return colour;

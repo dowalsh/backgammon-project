@@ -62,7 +62,7 @@ public class Dice {
 		return formatString.toString();
 	}
 
-	private final static String[][] getDiceFace(int n) {
+	public final static String[][] getDiceFace(int n) {
 
 		String[][] diceFace = { { " ", " ", " " }, { " ", " ", " " }, { " ", " ", " " } };
 

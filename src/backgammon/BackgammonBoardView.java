@@ -146,6 +146,53 @@ public class BackgammonBoardView {
 		print(formatString.toString());
 
 	}
+	
+	public static void printStart(Player player1, Player player2, int[] roll) {
+
+		String[][] diceFace1 = Dice.getDiceFace(roll[0]);
+		String[][] diceFace2 = Dice.getDiceFace(roll[1]);		
+		
+		String indent = " ".repeat(20);
+		String indent1 = " ".repeat(15);
+		
+		final StringBuilder formatString = new StringBuilder("");
+		formatString.append("\n");
+		formatString.append(indent1);
+		formatString.append(player1.toString()+"'s roll\n");
+		formatString.append("\n");
+		formatString.append(indent);
+		formatString.append("+-------+\n");
+		for (int i = 0; i < 3; i++) {
+			formatString.append(indent);
+			formatString.append("| ");
+			for (int j = 0; j < 3; j++) {
+				formatString.append(diceFace1[i][j]);
+				formatString.append(" ");
+			}
+			formatString.append("|\n");
+		}
+		formatString.append(indent);
+		formatString.append("+-------+\n");
+		formatString.append("\n");
+		formatString.append(indent1);
+		formatString.append(player2.toString()+"'s roll\n");
+		formatString.append("\n");
+		formatString.append(indent);
+		formatString.append("+-------+\n");
+		for (int i = 0; i < 3; i++) {
+			formatString.append(indent);
+			formatString.append("| ");
+			for (int j = 0; j < 3; j++) {
+				formatString.append(diceFace2[i][j]);
+				formatString.append(" ");
+			}
+			formatString.append("|\n");
+		}
+		formatString.append(indent);
+		formatString.append("+-------+\n");
+		
+		print(formatString.toString());
+	}
 
 	private static void fillCheckers(String[][] table, int starting_row_index, int col_index, boolean fillDownwards,
 			BoardSpace b) {
