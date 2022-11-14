@@ -33,7 +33,8 @@ public class Backgammon {
 				activePlayer = player1;
 
 			while (!isTurnOver) {
-
+				
+				board.beginTurn();
 				BackgammonBoardView.printInfo(activePlayer.toString() + " it is your turn!");
 
 				BackgammonBoardView.print(board, activePlayer);

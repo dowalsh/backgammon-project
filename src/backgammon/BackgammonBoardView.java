@@ -220,7 +220,8 @@ public class BackgammonBoardView {
 		if (numSymbols <= 0)
 			numSymbols = 3;
 		String symbols = symbol.repeat(numSymbols);
-		print("\n" + symbols + " " + message + " " + symbols);
+		String banner = symbol.repeat(DISPLAY_WIDTH);
+		print("\n" + banner + "\n" + symbols + " " + message + " " + symbols + "\n" +banner);
 	}
 
 	/**

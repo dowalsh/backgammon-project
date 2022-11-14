@@ -370,10 +370,14 @@ public class BackgammonBoard {
 			this.endTurn();
 	}
 
-	
 
 	public boolean isTurnOver() {
 		return isTurnOver;
+	}
+
+	public void beginTurn() {
+		isTurnOver = false;
+		isDiceRolled = false;
 	}
 
 }
