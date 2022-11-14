@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This program is the BackgammonBoard class
@@ -140,7 +143,7 @@ public class BackgammonBoard {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
 					if (boardSpaces[i].canTake(player)) {
 						destSpace = getDestinationBoardSpace(player, boardSpaces[i], roll);
-						// TODO remove test of != null ; not goot practice according to notes I think
+						// TODO remove test of != null ; not groot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
 							Move legalMove = new Move(roll, boardSpaces[i], destSpace);
 							nextPossibleMoves.add(legalMove);
@@ -174,9 +177,29 @@ public class BackgammonBoard {
 		int dest = start - (roll);
 		BoardSpace destination;
 		
-		//TODO Bear off functionality
-		if(dest<=0) {
-			destination  = null;
+		if (dest < 0) {
+			if(canBearOff(player)) {
+				//Check if start is highest pip count of player's points
+				boolean highestPip = true;
+				for(int i=6;i>start;i--) {
+					if(!boardSpaces[player.getAlternateIndex(i)-1].isEmpty()) {
+						highestPip = false;
+					}
+				}
+				if(highestPip) {
+					destination = getBearedOffSpaceByColour(player.getColour());
+				} else {
+					destination = null;
+				}
+			} else {
+				destination = null;
+			}
+		} else if (dest == 0) {
+			if(canBearOff(player)) {
+				destination = getBearedOffSpaceByColour(player.getColour());
+			} else {
+				destination = null;
+			}
 		} else {
 			destination = boardSpaces[player.getAlternateIndex(dest)-1];
 		}
@@ -192,8 +215,13 @@ public class BackgammonBoard {
 	}
 	
 	public boolean canBearOff(Player player) {
-		// TODO Bear off logic
-		return false;
+		boolean bearOff = true;
+		for(int i=24;i>6;i--) {
+			if(!boardSpaces[player.getAlternateIndex(i)-1].isEmpty()) {
+				bearOff = false;
+			}
+		}
+		return bearOff;
 	}
 
 	public boolean isWon() {
