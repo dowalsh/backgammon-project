@@ -20,6 +20,9 @@ public class Backgammon {
 		Player activePlayer = player2;
 
 		BackgammonBoardView.printInputOptions();
+		
+		//TODO :Logic for first player
+		
 
 		while (run) {
 
@@ -79,9 +82,11 @@ public class Backgammon {
 					BackgammonBoardView.printError("INVALID INPUT");
 					BackgammonBoardView.printInputOptions();
 				}
-				if (board.isWon()) {
+				if (board.isWon(activePlayer)) {
+					BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString() + " is the winner! Thanks for paying!");
+					board.endGame();
+					isTurnOver = true;
 					run = false;
-					BackgammonBoardView.printInfo("Game Completed! Thanks for paying!");
 				}
 			}
 		}
