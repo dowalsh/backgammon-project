@@ -27,7 +27,6 @@ public class Backgammon {
 		while (run) {
 
 			boolean isTurnOver = false;
-			boolean diceHasBeenRolled = false;
 
 			// switch the active player
 			if (activePlayer == player1)
@@ -35,9 +34,9 @@ public class Backgammon {
 			else
 				activePlayer = player1;
 
+			board.beginTurn();
 			while (!isTurnOver) {
-				
-				board.beginTurn();
+			
 				BackgammonBoardView.printInfo(activePlayer.toString() + " it is your turn!");
 
 				BackgammonBoardView.print(board, activePlayer);
@@ -53,16 +52,20 @@ public class Backgammon {
 					isTurnOver = true;
 					run = false;
 				} else if (input.equals("ROLL")) {
-					if (diceHasBeenRolled) {
+					if (board.isDiceRolled()) {
 						BackgammonBoardView.printError("Cannot re-roll dice");
 					} else {
 						// roll the dice
-						board.rollDice();
+						board.rollDice(activePlayer);
 						int[] roll = board.getLatestDiceRoll();
 						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
-						diceHasBeenRolled = true;
-						board.createLegalMoves(activePlayer);
+						
+						if(board.noMoveAvailable(activePlayer)) {
+							isTurnOver = board.isTurnOver();
+							BackgammonBoardView.printInfo("No Moves Available, Ending Turn ");
+
+						}
 					}
 				} else if (input.equals("PIP")) {
 					// "pip" command to report the pip count for both players
@@ -70,7 +73,7 @@ public class Backgammon {
 				} else if (input.length() ==1 && board.getMoveKeys().contains(input.charAt(0))) {
 					// User single alphabetical input to select a move
 					BackgammonBoardView.printInfo("Selected Move Option: " + input);
-					board.applyMove(input.charAt(0),activePlayer);
+					board.selectMove(input.charAt(0),activePlayer);
 					isTurnOver = board.isTurnOver();
 					
 				} else if (input.equals("HINT")) {

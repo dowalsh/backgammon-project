@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +37,6 @@ public class BackgammonBoard {
 	private int[] latestDiceRoll = new int[2];
 	private boolean isDoubles = false;
 	private boolean isDiceRolled = false;
-
 	private List<Integer> availableRolls = new ArrayList<Integer>();
 
 	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
@@ -75,6 +75,8 @@ public class BackgammonBoard {
 				new Bar(board.getBarByColour(Colour.BLACK)),
 				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.WHITE)),
 				new BearedOffSpace(board.getBearedOffSpaceByColour(Colour.BLACK)));
+
+		this.availableRolls.addAll(board.availableRolls);
 	}
 
 	private static Point[] copyPoints(BackgammonBoard board) {
@@ -123,31 +125,46 @@ public class BackgammonBoard {
 		return (Point) boardSpaces[index];
 	}
 
-	public Collection <Integer> getUniqueAvailableRolls() {
-        Collection<Integer> uniqueRolls = new HashSet<Integer>(availableRolls);
+	public String legalMovesToString(Player activePlayer) {
+		final StringBuilder moveString = new StringBuilder("");
+
+		moveString.append("Remaining Rolls: " + availableRolls + "\n");
+		moveString.append("MOVE OPTIONS: \n");
+		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
+			char key = m.getKey();
+			Move move = m.getValue();
+			moveString.append(key + ") " + move.toString(activePlayer) + "\n");
+		}
+		return moveString.toString();
+	}
+
+	private Collection<Integer> getUniqueAvailableRolls() {
+		Collection<Integer> uniqueRolls = new HashSet<Integer>(availableRolls);
 
 		return uniqueRolls;
 	}
 
-	private List<Move> getPossibleNextMoves(Player player) {
+	private List<Move> getPossibleNextMoves(Player activePlayer) {
+
 		Collection<Integer> uniqueRolls = getUniqueAvailableRolls();
+
 		List<Move> nextPossibleMoves = new ArrayList<Move>();
-		Bar playersBar = getBarByColour(player.getColour());
+		Bar activePlayersBar = getBarByColour(activePlayer.getColour());
 		BoardSpace destSpace;
 		for (int roll : uniqueRolls) {
-			if (playersBar.canTake(player)) {
-				destSpace = getDestinationBoardSpace(player, playersBar, roll);
-				if (destSpace.canPlace(playersBar.getTopChecker())) {
-					Move legalMove = new Move(roll, playersBar, destSpace);
+			if (activePlayersBar.canTake(activePlayer)) {
+				destSpace = getDestinationBoardSpace(activePlayer, activePlayersBar, roll);
+				if (destSpace.canPlace(activePlayersBar.getTopChecker())) {
+					Move legalMove = new Move(roll, activePlayersBar, destSpace, activePlayer);
 					nextPossibleMoves.add(legalMove);
 				}
 			} else {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
-					if (boardSpaces[i].canTake(player)) {
-						destSpace = getDestinationBoardSpace(player, boardSpaces[i], roll);
+					if (boardSpaces[i].canTake(activePlayer)) {
+						destSpace = getDestinationBoardSpace(activePlayer, boardSpaces[i], roll);
 						// TODO remove test of != null ; not groot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
-							Move legalMove = new Move(roll, boardSpaces[i], destSpace);
+							Move legalMove = new Move(roll, boardSpaces[i], destSpace, activePlayer);
 							nextPossibleMoves.add(legalMove);
 						}
 					}
@@ -157,35 +174,21 @@ public class BackgammonBoard {
 		return nextPossibleMoves;
 	}
 
-	public String legalMovesToString(Player player) {
-		final StringBuilder moveString = new StringBuilder("");
-		
-		
-		moveString.append("Remaining Rolls: "+availableRolls+"\n");
-		moveString.append("MOVE OPTIONS: \n");
-		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
-			char key = m.getKey();
-			Move move = m.getValue();
-			moveString.append(key + ") " + move.toString(player) + "\n");
-		}
-		return moveString.toString();
-	}
-
-	public BoardSpace getDestinationBoardSpace(Player player, BoardSpace source, int roll) {
-		int start = source.getPipValue(player);
+	public BoardSpace getDestinationBoardSpace(Player activePlayer, BoardSpace source, int roll) {
+		int start = source.getPipValue(activePlayer);
 		int dest = start - (roll);
 		BoardSpace destination;
 		if (dest < 0) {
-			if (canBearOff(player)) {
-				// Check if start is highest pip count of player's points
+			if (canBearOff(activePlayer)) {
+				// Check if start is highest pip count of activePlayer's points
 				boolean highestPip = true;
 				for (int i = 6; i > start; i--) {
-					if (!boardSpaces[player.getAlternateIndex(i) - 1].isEmpty()) {
+					if (!boardSpaces[activePlayer.getAlternateIndex(i) - 1].isEmpty()) {
 						highestPip = false;
 					}
 				}
 				if (highestPip) {
-					destination = getBearedOffSpaceByColour(player.getColour());
+					destination = getBearedOffSpaceByColour(activePlayer.getColour());
 				} else {
 					destination = null;
 				}
@@ -193,13 +196,13 @@ public class BackgammonBoard {
 				destination = null;
 			}
 		} else if (dest == 0) {
-			if (canBearOff(player)) {
-				destination = getBearedOffSpaceByColour(player.getColour());
+			if (canBearOff(activePlayer)) {
+				destination = getBearedOffSpaceByColour(activePlayer.getColour());
 			} else {
 				destination = null;
 			}
 		} else {
-			destination = boardSpaces[player.getAlternateIndex(dest) - 1];
+			destination = boardSpaces[activePlayer.getAlternateIndex(dest) - 1];
 		}
 		return destination;
 	}
@@ -208,10 +211,10 @@ public class BackgammonBoard {
 		this.availableRolls.clear();
 	}
 
-	public boolean canBearOff(Player player) {
+	public boolean canBearOff(Player activePlayer) {
 		boolean bearOff = true;
 		for (int i = 24; i > 6; i--) {
-			if (!boardSpaces[player.getAlternateIndex(i) - 1].isEmpty()) {
+			if (!boardSpaces[activePlayer.getAlternateIndex(i) - 1].isEmpty()) {
 				bearOff = false;
 			}
 		}
@@ -236,7 +239,7 @@ public class BackgammonBoard {
 	/**
 	 * rolls two dice and saves the rolls as the latest roll
 	 */
-	public void rollDice() {
+	public void rollDice(Player activePlayer) {
 		this.latestDiceRoll[0] = Dice.roll();
 		this.latestDiceRoll[1] = Dice.roll();
 		isDiceRolled = true;
@@ -251,6 +254,8 @@ public class BackgammonBoard {
 			this.availableRolls.add(this.latestDiceRoll[0]);
 			this.availableRolls.add(this.latestDiceRoll[1]);
 		}
+
+		updateLegalMoves(activePlayer);
 	}
 
 	private void endTurn() {
@@ -258,8 +263,11 @@ public class BackgammonBoard {
 		this.latestDiceRoll[1] = 0;
 		isDiceRolled = false;
 		isTurnOver = true;
-		resetLegalMoves();
 		resetAvailableRolls();
+	}
+
+	public void beginTurn() {
+		isTurnOver = false;
 	}
 
 	public boolean isDiceRolled() {
@@ -267,22 +275,22 @@ public class BackgammonBoard {
 	}
 
 	/**
-	 * Gets the pip count for a player
+	 * Gets the pip count for a activePlayer
 	 * 
-	 * @param player the player to calculate the pip count for
+	 * @param activePlayer the activePlayer to calculate the pip count for
 	 */
-	public int getPipCount(Player player) {
+	public int getPipCount(Player activePlayer) {
 		int pipCount = 0;
 
 		// For Every BoardSpace
 		for (BoardSpace b : boardSpaces) {
 			int numCheckers = b.getNumCheckers();
-			// Get number of player's checkers on that space
+			// Get number of activePlayer's checkers on that space
 			if (numCheckers > 0) {
-				if (b.getTopChecker().getColour() == player.getColour()) {
+				if (b.getTopChecker().getColour() == activePlayer.getColour()) {
 					// multiply this number this space's pip value
 					// and add to running total
-					pipCount += numCheckers * b.getPipValue(player);
+					pipCount += numCheckers * b.getPipValue(activePlayer);
 				}
 			}
 
@@ -311,46 +319,97 @@ public class BackgammonBoard {
 		return legalMoves.keySet();
 	}
 
-	public void createLegalMoves(Player activePlayer) {
-		char key = 'A';
-		if (isDoubles) {
-			for (Move m : getPossibleNextMoves(activePlayer)) {
-				legalMoves.put(key, m);
-				key++;
-			}
+	public void updateLegalMoves(Player activePlayer) {
+
+		List<Move> possibleNextMoves = getPossibleNextMoves(activePlayer);
+		if (possibleNextMoves.isEmpty()) {
+			isTurnOver = true;
 		} else {
-			for (Move m : getPossibleNextMoves(activePlayer)) {
-				legalMoves.put(key, m);
-				key++;
+			if (getUniqueAvailableRolls().size() == 1) {
+				// Either doubles have been rolled, or there is only one roll available left
+				addMovesToDictionary(possibleNextMoves);
+
+			} else {
+				List<MoveSet> legalMoveSets = createLegalMoveSets(possibleNextMoves, activePlayer);
+
+				List<Move> legalMoves = new ArrayList<Move>();
+				for (MoveSet mp : legalMoveSets) {
+					legalMoves.add(mp.getFirstMove());
+				}
+				Collection<Move> uniqueMoves = new HashSet<Move>(legalMoves);
+
+				addMovesToDictionary(new ArrayList<Move>(uniqueMoves));
+			}
+		}
+	}
+
+	private List<MoveSet> createLegalMoveSets(List<Move> possibleNextMoves, Player activePlayer) {
+		List<MoveSet> legalMoveSets = new ArrayList<MoveSet>();
+
+		for (Move m1 : possibleNextMoves) {
+			BackgammonBoard newBoard = new BackgammonBoard(this);
+
+			newBoard.applyMove(m1, activePlayer);
+			List<Move> subsequentMoves = newBoard.getPossibleNextMoves(activePlayer);
+			if (subsequentMoves.isEmpty()) {
+				// Add a singular move to the movepairs
+				legalMoveSets.add(new MoveSet(m1));
+			} else {
+				// Add a moveset for every combination
+				for (Move m2 : subsequentMoves) {
+					legalMoveSets.add(new MoveSet(m1, m2));
+				}
 			}
 		}
 
-	}
-
-	private void updateLegalMoves(Player activePlayer) {
-		resetLegalMoves();
-		char key = 'A';
-		if (isDoubles) {
-			for (Move m : getPossibleNextMoves(activePlayer)) {
-				legalMoves.put(key, m);
-				key++;
+		// If any movesets use both rolls, delete others
+		boolean canUseBothRolls = false;
+		for (MoveSet moveSet : legalMoveSets) {
+			if (moveSet.size() == 2) {
+				canUseBothRolls = true;
+				break;
+			}
+		}
+		if (canUseBothRolls) {
+			for (MoveSet moveSet : legalMoveSets) {
+				if (moveSet.size() == 1) {
+					legalMoveSets.remove(moveSet);
+				}
 			}
 		} else {
-			for (Move m : getPossibleNextMoves(activePlayer)) {
-				legalMoves.put(key, m);
-				key++;
+
+			boolean canUseLargerRoll = false;
+			for (MoveSet moveSet : legalMoveSets) {
+				if (moveSet.usesRoll(Collections.max(availableRolls))) {
+					canUseLargerRoll = true;
+					break;
+				}
 			}
-		}	
-	}
-	
-	public void resetLegalMoves() {
-		this.legalMoves.clear();
+			if (canUseLargerRoll) {
+				for (MoveSet moveSet : legalMoveSets) {
+					if (!moveSet.usesRoll(Collections.max(availableRolls))) {
+						legalMoveSets.remove(moveSet);
+					}
+				}
+			}
+		}
+
+		return legalMoveSets;
 	}
 
-	public void applyMove(char c, Player activePlayer) {
-		Move m = legalMoves.get(c);
-		BoardSpace source = m.getSource();
-		BoardSpace destination = m.getDestination();
+	private void addMovesToDictionary(List<Move> uniqueMoves) {
+		Collections.sort(uniqueMoves);
+		legalMoves.clear();
+		char key = 'A';
+		for (Move m : uniqueMoves) {
+			legalMoves.put(key, m);
+			key++;
+		}
+	}
+
+	private void applyMove(Move m, Player activePlayer) {
+		BoardSpace source = m.getSource(this, activePlayer);
+		BoardSpace destination = m.getDestination(this, activePlayer);
 
 		Checker checker = source.removeChecker();
 
@@ -363,24 +422,40 @@ public class BackgammonBoard {
 		}
 
 		destination.addChecker(checker);
-		
-		//other updates
+
+		// other updates
 		availableRolls.remove(m.getRoll());
-		
+	}
+
+	public void selectMove(char c, Player activePlayer) {
+		Move m = legalMoves.get(c);
+		applyMove(m, activePlayer);
+
 		updateLegalMoves(activePlayer);
 
 		if (availableRolls.isEmpty())
 			this.endTurn();
 	}
 
-
 	public boolean isTurnOver() {
 		return isTurnOver;
 	}
 
-	public void beginTurn() {
-		isTurnOver = false;
-		isDiceRolled = false;
+	public BoardSpace getBoardSpaceByPipValue(int p, Player activePlayer) {
+		BoardSpace bs;
+		if (p == 0) {
+			bs = getBearedOffSpaceByColour(activePlayer.getColour());
+		} else if (p == 25) {
+			bs = getBarByColour(activePlayer.getColour());
+		} else {
+			bs = boardSpaces[activePlayer.getAlternateIndex(p) - 1];
+		}
+		return bs;
+	}
+
+	public boolean noMoveAvailable(Player activePlayer) {
+		// TODO try think of a more elegant solution
+		return getPossibleNextMoves(activePlayer).isEmpty();
 	}
 
 }
