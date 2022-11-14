@@ -59,7 +59,7 @@ public class Bar extends BoardSpace {
 
 	@Override
 	public String toString(Player player) {
-		return this.getColour() + " Bar";
+		return "Bar";
 	}
 
 }
