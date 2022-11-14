@@ -221,9 +221,12 @@ public class BackgammonBoard {
 		return bearOff;
 	}
 
-	public boolean isWon() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isWon(Player player) {
+		boolean gameWon = false;
+		if(getBearedOffSpaceByColour(player.getColour()).isFull()) {
+			gameWon = true;
+		}
+		return gameWon;
 	}
 
 	/**
