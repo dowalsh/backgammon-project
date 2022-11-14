@@ -23,10 +23,11 @@ public abstract class BoardSpace {
 
 	}
 
-	//Copy Constructor
+	// Copy Constructor
 	public BoardSpace(BoardSpace b) {
 		this.setColour(b.getColour());
-		this.addNewCheckers(b.getNumCheckers(), b.getColour());
+		if (!b.isEmpty())
+			this.addNewCheckers(b.getNumCheckers(), b.getTopChecker().getColour());
 	}
 
 	/**
