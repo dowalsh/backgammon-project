@@ -57,8 +57,16 @@ public class Move implements Comparable<Move> {
 	 * @return String of the move.
 	 */
 	public String toString(Player player) {
-		// TODO 0 and 25 will show for bar and beared off
-		return "[" + roll + "]  " + sourcePipValue + "->" + destinationPipValue;
+		String moveString = "";
+		if (sourcePipValue == 25) {
+			moveString = "[" + roll + "] Bar ->" + destinationPipValue;
+		} else if (destinationPipValue == 0) {
+			moveString = "[" + roll + "]  " + sourcePipValue + "-> Off";
+		} else {
+			moveString = "[" + roll + "]  " + sourcePipValue + "->" + destinationPipValue;
+		}
+			
+		return moveString;
 	}
 
 	public Object getRoll() {
