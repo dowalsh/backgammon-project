@@ -63,7 +63,6 @@ public class BackgammonBoardView {
 		table[table.length - 1][col_line] = "B";
 		
 		
-		System.out.println(bs[25].getColour());
 		fillCheckers(table, top_checkers_row_index, col_line, false, bs[24]); //White bar
 		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[25]); //Black bar
 
