@@ -206,7 +206,7 @@ public class BackgammonBoardView {
 	 * @param message String informational message
 	 */
 	public static void printInfo(String message) {
-		printBanner(message, "=");
+		printBanner(message, "-");
 	}
 
 	/**
@@ -216,12 +216,13 @@ public class BackgammonBoardView {
 	 * @param symbol  String symbol to print at front and end of formatted message
 	 */
 	private static void printBanner(String message, String symbol) {
-		int numSymbols = (DISPLAY_WIDTH - message.length()) / 2;
+		int numSymbols = (DISPLAY_WIDTH - message.length() -1) / 2;
 		if (numSymbols <= 0)
 			numSymbols = 3;
 		String symbols = symbol.repeat(numSymbols);
-		String banner = symbol.repeat(DISPLAY_WIDTH);
-		print("\n" + banner + "\n" + symbols + " " + message + " " + symbols + "\n" +banner);
+		String messageLine = symbols + " " + message + " " + symbols;
+		String banner = symbol.repeat(messageLine.length());
+		print("\n" + banner + "\n" + messageLine + "\n" +banner);
 	}
 
 	/**
@@ -235,7 +236,7 @@ public class BackgammonBoardView {
 	}
 
 	public static void printInputOptions() {
-		printBanner("INPUT OPTIONS", "%");
+		printBanner("INPUT OPTIONS", "=");
 		print("quit = Quit");
 		print("roll = Roll the Dice");
 		print("pip = Display Pip Counts");
