@@ -94,5 +94,11 @@ class PointTest {
 		assertEquals(4,populatedWhitePoint.getNumCheckers());
 		assertNotNull(removed);
 	}
+	
+	void testHasColour() {
+		assertEquals(false,emptyPoint.hasColour(Colour.BLACK));
+		assertEquals(true,populatedWhitePoint.hasColour(Colour.WHITE));
+		assertEquals(false,populatedWhitePoint.hasColour(Colour.BLACK));
+	}
 
 }

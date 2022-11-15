@@ -35,6 +35,7 @@ public class BackgammonBoard {
 
 	// Dice Roll
 	private int[] latestDiceRoll = new int[2];
+	//TODO get rid??
 	private boolean isDoubles = false;
 	private boolean isDiceRolled = false;
 	private List<Integer> availableRolls = new ArrayList<Integer>();
@@ -44,6 +45,7 @@ public class BackgammonBoard {
 	private boolean isGameOver = false;
 	private boolean isTurnOver;
 
+	//TODO Get rid
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
 	}

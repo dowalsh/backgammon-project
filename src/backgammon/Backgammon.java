@@ -104,7 +104,7 @@ public class Backgammon {
 					BackgammonBoardView.printInputOptions();
 				}
 				if (board.isWon(activePlayer)) {
-					BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString() + " is the winner! Thanks for paying!");
+					BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString() + " is the winner! Thanks for playing!");
 					board.endGame();
 					isTurnOver = true;
 					run = false;
