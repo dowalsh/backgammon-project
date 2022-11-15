@@ -81,7 +81,7 @@ public class Backgammon {
 						
 						if(board.noMoveAvailable(activePlayer)) {
 							isTurnOver = board.isTurnOver();
-							BackgammonBoardView.printInfo("No Moves Available, Ending Turn ");
+							BackgammonBoardView.printInfo("No Moves Available, Ending Turn");
 
 						}
 					}

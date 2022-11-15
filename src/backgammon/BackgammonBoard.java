@@ -183,7 +183,7 @@ public class BackgammonBoard {
 				// Check if start is highest pip count of activePlayer's points
 				boolean highestPip = true;
 				for (int i = 6; i > start; i--) {
-					if (!boardSpaces[activePlayer.getAlternateIndex(i) - 1].isEmpty()) {
+					if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasColour(activePlayer.getColour())) {
 						highestPip = false;
 					}
 				}
@@ -214,7 +214,7 @@ public class BackgammonBoard {
 	public boolean canBearOff(Player activePlayer) {
 		boolean bearOff = true;
 		for (int i = 24; i > 6; i--) {
-			if (!boardSpaces[activePlayer.getAlternateIndex(i) - 1].isEmpty()) {
+			if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasColour(activePlayer.getColour())) {
 				bearOff = false;
 			}
 		}
@@ -264,6 +264,7 @@ public class BackgammonBoard {
 		isDiceRolled = false;
 		isTurnOver = true;
 		resetAvailableRolls();
+		this.legalMoves.clear();
 	}
 
 	public void beginTurn() {
@@ -323,7 +324,7 @@ public class BackgammonBoard {
 
 		List<Move> possibleNextMoves = getPossibleNextMoves(activePlayer);
 		if (possibleNextMoves.isEmpty()) {
-			isTurnOver = true;
+			this.endTurn();
 		} else {
 			if (getUniqueAvailableRolls().size() == 1) {
 				// Either doubles have been rolled, or there is only one roll available left

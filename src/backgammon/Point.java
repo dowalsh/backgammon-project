@@ -115,5 +115,15 @@ public class Point extends BoardSpace {
 	public String toString(Player player) {
 		return Integer.toString(getPipValue(player));
 	}
+	
+	public boolean hasColour(Colour colourOfPlayer) {
+		boolean sameColour = false;
+		if (this.isEmpty()) {
+			sameColour = false;
+		} else if (colourOfPlayer.equals(this.getTopChecker().getColour())) {
+			sameColour = true;
+		}
+		return sameColour;
+	}
 
 }

@@ -25,7 +25,7 @@ public class Dice {
 	 * @return The result of the roll
 	 */
 	public final static int roll() {
-		double roll = Math.random() * SIDES_ON_DICE + 1.0;
+		double roll = (Math.random()*SIDES_ON_DICE) + 1.0;
 		return (int) roll;
 	}
 
