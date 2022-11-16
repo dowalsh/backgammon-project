@@ -32,8 +32,8 @@ public class BackgammonBoardView {
 		// 2 rows for the top, 2 for the bottom, 1 for space and N for each side of
 		// checkers
 		int rows = 2 * HEADER_FOOTER_SIZE + 1 + MAX_DISPLAY_CHECKERS * 2;
-		// 1 col for each checker stack, 1 for each edge, 3 for the bar
-		int columns = 12 + 2 + 3;
+		// 1 col for each checker stack, 1 for each edge, 3 for the bar 1 for beared off
+		int columns = 12 + 2 + 3 +1;
 		String[][] table = new String[rows][columns];
 
 		// Initialise array with empty strings
@@ -62,12 +62,9 @@ public class BackgammonBoardView {
 		table[0][col_line] = "B";
 		table[table.length - 1][col_line] = "B";
 		
-		
 		fillCheckers(table, top_checkers_row_index, col_line, false, bs[24]); //White bar
 		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[25]); //Black bar
 
-
-		
 		col_line++;
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
@@ -76,6 +73,10 @@ public class BackgammonBoardView {
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
+		
+		col_line++;
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bar
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bar
 
 		// Top and bottom
 		int row_line = HEADER_FOOTER_SIZE - 1;
@@ -88,7 +89,7 @@ public class BackgammonBoardView {
 		}
 
 		// points from whites perspective
-		int point_col = table[0].length - 2;
+		int point_col = table[0].length - 3;
 		for (int i = 1; i <= 6; i++) {
 			fillCheckers(table, top_checkers_row_index, point_col, false, bs[i - 1]);
 			table[top_checkers_row_index + 2][point_col] = Integer.toString(player.getAlternateIndex(i));

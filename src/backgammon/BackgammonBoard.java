@@ -56,6 +56,10 @@ public class BackgammonBoard {
 	public BackgammonBoard() {
 		this(createInitialPoints(), new Bar(Colour.WHITE), new Bar(Colour.BLACK), new BearedOffSpace(Colour.WHITE),
 				new BearedOffSpace(Colour.BLACK));
+		//TODO remove these testing lines for display
+//		this.getBearedOffSpaceByColour(Colour.WHITE).addNewCheckers(3, Colour.WHITE);
+//		this.getBearedOffSpaceByColour(Colour.BLACK).addNewCheckers(7, Colour.BLACK);
+
 	}
 
 	private static Point[] createInitialPoints() {
