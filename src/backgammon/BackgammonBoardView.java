@@ -75,8 +75,8 @@ public class BackgammonBoardView {
 		}
 		
 		col_line++;
-		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bar
-		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bar
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bear off
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bear off
 
 		// Top and bottom
 		int row_line = HEADER_FOOTER_SIZE - 1;
@@ -290,6 +290,7 @@ public class BackgammonBoardView {
 		print("pip = Display Pip Counts");
 		print("Enter a letter A,B,C etc to make a move");
 		print("hint = display all command options");
+		print("dice<int><int> = Enter your desired roll");
 
 
 	}

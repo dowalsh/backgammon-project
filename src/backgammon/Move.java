@@ -83,14 +83,7 @@ public class Move implements Comparable<Move> {
 		if (rollDiff != 0) {
 			comp = rollDiff;
 		} else {
-			int sourceDiff = o.sourcePipValue - sourcePipValue;
-			if (sourceDiff != 0) {
-				comp = sourceDiff;
-			} else {
-				int destDiff = o.destinationPipValue - destinationPipValue;
-				comp = destDiff;
-
-			}
+			comp = o.sourcePipValue - sourcePipValue;
 		}
 
 		return comp;

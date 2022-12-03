@@ -88,7 +88,7 @@ public class Backgammon {
 				} else if (input.equals("PIP")) {
 					// "pip" command to report the pip count for both players
 					BackgammonBoardView.printPipCounts(board, player1, player2);
-				} else if (input.length() ==1 && board.getMoveKeys().contains(input.charAt(0))) {
+				} else if (input.length() == 1 && board.getMoveKeys().contains(input.charAt(0))) {
 					// User single alphabetical input to select a move
 					BackgammonBoardView.printInfo("Selected Move Option: " + input);
 					board.selectMove(input.charAt(0),activePlayer);
@@ -96,6 +96,18 @@ public class Backgammon {
 					
 				} else if (input.equals("HINT")) {
 					BackgammonBoardView.printInputOptions();
+				} else if (input.matches("DICE[1-6][1-6]")) {
+					if (board.isDiceRolled()) {
+						BackgammonBoardView.printError("Cannot re-roll dice");
+					} else {
+						// set roll
+						int roll1 = Character.getNumericValue(input.charAt(4));
+						int roll2 = Character.getNumericValue(input.charAt(5));
+						board.setRolls(roll1, roll2, activePlayer);
+						int[] roll = {roll1, roll2};
+						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
+								+ Integer.toString(roll[1]));
+					}
 				}
 				// can add more else if s for other input options here
 				else {

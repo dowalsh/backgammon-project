@@ -126,6 +126,24 @@ public class BackgammonBoard {
 		index++;
 
 	}
+	
+	public void setRolls(int roll1,int roll2, Player activePlayer) {
+		this.latestDiceRoll[0] = roll1;
+		this.latestDiceRoll[1] = roll2;
+		isDiceRolled = true;
+
+		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
+			isDoubles = true;
+			for (int i = 0; i < 4; i++) {
+				this.availableRolls.add(this.latestDiceRoll[0]);
+			}
+		} else {
+			isDoubles = false;
+			this.availableRolls.add(this.latestDiceRoll[0]);
+			this.availableRolls.add(this.latestDiceRoll[1]);
+		}
+		updateLegalMoves(activePlayer);
+	}
 
 	private Point getPoint(int index) {
 		return (Point) boardSpaces[index];
