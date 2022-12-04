@@ -33,21 +33,21 @@ public class Move implements Comparable<Move> {
 	 * 
 	 * @return Source of checker.
 	 */
-	public BoardSpace getSource(BackgammonBoard board, Player activePlayer) {
+	public BoardSpace getSource(BackgammonBoard board, Colour colour) {
 		// TODO logic to return the boardSpace
-		return board.getBoardSpaceByPipValue(sourcePipValue, activePlayer);
+		return board.getBoardSpaceByPipValue(sourcePipValue, colour);
 	}
 
 	/**
 	 * Returns where checker is moving to.
 	 * 
-	 * @param activePlayer
+	 * @param colour
 	 * @param board
 	 * 
 	 * @return Destination of checker.
 	 */
-	public BoardSpace getDestination(BackgammonBoard board, Player activePlayer) {
-		return board.getBoardSpaceByPipValue(destinationPipValue, activePlayer);
+	public BoardSpace getDestination(BackgammonBoard board, Colour colour) {
+		return board.getBoardSpaceByPipValue(destinationPipValue, colour);
 	}
 
 	/**
