@@ -20,12 +20,16 @@ public class Point extends BoardSpace {
 	public Point(int n) {
 
 		this.whiteIndex = n;
-
+	
 		if (n % 2 == 0) {
 			this.setColour(Colour.BLACK);
 		} else {
 			this.setColour(Colour.WHITE);
 		}
+	}
+	
+	public void addInitialCheckers() {
+		int n = whiteIndex;
 
 		switch (n) {
 		case 24:
@@ -53,6 +57,7 @@ public class Point extends BoardSpace {
 			addNewCheckers(5, Colour.BLACK);
 			break;
 		}
+		
 	}
 
 	// copy constructor

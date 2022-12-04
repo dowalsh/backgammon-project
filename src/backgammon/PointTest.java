@@ -15,7 +15,9 @@ class PointTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		populatedWhitePoint = new Point(13);
+		populatedWhitePoint.addInitialCheckers();
 		emptyPoint = new Point(2);
+		
 		oneBlackCheckerPoint = new Point(3);
 		Checker added = new Checker(Colour.BLACK);
 		oneBlackCheckerPoint.addChecker(added);
