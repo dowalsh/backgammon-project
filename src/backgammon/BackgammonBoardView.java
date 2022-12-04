@@ -12,7 +12,7 @@ package backgammon;
  */
 public class BackgammonBoardView {
 
-	public final static int DISPLAY_WIDTH = 50;
+	public final static int DISPLAY_WIDTH = 51;
 	public final static int MAX_DISPLAY_CHECKERS = 5;
 	public final static int HEADER_FOOTER_SIZE = 2;
 	
@@ -62,8 +62,8 @@ public class BackgammonBoardView {
 		table[0][col_line] = "B";
 		table[table.length - 1][col_line] = "B";
 		
-		fillCheckers(table, top_checkers_row_index, col_line, false, bs[24]); //White bar
-		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[25]); //Black bar
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[24]); //White bear off
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[25]); //Black bear off
 
 		col_line++;
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
@@ -75,8 +75,8 @@ public class BackgammonBoardView {
 		}
 		
 		col_line++;
-		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bar
-		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bar
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bear off
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bear off
 
 		// Top and bottom
 		int row_line = HEADER_FOOTER_SIZE - 1;
@@ -290,6 +290,7 @@ public class BackgammonBoardView {
 		print("pip = Display Pip Counts");
 		print("Enter a letter A,B,C etc to make a move");
 		print("hint = display all command options");
+		print("dice<int><int> = Enter your desired roll");
 
 
 	}

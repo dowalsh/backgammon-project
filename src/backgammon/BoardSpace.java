@@ -103,14 +103,6 @@ public abstract class BoardSpace {
 		return empty;
 	}
 
-	/**
-	 * Gets the full stack in this space.
-	 * 
-	 * @return Stack of Checkers in space.
-	 */
-	public final ArrayList<Checker> getStack() {
-		return stackOfCheckers;
-	}
 
 	/**
 	 * Adds a checker to the space.

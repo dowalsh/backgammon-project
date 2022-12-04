@@ -35,5 +35,11 @@ class BarTest {
 		assertEquals(true, blackBar.canTake(new Player(Colour.BLACK, "Dummy")));
 		assertEquals(false, blackBar.canTake(new Player(Colour.WHITE, "Dummy")));
 	}
+	
+	@Test
+	void testGetPipValue() {
+		assertEquals(25, blackBar.getPipValue(new Player(Colour.BLACK, "Dummy")));
+		assertEquals(25, whiteBar.getPipValue(new Player(Colour.WHITE, "Dummy")));
+	}
 
 }
