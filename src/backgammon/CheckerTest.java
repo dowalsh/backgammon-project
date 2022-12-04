@@ -22,7 +22,7 @@ class CheckerTest {
 
 	@Test
 	void testToString() {
-		assertEquals("*",checker1.toString());
+		assertEquals(".",checker1.toString());
 		assertEquals("o",checker2.toString());
 	}
 

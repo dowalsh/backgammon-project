@@ -370,6 +370,7 @@ public class BackgammonBoard {
 		}
 
 		// If any movesets use both rolls, delete others
+		//TODO test this
 		boolean canUseBothRolls = false;
 		for (MoveSet moveSet : legalMoveSets) {
 			if (moveSet.size() == 2) {
@@ -384,7 +385,6 @@ public class BackgammonBoard {
 				}
 			}
 		} else {
-
 			boolean canUseLargerRoll = false;
 			for (MoveSet moveSet : legalMoveSets) {
 				if (moveSet.usesRoll(Collections.max(availableRolls))) {
