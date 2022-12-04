@@ -31,14 +31,7 @@ public class Player {
 	}
 
 	public int getAlternateIndex(int equivalentWhiteIndex) {
-
-		int index;
-		if (colour == Colour.WHITE) {
-			index = equivalentWhiteIndex;
-		} else {
-			index = 25 - equivalentWhiteIndex;
-		}
-		return index;
+		return this.colour.getAlternateIndex(equivalentWhiteIndex);
 	}
 
 	public Colour getColour() {
