@@ -40,7 +40,7 @@ class BackgammonBoardTest {
 
 	@Test
 	void testGetPipCount() {
-		assertEquals(167, board.getPipCount(activePlayer));
+		assertEquals(167, board.getPipCount(activePlayer.getColour()));
 	}
 
 	@Test

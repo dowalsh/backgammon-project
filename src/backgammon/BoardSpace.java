@@ -46,21 +46,19 @@ public abstract class BoardSpace {
 	public abstract boolean canTake(Player player);
 
 	/**
-	 * Returns a string of the space.
+	 * Returns a string representation of this boardSpace
 	 * 
-	 * @param player Active player.
-	 * @return String of space.
+	 * @param playerColour The colour of the player whose perspective it is
+	 * @return String representation of this boardSpace
 	 */
-	public abstract String toString(Player player);
+	public abstract String toString(Colour playerColour);
 
 	/**
-	 * Gets how far the space is away from the beared off space for the active
-	 * player.
-	 * 
-	 * @param player Active player.
-	 * @return Value of how far the space is from beared off space.
+	 * Get the pip value for this board space.
+	 * @param playerColour the colour of the player whose perspective the pip values should refer to
+	 * @return the pip value for this boardSpace (ie how many spaces away from beared off this space is)
 	 */
-	public abstract int getPipValue(Player player);
+	public abstract int getPipValue(Colour playerColour);
 
 	/**
 	 * Returns the amount of checkers in the space.

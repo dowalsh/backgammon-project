@@ -306,8 +306,8 @@ public class BackgammonBoardView {
 
 	public static void printPipCounts(BackgammonBoard board, Player player1, Player player2) {
 		printInfo("Pip Counts");
-		print(player1 + ": " + board.getPipCount(player1));
-		print(player2 + ": " + board.getPipCount(player2));
+		print(player1 + ": " + board.getPipCount(player1.getColour()));
+		print(player2 + ": " + board.getPipCount(player2.getColour()));
 	}
 
 }

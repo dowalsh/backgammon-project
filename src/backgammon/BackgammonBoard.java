@@ -100,7 +100,7 @@ public class BackgammonBoard {
 		Point[] points = new Point[NUMBER_OF_POINTS];
 		// create and add points
 		while (index < NUMBER_OF_POINTS) {
-			points[index] = new Point(index + 1, board.getPoint(index));
+			points[index] = new Point(board.getPoint(index));
 			index++;
 		}
 		return points;
@@ -220,7 +220,7 @@ public class BackgammonBoard {
 			if (activePlayersBar.canTake(activePlayer)) {
 				destSpace = getDestinationBoardSpace(activePlayer, activePlayersBar, roll);
 				if (destSpace.canPlace(activePlayersBar.getTopChecker())) {
-					Move legalMove = new Move(roll, activePlayersBar, destSpace, activePlayer);
+					Move legalMove = new Move(roll, activePlayersBar, destSpace, activePlayer.getColour());
 					nextPossibleMoves.add(legalMove);
 				}
 			} else {
@@ -229,7 +229,7 @@ public class BackgammonBoard {
 						destSpace = getDestinationBoardSpace(activePlayer, boardSpaces[i], roll);
 						// TODO remove test of != null ; not groot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
-							Move legalMove = new Move(roll, boardSpaces[i], destSpace, activePlayer);
+							Move legalMove = new Move(roll, boardSpaces[i], destSpace, activePlayer.getColour());
 							nextPossibleMoves.add(legalMove);
 						}
 					}
@@ -240,7 +240,7 @@ public class BackgammonBoard {
 	}
 
 	public BoardSpace getDestinationBoardSpace(Player activePlayer, BoardSpace source, int roll) {
-		int start = source.getPipValue(activePlayer);
+		int start = source.getPipValue(activePlayer.getColour());
 		int dest = start - (roll);
 		BoardSpace destination;
 		if (dest < 0) {
@@ -249,7 +249,7 @@ public class BackgammonBoard {
 				boolean highestPip = true;
 				for (int i = 6; i > start; i--) {
 					if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1])
-							.hasColour(activePlayer.getColour())) {
+							.hasCheckerOfColour(activePlayer.getColour())) {
 						highestPip = false;
 					}
 				}
@@ -280,7 +280,7 @@ public class BackgammonBoard {
 	public boolean canBearOff(Player activePlayer) {
 		boolean bearOff = true;
 		for (int i = 24; i > 6; i--) {
-			if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasColour(activePlayer.getColour())) {
+			if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasCheckerOfColour(activePlayer.getColour())) {
 				bearOff = false;
 			}
 		}
@@ -341,7 +341,7 @@ public class BackgammonBoard {
 		return isDiceRolled;
 	}
 
-	public int getPipCount(Player activePlayer) {
+	public int getPipCount(Colour playerColour) {
 		int pipCount = 0;
 
 		// For Every BoardSpace
@@ -349,10 +349,10 @@ public class BackgammonBoard {
 			int numCheckers = b.getNumCheckers();
 			// Get number of activePlayer's checkers on that space
 			if (numCheckers > 0) {
-				if (b.getTopChecker().getColour() == activePlayer.getColour()) {
+				if (b.getTopChecker().getColour() == playerColour) {
 					// multiply this number this space's pip value
 					// and add to running total
-					pipCount += numCheckers * b.getPipValue(activePlayer);
+					pipCount += numCheckers * b.getPipValue(playerColour);
 				}
 			}
 
@@ -476,7 +476,7 @@ public class BackgammonBoard {
 		Checker checker = source.removeChecker();
 
 		if (destination instanceof Point) {
-			if (((Point) destination).isAHit(checker)) {
+			if (((Point) destination).isHittable(checker)) {
 				Checker removed = destination.removeChecker();
 				Bar bar = getBarByColour(removed.getColour());
 				bar.addChecker(removed);
@@ -503,14 +503,14 @@ public class BackgammonBoard {
 		return isTurnOver;
 	}
 
-	public BoardSpace getBoardSpaceByPipValue(int p, Colour colour) {
+	public BoardSpace getBoardSpaceByPipValue(int p, Colour playerColour) {
 		BoardSpace bs;
 		if (p == 0) {
-			bs = getBearedOffSpaceByColour(colour);
+			bs = getBearedOffSpaceByColour(playerColour);
 		} else if (p == 25) {
-			bs = getBarByColour(colour);
+			bs = getBarByColour(playerColour);
 		} else {
-			bs = boardSpaces[colour.getAlternateIndex(p) - 1];
+			bs = boardSpaces[playerColour.getAlternateIndex(p) - 1];
 		}
 		return bs;
 	}

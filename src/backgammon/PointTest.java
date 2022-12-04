@@ -27,6 +27,7 @@ class PointTest {
 	void testCanPlace() {
 		assertEquals(true, populatedWhitePoint.canPlace(white));
 		assertEquals(false, populatedWhitePoint.canPlace(black));
+		assertEquals(true, oneBlackCheckerPoint.canPlace(white));
 		assertEquals(true, emptyPoint.canPlace(black));
 	}
 
@@ -40,12 +41,12 @@ class PointTest {
 	}
 
 	@Test
-	void testIsAHit() {
-		assertEquals(true, oneBlackCheckerPoint.isAHit(white));
-		assertEquals(false, oneBlackCheckerPoint.isAHit(black));
-		assertEquals(false, emptyPoint.isAHit(black));
-		assertEquals(false, populatedWhitePoint.isAHit(black));
-		assertEquals(false, populatedWhitePoint.isAHit(white));
+	void testIsHittable() {
+		assertEquals(true, oneBlackCheckerPoint.isHittable(white));
+		assertEquals(false, oneBlackCheckerPoint.isHittable(black));
+		assertEquals(false, emptyPoint.isHittable(black));
+		assertEquals(false, populatedWhitePoint.isHittable(black));
+		assertEquals(false, populatedWhitePoint.isHittable(white));
 	}
 
 	@Test
@@ -97,10 +98,25 @@ class PointTest {
 		assertNotNull(removed);
 	}
 	
+	@Test
 	void testHasColour() {
-		assertEquals(false,emptyPoint.hasColour(Colour.BLACK));
-		assertEquals(true,populatedWhitePoint.hasColour(Colour.WHITE));
-		assertEquals(false,populatedWhitePoint.hasColour(Colour.BLACK));
+		assertEquals(false,emptyPoint.hasCheckerOfColour(Colour.BLACK));
+		assertEquals(true,populatedWhitePoint.hasCheckerOfColour(Colour.WHITE));
+		assertEquals(false,populatedWhitePoint.hasCheckerOfColour(Colour.BLACK));
+	}
+	
+	@Test
+	void testCopy() {
+		Point copiedPoint = new Point(populatedWhitePoint);
+		assertEquals(copiedPoint.getColour(),populatedWhitePoint.getColour());
+		assertEquals(copiedPoint.getNumCheckers(),populatedWhitePoint.getNumCheckers());
+		assertEquals(copiedPoint.getTopChecker().getColour(),populatedWhitePoint.getTopChecker().getColour());
+	}
+	
+	@Test
+	void testToString() {
+		assertEquals("13",populatedWhitePoint.toString(Colour.WHITE));
+		assertEquals("12",populatedWhitePoint.toString(Colour.BLACK));
 	}
 
 }

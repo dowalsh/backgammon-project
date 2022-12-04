@@ -22,10 +22,10 @@ public class Move implements Comparable<Move> {
 	 * @param src      Where checker is moving from.
 	 * @param dest     Where checker can move to.
 	 */
-	public Move(int distance, BoardSpace src, BoardSpace dest, Player activePlayer) {
+	public Move(int distance, BoardSpace src, BoardSpace dest, Colour playerColour) {
 		this.roll = distance;
-		this.sourcePipValue = src.getPipValue(activePlayer);
-		this.destinationPipValue = dest.getPipValue(activePlayer);
+		this.sourcePipValue = src.getPipValue(playerColour);
+		this.destinationPipValue = dest.getPipValue(playerColour);
 	}
 
 	/**

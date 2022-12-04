@@ -3,19 +3,22 @@ package backgammon;
 /**
  * This program is the Point class
  * @author Sam Lynch
- *
  */
 
 /**
- * A {@code Point} is an extension of the BoardSpace class, representing a point
- * on the backgammon board
+ * A {@code Point} is a subclass of the BoardSpace class, representing 
+ * a single point on the backgammon board
  */
 public class Point extends BoardSpace {
 
+	/**
+	 * The value/index of this point according to the white player's perspective
+	 */
 	private int whiteIndex;
 
 	/**
-	 * Constructor for this class
+	 * Constructor
+	 * @param n the value/index of this point according to the white players perspective
 	 */
 	public Point(int n) {
 
@@ -28,6 +31,9 @@ public class Point extends BoardSpace {
 		}
 	}
 	
+	/**
+	 * Add the appropriate checkers (if any) to this point for the initial state of backgammon board
+	 */
 	public void addInitialCheckers() {
 		int n = whiteIndex;
 
@@ -60,10 +66,13 @@ public class Point extends BoardSpace {
 		
 	}
 
-	// copy constructor
-	public Point(int n, Point point) {
+	/**
+	 * copy constructor
+	 * @param point Point to copy
+	 */
+	public Point(Point point) {
 		super(point);
-		this.whiteIndex = n;
+		this.whiteIndex = point.getPipValue(Colour.WHITE);
 	}
 
 	@Override
@@ -79,6 +88,7 @@ public class Point extends BoardSpace {
 		return place;
 	}
 
+
 	@Override
 	public boolean canTake(Player player) {
 		boolean take;
@@ -93,42 +103,42 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public int getPipValue(Player player) {
-		return player.getAlternateIndex(whiteIndex);
+	public int getPipValue(Colour colour) {
+		return colour.getAlternateIndex(whiteIndex);
 	}
 
 	/**
-	 * Checks if moving a checker onto this point will result in a hit.
+	 * Check if moving a checker onto this point will result in a hit.
 	 * 
-	 * @param start Checker to move onto point.
-	 * @return Whether or not a hit occurs.
+	 * @param checker Checker to move onto point.
+	 * @return true if this move would result in a hit
 	 */
-	public boolean isAHit(Checker start) {
+	public boolean isHittable(Checker checker) {
 		boolean hit = false;
-		if (this.getNumCheckers() == 1 && !start.getColour().equals(getTopChecker().getColour())) {
+		if (this.getNumCheckers() == 1 && !checker.getColour().equals(getTopChecker().getColour())) {
 			hit = true;
 		}
 		return hit;
 	}
 
-	/**
-	 * Returns a string of the point from the active players perspective.
-	 * 
-	 * @param player Active player.
-	 * @return String of point.
-	 */
-	public String toString(Player player) {
-		return Integer.toString(getPipValue(player));
+	@Override
+	public String toString(Colour colour) {
+		return Integer.toString(getPipValue(colour));
 	}
 	
-	public boolean hasColour(Colour colourOfPlayer) {
-		boolean sameColour = false;
+	/**
+	 * Check if this point has a checker of a certain colour on it
+	 * @param colourOfPlayer
+	 * @return
+	 */
+	public boolean hasCheckerOfColour(Colour colour) {
+		boolean hasCheckerOfColour = false;
 		if (this.isEmpty()) {
-			sameColour = false;
-		} else if (colourOfPlayer.equals(this.getTopChecker().getColour())) {
-			sameColour = true;
+			hasCheckerOfColour = false;
+		} else if (colour.equals(this.getTopChecker().getColour())) {
+			hasCheckerOfColour = true;
 		}
-		return sameColour;
+		return hasCheckerOfColour;
 	}
 
 }

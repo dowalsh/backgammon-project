@@ -38,8 +38,8 @@ class BarTest {
 	
 	@Test
 	void testGetPipValue() {
-		assertEquals(25, blackBar.getPipValue(new Player(Colour.BLACK, "Dummy")));
-		assertEquals(25, whiteBar.getPipValue(new Player(Colour.WHITE, "Dummy")));
+		assertEquals(25, whiteBar.getPipValue(Colour.WHITE));
+		assertEquals(25, blackBar.getPipValue(Colour.BLACK));
 	}
 
 }

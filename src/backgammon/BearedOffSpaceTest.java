@@ -44,8 +44,8 @@ class BearedOffSpaceTest {
 	}
 	
 	void testGetPipValue() {
-		assertEquals(0, whiteBearedOffSpace.getPipValue(new Player(Colour.WHITE, "Dummy")));
-		assertEquals(0, blackBearedOffSpace.getPipValue(new Player(Colour.BLACK, "Dummy")));
+		assertEquals(0, whiteBearedOffSpace.getPipValue(Colour.WHITE));
+		assertEquals(0, blackBearedOffSpace.getPipValue(Colour.BLACK));
 	}
 
 }

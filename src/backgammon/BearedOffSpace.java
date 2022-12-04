@@ -41,7 +41,7 @@ public class BearedOffSpace extends BoardSpace {
 	}
 	
 	@Override
-	public int getPipValue(Player player) {
+	public int getPipValue(Colour colour) {
 		return 0;
 	}
 	
@@ -58,7 +58,7 @@ public class BearedOffSpace extends BoardSpace {
 	}
 
 	@Override
-	public String toString(Player player) {
+	public String toString(Colour playerColour) {
 		return this.getColour() + " Beared off space";
 	}
 
