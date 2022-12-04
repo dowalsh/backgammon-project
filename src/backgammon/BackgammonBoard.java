@@ -35,8 +35,9 @@ public class BackgammonBoard {
 
 	// Dice Roll
 	private int[] latestDiceRoll = new int[2];
-	//TODO get rid??
+	// TODO get rid??
 	private boolean isDoubles = false;
+
 	private boolean isDiceRolled = false;
 	private List<Integer> availableRolls = new ArrayList<Integer>();
 
@@ -45,7 +46,7 @@ public class BackgammonBoard {
 	private boolean isGameOver = false;
 	private boolean isTurnOver;
 
-	//TODO Get rid
+	// TODO Get rid
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
 	}
@@ -56,13 +57,22 @@ public class BackgammonBoard {
 	public BackgammonBoard() {
 		this(createInitialPoints(), new Bar(Colour.WHITE), new Bar(Colour.BLACK), new BearedOffSpace(Colour.WHITE),
 				new BearedOffSpace(Colour.BLACK));
-		//TODO remove these testing lines for display
+		// TODO remove these testing lines for display
 //		this.getBearedOffSpaceByColour(Colour.WHITE).addNewCheckers(3, Colour.WHITE);
 //		this.getBearedOffSpaceByColour(Colour.BLACK).addNewCheckers(7, Colour.BLACK);
 
 	}
 
 	private static Point[] createInitialPoints() {
+		Point[] points = createEmptyPoints();
+		for (Point p : points) {
+			// add checkers to points
+			p.addInitialCheckers();
+		}
+		return points;
+	}
+
+	private static Point[] createEmptyPoints() {
 		int index = 0;
 		Point[] points = new Point[NUMBER_OF_POINTS];
 		// create and add points
@@ -96,6 +106,37 @@ public class BackgammonBoard {
 		return points;
 	}
 
+	/**
+	 * Testing Constructor for the class Sets up the board in a designated state
+	 */
+	protected static BackgammonBoard createTestBoard(String testScenarioString) {
+
+		// Create empty points and empty bars and empty beared off
+
+		// to add checkers to the points - they are indexed by whites perspective
+		// (from 0 to 23)
+		Point[] points = createEmptyPoints();
+		Bar whiteBar = new Bar(Colour.WHITE);
+		Bar blackBar = new Bar(Colour.BLACK);
+		BearedOffSpace whiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
+		BearedOffSpace blackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		BackgammonBoard testBoard = new BackgammonBoard(points, whiteBar, blackBar, whiteBearedOffSpace, blackBearedOffSpace);
+
+		switch (testScenarioString) {
+		case "EXAMPLE TEST":
+			// This example test shows the format of how a test board can be configured
+			// In this example we want to add 5 checkers to the white beared off space
+			// To do so, we get the white beared off space using getBoardSpaceByPipValue(0, Colour.WHITE)
+			// then we add 5 white checkers to this space using addNewCheckers(5, Colour.WHITE)
+			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(5, Colour.WHITE);
+		case "OTHER TEST":
+			// can implement any number of specific test scenarios here
+		}
+		
+		// call constructor
+		return testBoard;
+	}
+
 	/*
 	 * Largest generic constructor for class
 	 */
@@ -126,8 +167,8 @@ public class BackgammonBoard {
 		index++;
 
 	}
-	
-	public void setRolls(int roll1,int roll2, Player activePlayer) {
+
+	public void setRolls(int roll1, int roll2, Player activePlayer) {
 		this.latestDiceRoll[0] = roll1;
 		this.latestDiceRoll[1] = roll2;
 		isDiceRolled = true;
@@ -207,7 +248,8 @@ public class BackgammonBoard {
 				// Check if start is highest pip count of activePlayer's points
 				boolean highestPip = true;
 				for (int i = 6; i > start; i--) {
-					if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasColour(activePlayer.getColour())) {
+					if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1])
+							.hasColour(activePlayer.getColour())) {
 						highestPip = false;
 					}
 				}
@@ -247,7 +289,7 @@ public class BackgammonBoard {
 
 	public boolean isWon(Player player) {
 		boolean gameWon = false;
-		if(getBearedOffSpaceByColour(player.getColour()).isFull()) {
+		if (getBearedOffSpaceByColour(player.getColour()).isFull()) {
 			gameWon = true;
 		}
 		return gameWon;
@@ -299,11 +341,6 @@ public class BackgammonBoard {
 		return isDiceRolled;
 	}
 
-	/**
-	 * Gets the pip count for a activePlayer
-	 * 
-	 * @param activePlayer the activePlayer to calculate the pip count for
-	 */
 	public int getPipCount(Player activePlayer) {
 		int pipCount = 0;
 
@@ -388,7 +425,7 @@ public class BackgammonBoard {
 		}
 
 		// If any movesets use both rolls, delete others
-		//TODO test this
+		// TODO test this
 		boolean canUseBothRolls = false;
 		for (MoveSet moveSet : legalMoveSets) {
 			if (moveSet.size() == 2) {
@@ -433,8 +470,8 @@ public class BackgammonBoard {
 	}
 
 	private void applyMove(Move m, Player activePlayer) {
-		BoardSpace source = m.getSource(this, activePlayer);
-		BoardSpace destination = m.getDestination(this, activePlayer);
+		BoardSpace source = m.getSource(this, activePlayer.getColour());
+		BoardSpace destination = m.getDestination(this, activePlayer.getColour());
 
 		Checker checker = source.removeChecker();
 
@@ -466,14 +503,14 @@ public class BackgammonBoard {
 		return isTurnOver;
 	}
 
-	public BoardSpace getBoardSpaceByPipValue(int p, Player activePlayer) {
+	public BoardSpace getBoardSpaceByPipValue(int p, Colour colour) {
 		BoardSpace bs;
 		if (p == 0) {
-			bs = getBearedOffSpaceByColour(activePlayer.getColour());
+			bs = getBearedOffSpaceByColour(colour);
 		} else if (p == 25) {
-			bs = getBarByColour(activePlayer.getColour());
+			bs = getBarByColour(colour);
 		} else {
-			bs = boardSpaces[activePlayer.getAlternateIndex(p) - 1];
+			bs = boardSpaces[colour.getAlternateIndex(p) - 1];
 		}
 		return bs;
 	}

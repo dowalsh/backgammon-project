@@ -7,6 +7,7 @@ public class Backgammon {
 	public static void main(String[] args) {
 
 		BackgammonBoard board = new BackgammonBoard();
+		
 		Scanner stringScanner = new Scanner(System.in);
 
 		// Create players and get names
