@@ -1,5 +1,7 @@
 package backgammon;
 
+import java.util.Scanner;
+
 /**
  * This program is the BackgammonBoardView class
  * @author dylan
@@ -15,7 +17,6 @@ public class BackgammonBoardView {
 	public final static int DISPLAY_WIDTH = 51;
 	public final static int MAX_DISPLAY_CHECKERS = 5;
 	public final static int HEADER_FOOTER_SIZE = 2;
-	
 
 	/**
 	 * Formats and prints the state of the game of backgammon to the console
@@ -33,7 +34,7 @@ public class BackgammonBoardView {
 		// checkers
 		int rows = 2 * HEADER_FOOTER_SIZE + 1 + MAX_DISPLAY_CHECKERS * 2;
 		// 1 col for each checker stack, 1 for each edge, 3 for the bar 1 for beared off
-		int columns = 12 + 2 + 3 +1;
+		int columns = 12 + 2 + 3 + 1;
 		String[][] table = new String[rows][columns];
 
 		// Initialise array with empty strings
@@ -43,12 +44,9 @@ public class BackgammonBoardView {
 			}
 		}
 
-		
 		int top_checkers_row_index = table.length - HEADER_FOOTER_SIZE - 1;
 		int bottom_checkers_row_index = HEADER_FOOTER_SIZE;
 
-		
-		
 		// Edges and Bar
 		int col_line = 0;
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
@@ -61,9 +59,9 @@ public class BackgammonBoardView {
 		col_line++;
 		table[0][col_line] = "B";
 		table[table.length - 1][col_line] = "B";
-		
-		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[24]); //White bear off
-		fillCheckers(table, top_checkers_row_index, col_line, false, bs[25]); //Black bear off
+
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[24]); // White bear off
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[25]); // Black bear off
 
 		col_line++;
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
@@ -73,10 +71,10 @@ public class BackgammonBoardView {
 		for (int row = HEADER_FOOTER_SIZE; row < table.length - HEADER_FOOTER_SIZE; row++) {
 			table[row][col_line] = "|";
 		}
-		
+
 		col_line++;
-		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); //White bear off
-		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); //Black bear off
+		fillCheckers(table, top_checkers_row_index, col_line, false, bs[26]); // White bear off
+		fillCheckers(table, bottom_checkers_row_index, col_line, true, bs[27]); // Black bear off
 
 		// Top and bottom
 		int row_line = HEADER_FOOTER_SIZE - 1;
@@ -116,9 +114,7 @@ public class BackgammonBoardView {
 
 		// Create output format String & print
 		final StringBuilder formatString = new StringBuilder("");
-		
-		
-		
+
 		if (!board.isGameOver()) {
 			if (board.isDiceRolled()) {
 				int[] diceRoll = board.getLatestDiceRoll();
@@ -130,8 +126,7 @@ public class BackgammonBoardView {
 
 			}
 		}
-		
-		
+
 		// Header
 		formatString.append("\n");
 		// Main Board
@@ -142,24 +137,22 @@ public class BackgammonBoardView {
 			formatString.append("\n");
 		}
 
-
-
 		print(formatString.toString());
 
 	}
-	
+
 	public static void printStart(Player player1, Player player2, int[] roll) {
 
 		String[][] diceFace1 = Dice.getDiceFace(roll[0]);
-		String[][] diceFace2 = Dice.getDiceFace(roll[1]);		
-		
+		String[][] diceFace2 = Dice.getDiceFace(roll[1]);
+
 		String indent = " ".repeat(20);
 		String indent1 = " ".repeat(15);
-		
+
 		final StringBuilder formatString = new StringBuilder("");
 		formatString.append("\n");
 		formatString.append(indent1);
-		formatString.append(player1.toString()+"'s roll\n");
+		formatString.append(player1.toString() + "'s roll\n");
 		formatString.append("\n");
 		formatString.append(indent);
 		formatString.append("+-------+\n");
@@ -176,7 +169,7 @@ public class BackgammonBoardView {
 		formatString.append("+-------+\n");
 		formatString.append("\n");
 		formatString.append(indent1);
-		formatString.append(player2.toString()+"'s roll\n");
+		formatString.append(player2.toString() + "'s roll\n");
 		formatString.append("\n");
 		formatString.append(indent);
 		formatString.append("+-------+\n");
@@ -191,7 +184,7 @@ public class BackgammonBoardView {
 		}
 		formatString.append(indent);
 		formatString.append("+-------+\n");
-		
+
 		print(formatString.toString());
 	}
 
@@ -264,13 +257,13 @@ public class BackgammonBoardView {
 	 * @param symbol  String symbol to print at front and end of formatted message
 	 */
 	private static void printBanner(String message, String symbol) {
-		int numSymbols = (DISPLAY_WIDTH - message.length() -1) / 2;
+		int numSymbols = (DISPLAY_WIDTH - message.length() - 1) / 2;
 		if (numSymbols <= 0)
 			numSymbols = 3;
 		String symbols = symbol.repeat(numSymbols);
 		String messageLine = symbols + " " + message + " " + symbols;
 		String banner = symbol.repeat(messageLine.length());
-		print("\n" + banner + "\n" + messageLine + "\n" +banner);
+		print("\n" + banner + "\n" + messageLine + "\n" + banner);
 	}
 
 	/**
@@ -292,7 +285,6 @@ public class BackgammonBoardView {
 		print("hint = display all command options");
 		print("dice<int><int> = Enter your desired roll");
 
-
 	}
 
 	public static void promptForPlayerName(int i) {
@@ -308,6 +300,26 @@ public class BackgammonBoardView {
 		printInfo("Pip Counts");
 		print(player1 + ": " + board.getPipCount(player1.getColour()));
 		print(player2 + ": " + board.getPipCount(player2.getColour()));
+	}
+
+	public static void promptForMatchLength() {
+		print("\nPlease Enter The Desired Match Length: ");
+	}
+
+	public static int getIntegerFromUser(Scanner inputScanner) {
+		int inputInteger = 0;
+		boolean isValidInteger = false;
+		do {
+			String inputString = inputScanner.next();
+			try {
+				inputInteger = Integer.parseInt(inputString);
+				isValidInteger = true;
+			} catch (NumberFormatException e) {
+				BackgammonBoardView.printError("Please Enter an Integer Value");
+			}
+		}while(isValidInteger==false);
+		
+		return inputInteger;
 	}
 
 }

@@ -6,25 +6,29 @@ public class Backgammon {
 
 	public static void main(String[] args) {
 
-//		BackgammonBoard board = new BackgammonBoard();
-		BackgammonBoard board =  BackgammonBoard.createTestBoard("EXAMPLE TEST");
+		BackgammonBoard board = new BackgammonBoard();
+//		BackgammonBoard board =  BackgammonBoard.createTestBoard("EXAMPLE TEST");
 
 		
-		Scanner stringScanner = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 		
 
 		// Create players and get names
 		BackgammonBoardView.promptForPlayerName(1);
-		Player player1 = new Player(Colour.WHITE, stringScanner.next());
+		Player player1 = new Player(Colour.WHITE, scan.next());
 		BackgammonBoardView.promptForPlayerName(2);
-		Player player2 = new Player(Colour.BLACK, stringScanner.next());
-
+		Player player2 = new Player(Colour.BLACK, scan.next());
+		BackgammonBoardView.promptForMatchLength();
+		int matchLength = BackgammonBoardView.getIntegerFromUser(scan);
+		
 		// Game control loop
 		boolean run = true; // to control whether the game should continue running
 		Player activePlayer;
 
 		BackgammonBoardView.printInputOptions();
 		
+		BackgammonBoardView.printInfo("Match Length: " + matchLength);
+
 		BackgammonBoardView.printInfo("Rolling Dice to see who goes first");
 		
 		int[] initialRolls = new int[2];
@@ -66,7 +70,7 @@ public class Backgammon {
 				BackgammonBoardView.promptPlayerForInput();
 
 				// convert input string to upper case in order to accept lower case inputs
-				String input = stringScanner.next().toUpperCase();
+				String input = scan.next().toUpperCase();
 				if (input.equals("QUIT")) {
 					// Quit Game
 					BackgammonBoardView.printInfo("Game terminated, thanks for playing!");
@@ -132,7 +136,7 @@ public class Backgammon {
 		BackgammonBoardView.print(board, activePlayer);
 
 		// close input
-		stringScanner.close();
+		scan.close();
 
 	}
 }
