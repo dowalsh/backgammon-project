@@ -22,10 +22,10 @@ public class Move implements Comparable<Move> {
 	 * @param src      Where checker is moving from.
 	 * @param dest     Where checker can move to.
 	 */
-	public Move(int distance, BoardSpace src, BoardSpace dest, Colour playerColour) {
+	public Move(int distance, int srcPipValue, int destPipValue) {
 		this.roll = distance;
-		this.sourcePipValue = src.getPipValue(playerColour);
-		this.destinationPipValue = dest.getPipValue(playerColour);
+		this.sourcePipValue = srcPipValue;
+		this.destinationPipValue = destPipValue;
 	}
 
 	/**
@@ -76,17 +76,22 @@ public class Move implements Comparable<Move> {
 
 	@Override
 	public int compareTo(Move o) {
-//		return toString().compareTo(o.toString());
-
-		int comp;
-		int rollDiff = roll - o.roll;
-		if (rollDiff != 0) {
-			comp = rollDiff;
-		} else {
-			comp = o.sourcePipValue - sourcePipValue;
+		int comp = roll - o.roll;
+		
+		if (comp == 0) {
+			comp = sourcePipValue - o.sourcePipValue;
+			if(comp == 0) {
+				comp = destinationPipValue - o.destinationPipValue;
+			}
 		}
 
 		return comp;
 
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+		return this.compareTo((Move) o)==0;
+	}
+	
 }

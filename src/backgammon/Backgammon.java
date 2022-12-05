@@ -6,9 +6,12 @@ public class Backgammon {
 
 	public static void main(String[] args) {
 
-		BackgammonBoard board = new BackgammonBoard();
+//		BackgammonBoard board = new BackgammonBoard();
+		BackgammonBoard board =  BackgammonBoard.createTestBoard("EXAMPLE TEST");
+
 		
 		Scanner stringScanner = new Scanner(System.in);
+		
 
 		// Create players and get names
 		BackgammonBoardView.promptForPlayerName(1);

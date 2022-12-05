@@ -15,11 +15,6 @@ class BackgammonBoardTest {
 		activePlayer = new Player(Colour.WHITE, "Dummy");
 	}
 
-	@Test
-	void testGetDestinationBoardSpace() {
-		BoardSpace[] spaces = board.getBoardSpaces();
-		assertEquals(spaces[3],board.getDestinationBoardSpace(activePlayer, spaces[5], 2));
-	}
 
 	@Test
 	void testCanBearOff() {

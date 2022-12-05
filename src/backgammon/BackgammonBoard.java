@@ -186,6 +186,26 @@ public class BackgammonBoard {
 		updateLegalMoves(activePlayer);
 	}
 
+
+	private void resetAvailableRolls() {
+		this.availableRolls.clear();
+	}
+
+	/**
+	 * @return the latest Dice Roll
+	 */
+	public int[] getLatestDiceRoll() {
+		return latestDiceRoll;
+	}
+
+	
+	/**
+	 * rolls two dice and saves the rolls as the latest roll
+	 */
+	public void rollDice(Player activePlayer) {
+		this.setRolls(Dice.roll(),Dice.roll(),activePlayer);
+	}
+
 	private Point getPoint(int index) {
 		return (Point) boardSpaces[index];
 	}
@@ -210,26 +230,29 @@ public class BackgammonBoard {
 	}
 
 	private List<Move> getPossibleNextMoves(Player activePlayer) {
-
+		
+		Colour colour = activePlayer.getColour();
 		Collection<Integer> uniqueRolls = getUniqueAvailableRolls();
 
 		List<Move> nextPossibleMoves = new ArrayList<Move>();
-		Bar activePlayersBar = getBarByColour(activePlayer.getColour());
+		Bar activePlayersBar = getBarByColour(colour);
 		BoardSpace destSpace;
 		for (int roll : uniqueRolls) {
 			if (activePlayersBar.canTake(activePlayer)) {
 				destSpace = getDestinationBoardSpace(activePlayer, activePlayersBar, roll);
 				if (destSpace.canPlace(activePlayersBar.getTopChecker())) {
-					Move legalMove = new Move(roll, activePlayersBar, destSpace, activePlayer.getColour());
+					Move legalMove = new Move(roll, activePlayersBar.getPipValue(colour), destSpace.getPipValue(colour) );
 					nextPossibleMoves.add(legalMove);
 				}
 			} else {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
 					if (boardSpaces[i].canTake(activePlayer)) {
+						// TODO
+						// canMove(activePlayer, boardSpaces[i], roll)
 						destSpace = getDestinationBoardSpace(activePlayer, boardSpaces[i], roll);
 						// TODO remove test of != null ; not groot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
-							Move legalMove = new Move(roll, boardSpaces[i], destSpace, activePlayer.getColour());
+							Move legalMove = new Move(roll, boardSpaces[i].getPipValue(colour), destSpace.getPipValue(colour));
 							nextPossibleMoves.add(legalMove);
 						}
 					}
@@ -238,8 +261,8 @@ public class BackgammonBoard {
 		}
 		return nextPossibleMoves;
 	}
-
-	public BoardSpace getDestinationBoardSpace(Player activePlayer, BoardSpace source, int roll) {
+	
+	private BoardSpace getDestinationBoardSpace(Player activePlayer, BoardSpace source, int roll) {
 		int start = source.getPipValue(activePlayer.getColour());
 		int dest = start - (roll);
 		BoardSpace destination;
@@ -273,10 +296,6 @@ public class BackgammonBoard {
 		return destination;
 	}
 
-	public void resetAvailableRolls() {
-		this.availableRolls.clear();
-	}
-
 	public boolean canBearOff(Player activePlayer) {
 		boolean bearOff = true;
 		for (int i = 24; i > 6; i--) {
@@ -295,34 +314,6 @@ public class BackgammonBoard {
 		return gameWon;
 	}
 
-	/**
-	 * @return the latest Dice Roll
-	 */
-	public int[] getLatestDiceRoll() {
-		return latestDiceRoll;
-	}
-
-	/**
-	 * rolls two dice and saves the rolls as the latest roll
-	 */
-	public void rollDice(Player activePlayer) {
-		this.latestDiceRoll[0] = Dice.roll();
-		this.latestDiceRoll[1] = Dice.roll();
-		isDiceRolled = true;
-
-		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
-			isDoubles = true;
-			for (int i = 0; i < 4; i++) {
-				this.availableRolls.add(this.latestDiceRoll[0]);
-			}
-		} else {
-			isDoubles = false;
-			this.availableRolls.add(this.latestDiceRoll[0]);
-			this.availableRolls.add(this.latestDiceRoll[1]);
-		}
-
-		updateLegalMoves(activePlayer);
-	}
 
 	private void endTurn() {
 		this.latestDiceRoll[0] = 0;
