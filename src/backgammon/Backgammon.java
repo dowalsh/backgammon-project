@@ -30,24 +30,7 @@ public class Backgammon {
 
 		BackgammonBoardView.printInfo("Rolling Dice to see who goes first");
 		
-		int[] initialRolls = new int[2];
-		do {
-			initialRolls[0] = Dice.roll();
-			initialRolls[1] = Dice.roll();
-			
-			BackgammonBoardView.printStart(player1, player2, initialRolls);
-			if (initialRolls[0] == initialRolls[1]) {
-				BackgammonBoardView.printInfo("Rolls are equal, let's roll again");
-			}
-		} while (initialRolls[0] == initialRolls[1]);
-		
-		if (initialRolls[0] > initialRolls[1]) {
-			BackgammonBoardView.printInfo(player1.toString()+" has a higher roll, so goes first");
-			activePlayer = player2;
-		} else {
-			BackgammonBoardView.printInfo(player2.toString()+" has a higher roll, so goes first");
-			activePlayer = player1;
-		}
+		activePlayer = choosePlayerToMoveFirst(player1,player2);
 		
 		while (run) {
 
@@ -63,8 +46,8 @@ public class Backgammon {
 			while (!isTurnOver) {
 			
 				BackgammonBoardView.printInfo(activePlayer.toString() + " it is your turn!");
-
-				BackgammonBoardView.print(board, activePlayer);
+				BackgammonBoardView.printScores(matchLength,player1,player2);
+				BackgammonBoardView.printBoard(board, activePlayer);
 
 				BackgammonBoardView.promptPlayerForInput();
 
@@ -132,10 +115,35 @@ public class Backgammon {
 		}
 
 		// print the game one last time
-		BackgammonBoardView.print(board, activePlayer);
+		BackgammonBoardView.printBoard(board, activePlayer);
 
 		// close input
 		scan.close();
 
+	}
+
+	private static Player choosePlayerToMoveFirst(Player player1, Player player2) {
+		Player playerToMoveFirst;
+		
+		int[] initialRolls = new int[2];
+		do {
+			initialRolls[0] = Dice.roll();
+			initialRolls[1] = Dice.roll();
+			
+			BackgammonBoardView.printStart(player1, player2, initialRolls);
+			if (initialRolls[0] == initialRolls[1]) {
+				BackgammonBoardView.printInfo("Rolls are equal, let's roll again");
+			}
+		} while (initialRolls[0] == initialRolls[1]);
+		
+		if (initialRolls[0] > initialRolls[1]) {
+			BackgammonBoardView.printInfo(player1.toString()+" has a higher roll, so goes first");
+			playerToMoveFirst = player2;
+		} else {
+			BackgammonBoardView.printInfo(player2.toString()+" has a higher roll, so goes first");
+			playerToMoveFirst = player1;
+		}
+		
+		return playerToMoveFirst;
 	}
 }

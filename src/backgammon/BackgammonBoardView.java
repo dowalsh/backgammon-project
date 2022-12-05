@@ -24,7 +24,7 @@ public class BackgammonBoardView {
 	 * @param board  the BackgammonBoard object
 	 * @param player the player to print the board perspective for
 	 */
-	public static void print(BackgammonBoard board, Player player) {
+	public static void printBoard(BackgammonBoard board, Player player) {
 
 		BoardSpace[] bs = board.getBoardSpaces();
 
@@ -317,6 +317,12 @@ public class BackgammonBoardView {
 		}while(isValidInteger==false);
 		
 		return inputInteger;
+	}
+	
+
+	public static void printScores(int matchLength, Player player1, Player player2) {
+		print("\n~~~ SCORES ~~~\n" +
+	player1.toString() + ": " + player1.getScore()+ "\n" + player2.toString() + ": " + player2.getScore() + "\nMatch Length: " +matchLength + "\n");
 	}
 
 }

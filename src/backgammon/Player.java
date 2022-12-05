@@ -12,6 +12,7 @@ package backgammon;
 public class Player {
 	private String name;
 	private Colour colour;
+	private int score = 0;
 
 	/**
 	 * Constructor for this class. Sets name and colour of player.
@@ -36,6 +37,27 @@ public class Player {
 
 	public Colour getColour() {
 		return colour;
+	}
+
+	/**
+	 * @return the player's score
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * @param scoreToAdd the score to add to the player's score
+	 */
+	public void addScore(int scoreToAdd) {
+		this.score = this.score + scoreToAdd;
+	}
+	
+	/**
+	 * reset the players score to zero
+	 */
+	public void resetScore() {
+		 this.score=0;
 	}
 
 }
