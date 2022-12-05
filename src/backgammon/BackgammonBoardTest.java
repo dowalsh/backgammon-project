@@ -39,16 +39,6 @@ class BackgammonBoardTest {
 	}
 
 	@Test
-	void testIsGameOver() {
-		assertEquals(false, board.isGameOver());
-	}
-
-//	@Test
-//	void testGetMoveKeys() {
-//		fail("Not yet implemented");
-//	}
-
-	@Test
 	void testIsTurnOver() {
 		board.beginTurn();
 		assertEquals(false, board.isTurnOver());

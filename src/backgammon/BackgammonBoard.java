@@ -35,15 +35,12 @@ public class BackgammonBoard {
 
 	// Dice Roll
 	private int[] latestDiceRoll = new int[2];
-	// TODO get rid??
-	private boolean isDoubles = false;
 
 	private boolean isDiceRolled = false;
 	private List<Integer> availableRolls = new ArrayList<Integer>();
 
 	private Map<Character, Move> legalMoves = new HashMap<Character, Move>();
 
-	private boolean isGameOver = false;
 	private boolean isTurnOver;
 	
 	private int doublingCubeMultiplier = 1;
@@ -195,7 +192,6 @@ public class BackgammonBoard {
 		}
 		updateLegalMoves(activePlayer);
 	}
-
 
 	private void resetAvailableRolls() {
 		this.availableRolls.clear();
@@ -368,14 +364,6 @@ public class BackgammonBoard {
 
 	private BearedOffSpace getBearedOffSpaceByColour(Colour c) {
 		return bearedOffSpaces_dict.get(c);
-	}
-
-	public boolean isGameOver() {
-		return isGameOver;
-	}
-
-	public void endGame() {
-		isGameOver = true;
 	}
 
 	public Set<Character> getMoveKeys() {

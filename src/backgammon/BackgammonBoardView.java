@@ -1,5 +1,6 @@
 package backgammon;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -24,8 +25,9 @@ public class BackgammonBoardView {
 	 * @param board  the BackgammonBoard object
 	 * @param player the player to print the board perspective for
 	 */
-	public static void printBoard(BackgammonBoard board, Player player) {
-
+	public static void printBoard(BackgammonGame game, Player player) {
+		
+		BackgammonBoard board = game.getBoard();
 		BoardSpace[] bs = board.getBoardSpaces();
 
 		// 2D array to display game
@@ -115,7 +117,7 @@ public class BackgammonBoardView {
 		// Create output format String & print
 		final StringBuilder formatString = new StringBuilder("");
 
-		if (!board.isGameOver()) {
+		if (!game.isGameOver()) {
 			if (board.isDiceRolled()) {
 				int[] diceRoll = board.getLatestDiceRoll();
 				formatString.append(board.legalMovesToString(player));
@@ -123,7 +125,6 @@ public class BackgammonBoardView {
 
 			} else {
 				formatString.append("To roll the dice enter command 'roll'\n");
-
 			}
 		}
 
@@ -284,7 +285,7 @@ public class BackgammonBoardView {
 		print("Enter a letter A,B,C etc to make a move");
 		print("hint = Display all command options");
 		print("dice<int><int> = Enter your desired roll");
-		if(activePlayer.canOfferDoubles()) {
+		if (activePlayer.canOfferDoubles()) {
 			print("double = Offer a double to the other player");
 		}
 
@@ -304,12 +305,13 @@ public class BackgammonBoardView {
 		print(player1 + ": " + board.getPipCount(player1.getColour()));
 		print(player2 + ": " + board.getPipCount(player2.getColour()));
 	}
-	
+
 	public static void printDoubleOffer(Player activePlayer, Player inactivePlayer) {
-		printBanner("DOUBLE OFFER","!");
-		print("\n"+inactivePlayer.toString() +", "+ activePlayer.toString() +" has offered you a double.\nWould you like to accept this offer and the stakes will be doubled?\nOr would you like to refuse and concede this game?");
+		printBanner("DOUBLE OFFER", "!");
+		print("\n" + inactivePlayer.toString() + ", " + activePlayer.toString()
+				+ " has offered you a double.\nWould you like to accept this offer and the stakes will be doubled?\nOr would you like to refuse and concede this game?");
 	}
-	
+
 	public static void printDoubleOptions() {
 		printBanner("INPUT OPTIONS", "=");
 		print("accept = Accept the offer and stakes will be doubled");
@@ -320,7 +322,7 @@ public class BackgammonBoardView {
 		int inputInteger = 0;
 		boolean isValidInteger = false;
 		do {
-			print("\n" +prompt+": ");
+			print("\n" + prompt + ": ");
 			String inputString = inputScanner.next();
 			try {
 				inputInteger = Integer.parseInt(inputString);
@@ -328,15 +330,26 @@ public class BackgammonBoardView {
 			} catch (NumberFormatException e) {
 				BackgammonBoardView.printError("Please Enter an Integer Value");
 			}
-		}while(isValidInteger==false);
-		
+		} while (isValidInteger == false);
+
 		return inputInteger;
+	}
+
+	public static void pressEnterToContinue() {
+		print("\n> Press Enter To Continue: ");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 
+
+
 	public static void printScores(int matchLength, Player player1, Player player2) {
-		print("\n~~~ SCORES ~~~\n" +
-	player1.toString() + ": " + player1.getScore()+ "\n" + player2.toString() + ": " + player2.getScore() + "\nMatch Length: " +matchLength + "\n");
+		print("\n~~~ SCORES ~~~\n" + player1.toString() + ": " + player1.getScore() + "\n" + player2.toString() + ": "
+				+ player2.getScore() + "\nMatch Length: " + matchLength + "\n");
 	}
 
 }
