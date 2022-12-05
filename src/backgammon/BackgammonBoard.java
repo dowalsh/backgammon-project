@@ -45,6 +45,8 @@ public class BackgammonBoard {
 
 	private boolean isGameOver = false;
 	private boolean isTurnOver;
+	
+	private int doublingCubeMultiplier = 1;
 
 	// TODO Get rid
 	public BoardSpace[] getBoardSpaces() {
@@ -166,6 +168,14 @@ public class BackgammonBoard {
 		bearedOffSpaces_dict.put(Colour.WHITE, whiteBearedOffSpace);
 		index++;
 
+	}
+	
+	public void applyDouble() {
+		this.doublingCubeMultiplier = 2*this.doublingCubeMultiplier;
+	}
+	
+	public int getDoublingCubeMultiplier() {
+		return this.doublingCubeMultiplier;
 	}
 
 	public void setRolls(int roll1, int roll2, Player activePlayer) {

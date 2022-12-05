@@ -12,6 +12,7 @@ package backgammon;
 public class Player {
 	private String name;
 	private Colour colour;
+	private boolean canOfferDoubles;
 
 	/**
 	 * Constructor for this class. Sets name and colour of player.
@@ -29,6 +30,23 @@ public class Player {
 	public String toString() {
 		return name + " (" + colour + ")";
 	}
+	
+	/**
+	 * Sets whether the player can offer a double or not.
+	 * @param canDouble Whether or not the player can offer a double.
+	 */
+	public void setCanOfferDoubles(boolean canDouble) {
+		this.canOfferDoubles = canDouble;
+	}
+	
+	/**
+	 * Returns whether or not a player can offer a double.
+	 * @return whether or not a player can offer a double.
+	 */
+	public boolean canOfferDoubles() {
+		return this.canOfferDoubles;
+	}
+	
 
 	public int getAlternateIndex(int equivalentWhiteIndex) {
 		return this.colour.getAlternateIndex(equivalentWhiteIndex);

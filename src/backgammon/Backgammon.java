@@ -22,8 +22,7 @@ public class Backgammon {
 		// Game control loop
 		boolean run = true; // to control whether the game should continue running
 		Player activePlayer;
-
-		BackgammonBoardView.printInputOptions();
+		Player inactivePlayer;
 		
 		BackgammonBoardView.printInfo("Rolling Dice to see who goes first");
 		
@@ -41,20 +40,30 @@ public class Backgammon {
 		if (initialRolls[0] > initialRolls[1]) {
 			BackgammonBoardView.printInfo(player1.toString()+" has a higher roll, so goes first");
 			activePlayer = player2;
+			inactivePlayer = player1;
 		} else {
 			BackgammonBoardView.printInfo(player2.toString()+" has a higher roll, so goes first");
 			activePlayer = player1;
+			inactivePlayer = player2;
 		}
+		
+		player1.setCanOfferDoubles(true);
+		player2.setCanOfferDoubles(true);
+		BackgammonBoardView.printInputOptions(activePlayer);
 		
 		while (run) {
 
 			boolean isTurnOver = false;
 
 			// switch the active player
-			if (activePlayer == player1)
+			if (activePlayer == player1) {
 				activePlayer = player2;
-			else
+				inactivePlayer = player1;
+			} else {
 				activePlayer = player1;
+				inactivePlayer = player2;
+				
+			}
 
 			board.beginTurn();
 			while (!isTurnOver) {
@@ -99,7 +108,7 @@ public class Backgammon {
 					isTurnOver = board.isTurnOver();
 					
 				} else if (input.equals("HINT")) {
-					BackgammonBoardView.printInputOptions();
+					BackgammonBoardView.printInputOptions(activePlayer);
 				} else if (input.matches("DICE[1-6][1-6]")) {
 					if (board.isDiceRolled()) {
 						BackgammonBoardView.printError("Cannot re-roll dice");
@@ -112,12 +121,39 @@ public class Backgammon {
 						BackgammonBoardView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 					}
+				} else if (input.equals("DOUBLE") && activePlayer.canOfferDoubles()) {
+					BackgammonBoardView.printDoubleOffer(activePlayer,inactivePlayer);
+					BackgammonBoardView.printDoubleOptions();
+					boolean validAnswer = false;
+					while(!validAnswer) {
+						String answer = stringScanner.next().toUpperCase();
+						if (answer.equals("ACCEPT")) {
+							board.applyDouble();
+							BackgammonBoardView.printInfo("Double Accepted");
+							BackgammonBoardView.printInfo("Stake is now: "+board.getDoublingCubeMultiplier());
+							activePlayer.setCanOfferDoubles(false);
+							inactivePlayer.setCanOfferDoubles(true);
+							validAnswer = true;
+						} else if (answer.equals("REFUSE")) {
+							BackgammonBoardView.printInfo("Double Refused");
+							BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString() + " is the winner! Thanks for playing!");
+							board.endGame();
+							validAnswer = true;
+							isTurnOver = true;
+							run = false;
+						}
+						else {
+							// input error
+							BackgammonBoardView.printError("INVALID INPUT");
+							BackgammonBoardView.printDoubleOptions();
+						}
+					}
 				}
 				// can add more else if s for other input options here
 				else {
 					// input error
 					BackgammonBoardView.printError("INVALID INPUT");
-					BackgammonBoardView.printInputOptions();
+					BackgammonBoardView.printInputOptions(activePlayer);
 				}
 				if (board.isWon(activePlayer)) {
 					BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString() + " is the winner! Thanks for playing!");

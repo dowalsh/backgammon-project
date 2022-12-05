@@ -283,14 +283,17 @@ public class BackgammonBoardView {
 
 	}
 
-	public static void printInputOptions() {
+	public static void printInputOptions(Player activePlayer) {
 		printBanner("INPUT OPTIONS", "=");
 		print("quit = Quit");
 		print("roll = Roll the Dice");
 		print("pip = Display Pip Counts");
 		print("Enter a letter A,B,C etc to make a move");
-		print("hint = display all command options");
+		print("hint = Display all command options");
 		print("dice<int><int> = Enter your desired roll");
+		if(activePlayer.canOfferDoubles()) {
+			print("double = Offer a double to the other player");
+		}
 
 
 	}
@@ -308,6 +311,17 @@ public class BackgammonBoardView {
 		printInfo("Pip Counts");
 		print(player1 + ": " + board.getPipCount(player1.getColour()));
 		print(player2 + ": " + board.getPipCount(player2.getColour()));
+	}
+	
+	public static void printDoubleOffer(Player activePlayer, Player inactivePlayer) {
+		printBanner("DOUBLE OFFER","!");
+		print("\n"+inactivePlayer.toString() +", "+ activePlayer.toString() +" has offered you a double.\nWould you like to accept this offer and the stakes will be doubled?\nOr would you like to refuse and concede this game?");
+	}
+	
+	public static void printDoubleOptions() {
+		printBanner("INPUT OPTIONS", "=");
+		print("accept = Accept the offer and stakes will be doubled");
+		print("refuse = Refuse the offer and concede the game");
 	}
 
 }
