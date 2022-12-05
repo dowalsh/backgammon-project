@@ -6,26 +6,30 @@ public class Backgammon {
 
 	public static void main(String[] args) {
 
-//		BackgammonBoard board = new BackgammonBoard();
-		BackgammonBoard board =  BackgammonBoard.createTestBoard("EXAMPLE TEST");
+		BackgammonBoard board = new BackgammonBoard();
+//		BackgammonBoard board =  BackgammonBoard.createTestBoard("EXAMPLE TEST");
 
 		
-		Scanner stringScanner = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);
 		
 
 		// Create players and get names
 		BackgammonBoardView.promptForPlayerName(1);
-		Player player1 = new Player(Colour.WHITE, stringScanner.next());
+		Player player1 = new Player(Colour.WHITE, scan.next());
 		BackgammonBoardView.promptForPlayerName(2);
-		Player player2 = new Player(Colour.BLACK, stringScanner.next());
-
+		Player player2 = new Player(Colour.BLACK, scan.next());
+		int matchLength = BackgammonBoardView.getIntegerFromUser("Please Enter The Desired Match Length",scan);
+		
 		// Game control loop
 		boolean run = true; // to control whether the game should continue running
 		Player activePlayer;
 		Player inactivePlayer;
 		
+		BackgammonBoardView.printInfo("Match Length: " + matchLength);
+
 		BackgammonBoardView.printInfo("Rolling Dice to see who goes first");
 		
+
 		int[] initialRolls = new int[2];
 		do {
 			initialRolls[0] = Dice.roll();
@@ -69,13 +73,13 @@ public class Backgammon {
 			while (!isTurnOver) {
 			
 				BackgammonBoardView.printInfo(activePlayer.toString() + " it is your turn!");
-
-				BackgammonBoardView.print(board, activePlayer);
+				BackgammonBoardView.printScores(matchLength,player1,player2);
+				BackgammonBoardView.printBoard(board, activePlayer);
 
 				BackgammonBoardView.promptPlayerForInput();
 
 				// convert input string to upper case in order to accept lower case inputs
-				String input = stringScanner.next().toUpperCase();
+				String input = scan.next().toUpperCase();
 				if (input.equals("QUIT")) {
 					// Quit Game
 					BackgammonBoardView.printInfo("Game terminated, thanks for playing!");
@@ -126,7 +130,7 @@ public class Backgammon {
 					BackgammonBoardView.printDoubleOptions();
 					boolean validAnswer = false;
 					while(!validAnswer) {
-						String answer = stringScanner.next().toUpperCase();
+						String answer = scan.next().toUpperCase();
 						if (answer.equals("ACCEPT")) {
 							board.applyDouble();
 							BackgammonBoardView.printInfo("Double Accepted");
@@ -165,10 +169,11 @@ public class Backgammon {
 		}
 
 		// print the game one last time
-		BackgammonBoardView.print(board, activePlayer);
+		BackgammonBoardView.printBoard(board, activePlayer);
 
 		// close input
-		stringScanner.close();
+		scan.close();
 
 	}
+
 }
