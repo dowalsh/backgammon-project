@@ -18,8 +18,7 @@ public class Backgammon {
 		Player player1 = new Player(Colour.WHITE, scan.next());
 		BackgammonBoardView.promptForPlayerName(2);
 		Player player2 = new Player(Colour.BLACK, scan.next());
-		BackgammonBoardView.promptForMatchLength();
-		int matchLength = BackgammonBoardView.getIntegerFromUser(scan);
+		int matchLength = BackgammonBoardView.getIntegerFromUser("Please Enter The Desired Match Length",scan);
 		
 		// Game control loop
 		boolean run = true; // to control whether the game should continue running

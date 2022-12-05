@@ -302,14 +302,11 @@ public class BackgammonBoardView {
 		print(player2 + ": " + board.getPipCount(player2.getColour()));
 	}
 
-	public static void promptForMatchLength() {
-		print("\nPlease Enter The Desired Match Length: ");
-	}
-
-	public static int getIntegerFromUser(Scanner inputScanner) {
+	public static int getIntegerFromUser(String prompt, Scanner inputScanner) {
 		int inputInteger = 0;
 		boolean isValidInteger = false;
 		do {
+			print("\n" +prompt+": ");
 			String inputString = inputScanner.next();
 			try {
 				inputInteger = Integer.parseInt(inputString);
