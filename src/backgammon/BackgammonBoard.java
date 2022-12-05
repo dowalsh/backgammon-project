@@ -127,8 +127,14 @@ public class BackgammonBoard {
 			// In this example we want to add 5 checkers to the white beared off space
 			// To do so, we get the white beared off space using getBoardSpaceByPipValue(0, Colour.WHITE)
 			// then we add 5 white checkers to this space using addNewCheckers(5, Colour.WHITE)
-			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(5, Colour.WHITE);
-		case "OTHER TEST":
+			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+		case "NEARLY OVER":
+			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(0, Colour.BLACK).addNewCheckers(14, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+
+		case "OTHER CASE":
 			// can implement any number of specific test scenarios here
 		}
 		
@@ -181,12 +187,10 @@ public class BackgammonBoard {
 		isDiceRolled = true;
 
 		if (this.latestDiceRoll[0] == this.latestDiceRoll[1]) {
-			isDoubles = true;
 			for (int i = 0; i < 4; i++) {
 				this.availableRolls.add(this.latestDiceRoll[0]);
 			}
 		} else {
-			isDoubles = false;
 			this.availableRolls.add(this.latestDiceRoll[0]);
 			this.availableRolls.add(this.latestDiceRoll[1]);
 		}
@@ -508,5 +512,6 @@ public class BackgammonBoard {
 		// TODO try think of a more elegant solution
 		return getPossibleNextMoves(activePlayer).isEmpty();
 	}
+
 
 }

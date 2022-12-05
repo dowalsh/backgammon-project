@@ -26,14 +26,13 @@ public class BackgammonMatch {
 
 		matchLength = BackgammonBoardView.getIntegerFromUser("Please Enter The Desired Match Length", scan);
 
-		BackgammonBoardView.printInfo("Match Length: " + matchLength);
-
 		boolean isMatchOver = false;
 		while (!isMatchOver) {
-
 			BackgammonGame game = new BackgammonGame(scan, player1, player2, matchLength);
+			BackgammonBoardView.printInfo(
+					"Starting Game");
 			game.playGame();
-
+			BackgammonBoardView.pressEnterToContinue();
 		}
 
 		// close input

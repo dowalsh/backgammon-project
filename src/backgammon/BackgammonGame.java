@@ -19,6 +19,7 @@ public class BackgammonGame {
 
 	// board for the game
 	private BackgammonBoard board = new BackgammonBoard();
+//	private BackgammonBoard board = BackgammonBoard.createTestBoard("NEARLY OVER");
 
 	public BackgammonBoard getBoard() {
 		return board;
@@ -119,8 +120,8 @@ public class BackgammonGame {
 							validAnswer = true;
 						} else if (answer.equals("REFUSE")) {
 							BackgammonBoardView.printInfo("Double Refused");
-							BackgammonBoardView.printInfo("Game Completed, " + activePlayer.toString()
-									+ " is the winner! Thanks for playing!");
+							BackgammonBoardView
+									.printInfo("Game Completed, " + activePlayer.toString() + " is the winner!");
 							validAnswer = true;
 							isTurnOver = true;
 							isGameOver = false;
@@ -191,6 +192,27 @@ public class BackgammonGame {
 
 	public boolean isGameOver() {
 		return isGameOver;
+	}
+
+	public boolean isDoublingCubeInPlay() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public int getDoublingCubePosition() {
+		int position;
+		if (player1.canOfferDoubles() && player2.canOfferDoubles()) {
+			position = 0;
+		}else if(player1.canOfferDoubles()) {
+			position = 1;
+		}else if(player2.canOfferDoubles()) {
+			position = 2;
+		}else {
+			//error? //TODO 
+			position = 0;
+		}
+		// TODO Auto-generated method stub
+		return position;
 	}
 
 }
