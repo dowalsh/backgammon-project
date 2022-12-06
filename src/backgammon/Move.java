@@ -50,13 +50,8 @@ public class Move implements Comparable<Move> {
 		return board.getBoardSpaceByPipValue(destinationPipValue, colour);
 	}
 
-	/**
-	 * Returns a string of the move.
-	 * 
-	 * @param player Active Player.
-	 * @return String of the move.
-	 */
-	public String toString(Player player) {
+	@Override
+	public String toString() {
 		String moveString = "";
 		if (sourcePipValue == 25) {
 			moveString = "[" + roll + "] Bar ->" + destinationPipValue;

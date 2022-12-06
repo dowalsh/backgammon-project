@@ -18,10 +18,16 @@ public class BackgammonMatch {
 
 	private boolean isMatchQuit = false;
 
+	/**
+	 * @param s
+	 */
 	public BackgammonMatch(Scanner s) {
 		this.scan = s;
 	}
 
+	/**
+	 * 
+	 */
 	public void playMatch() {
 
 		setPlayerNames();
@@ -42,6 +48,9 @@ public class BackgammonMatch {
 
 	}
 
+	/**
+	 * @return
+	 */
 	private Player getWinner() {
 		Player winner;
 		if (player1.getScore() > player2.getScore())
@@ -51,44 +60,74 @@ public class BackgammonMatch {
 		return winner;
 	}
 
+	/**
+	 * @return
+	 */
 	private boolean isMatchOver() {
 		return (player1.getScore() >= matchLength || player2.getScore() >= matchLength);
 	}
 
+	/**
+	 * 
+	 */
 	private void setPlayerNames() {
 		// Create players and get names
 		player1.setName(BackgammonView.promptForPlayerName(1, scan));
 		player2.setName(BackgammonView.promptForPlayerName(2, scan));
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean hasCrawfordHappened() {
 		return this.hasCrawfordHappened;
 	}
 
+	/**
+	 * @param crawford
+	 */
 	public void setHasCrawfordHappened(boolean crawford) {
 		this.hasCrawfordHappened = crawford;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getMatchLength() {
 		return this.matchLength;
 	}
 
+	/**
+	 * @return
+	 */
 	public Player getPlayer1() {
 		return this.player1;
 	}
 
+	/**
+	 * @return
+	 */
 	public Player getPlayer2() {
 		return this.player2;
 	}
 
+	/**
+	 * @return
+	 */
 	public Scanner getScanner() {
 		return this.scan;
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isMatchQuit() {
 		return isMatchQuit;
 	}
 
+	/**
+	 * 
+	 */
 	public void quit() {
 		isMatchQuit = true;
 	}
