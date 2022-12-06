@@ -56,10 +56,6 @@ public class Bar extends BoardSpace {
 	public int getPipValue(Colour playerColour) {
 		return 25;
 	}
-
-	@Override
-	public String toString(Colour playerColour) {
-		return "Bar";
-	}
+	
 
 }

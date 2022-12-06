@@ -42,4 +42,13 @@ class BarTest {
 		assertEquals(25, blackBar.getPipValue(Colour.BLACK));
 	}
 
+	
+	@Test
+	void testCopy() {
+		Bar copiedBar = new Bar(blackBar);
+		assertEquals(copiedBar.getColour(),blackBar.getColour());
+		assertEquals(copiedBar.getNumCheckers(),blackBar.getNumCheckers());
+		assertEquals(copiedBar.getTopChecker().getColour(),blackBar.getTopChecker().getColour());
+	}
+	
 }

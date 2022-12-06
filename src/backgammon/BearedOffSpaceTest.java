@@ -6,48 +6,60 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BearedOffSpaceTest {
-	private BearedOffSpace whiteBearedOffSpace;
-	private BearedOffSpace blackBearedOffSpace;
+	private BearedOffSpace emptyWhiteBearedOffSpace;
+	private BearedOffSpace populatedBlackBearedOffSpace;
 	private Checker white = new Checker(Colour.WHITE);
 	private Checker black = new Checker(Colour.BLACK);
+	
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
-		whiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
-		blackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		emptyWhiteBearedOffSpace = new BearedOffSpace(Colour.WHITE);
+		populatedBlackBearedOffSpace = new BearedOffSpace(Colour.BLACK);
+		populatedBlackBearedOffSpace.addChecker(black);
+
 	}
 
 	@Test
 	void testCanPlace() {
-		assertEquals(true, whiteBearedOffSpace.canPlace(white));
-		assertEquals(false, whiteBearedOffSpace.canPlace(black));
-		assertEquals(true, blackBearedOffSpace.canPlace(black));
-		assertEquals(false, blackBearedOffSpace.canPlace(white));
+		assertEquals(true, emptyWhiteBearedOffSpace.canPlace(white));
+		assertEquals(false, emptyWhiteBearedOffSpace.canPlace(black));
+		assertEquals(true, populatedBlackBearedOffSpace.canPlace(black));
+		assertEquals(false, populatedBlackBearedOffSpace.canPlace(white));
 	}
 
 	@Test
 	void testCanTake() {
-		blackBearedOffSpace.addChecker(black);
-		//cannot take from empty
-		assertEquals(false, whiteBearedOffSpace.canTake(Colour.WHITE));
 		
-		//can only take if checker same colour as player
-		assertEquals(true, blackBearedOffSpace.canTake(Colour.BLACK));
-		assertEquals(false, blackBearedOffSpace.canTake(Colour.WHITE));
+		//cannot take from empty
+		assertEquals(false, emptyWhiteBearedOffSpace.canTake(Colour.WHITE));
+		//cannot take from bearedOffSpace even with checkers
+		assertEquals(false, populatedBlackBearedOffSpace.canTake(Colour.BLACK));
 	}	
 
 
 	@Test
 	void testIsFull() {
-		blackBearedOffSpace.addNewCheckers(15, Colour.BLACK);
-		whiteBearedOffSpace.addNewCheckers(8, Colour.WHITE);
-		assertEquals(true, blackBearedOffSpace.isFull());
-		assertEquals(false, whiteBearedOffSpace.isFull());
+		populatedBlackBearedOffSpace.addNewCheckers(14, Colour.BLACK);
+		emptyWhiteBearedOffSpace.addNewCheckers(8, Colour.WHITE);
+		assertEquals(true, populatedBlackBearedOffSpace.isFull());
+		assertEquals(false, emptyWhiteBearedOffSpace.isFull());
 	}
 	
+	@Test
 	void testGetPipValue() {
-		assertEquals(0, whiteBearedOffSpace.getPipValue(Colour.WHITE));
-		assertEquals(0, blackBearedOffSpace.getPipValue(Colour.BLACK));
+		assertEquals(0, emptyWhiteBearedOffSpace.getPipValue(Colour.WHITE));
+		assertEquals(0, populatedBlackBearedOffSpace.getPipValue(Colour.BLACK));
 	}
 
+	
+	@Test
+	void testCopy() {
+		
+		BearedOffSpace copiedBearedOffSpace = new BearedOffSpace(populatedBlackBearedOffSpace);
+		assertEquals(copiedBearedOffSpace.getColour(),populatedBlackBearedOffSpace.getColour());
+		assertEquals(copiedBearedOffSpace.getNumCheckers(),populatedBlackBearedOffSpace.getNumCheckers());
+		assertEquals(copiedBearedOffSpace.getTopChecker().getColour(),populatedBlackBearedOffSpace.getTopChecker().getColour());
+	}
 }

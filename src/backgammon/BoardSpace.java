@@ -47,14 +47,6 @@ public abstract class BoardSpace {
 	public abstract boolean canTake(Colour playerColour);
 
 	/**
-	 * Returns a string representation of this boardSpace
-	 * 
-	 * @param playerColour The colour of the player whose perspective it is
-	 * @return String representation of this boardSpace
-	 */
-	public abstract String toString(Colour playerColour);
-
-	/**
 	 * Get the pip value for this board space.
 	 * 
 	 * @param playerColour the colour of the player whose perspective the pip values
