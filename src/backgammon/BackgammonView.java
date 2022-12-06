@@ -30,8 +30,12 @@ public class BackgammonView {
 	 * @param board  the BackgammonBoard object
 	 * @param player the player to print the board perspective for
 	 */
-	// TODO refactor
 	public static void printBoard(BackgammonGame game, Player player) {
+		print(getBoardString( game,  player));
+	}
+	
+	// TODO refactor
+	protected static String getBoardString(BackgammonGame game, Player player) {
 
 		BackgammonBoard board = game.getBoard();
 		BoardSpace[] bs = board.getBoardSpaces();
@@ -170,8 +174,7 @@ public class BackgammonView {
 			formatString.append("\n");
 		}
 
-		print(formatString.toString());
-
+		return formatString.toString();
 	}
 
 	private static void fillVerticalLine(String[][] table, int col_line) {
