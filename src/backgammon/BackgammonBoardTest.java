@@ -34,8 +34,7 @@ class BackgammonBoardTest {
 		testboard.setRolls(5, 3, activePlayer);
 		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5,15,10)));
 		Collection<Move> actualMoves = testboard.getLegalMoves();
-		assertEquals(testMoves.size() ,actualMoves.size());
-		assertTrue(testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
 	}
 
 	@Test
