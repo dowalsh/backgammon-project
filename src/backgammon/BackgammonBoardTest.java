@@ -12,19 +12,32 @@ import org.junit.jupiter.api.Test;
 class BackgammonBoardTest {
 	private BackgammonBoard board;
 	private Player blackPlayer;
+<<<<<<< HEAD
+=======
+	private Player whitePlayer;
+>>>>>>> 27190a2598042ca476e4f4d4ebbd8b89e006216f
 
 	@BeforeEach
 	void setUp() throws Exception {
 		board = new BackgammonBoard();
+<<<<<<< HEAD
 		blackPlayer = new Player(Colour.BLACK, "Dummy");
+=======
+		blackPlayer = new Player(Colour.BLACK,"Dummy");
+		whitePlayer = new Player(Colour.WHITE,"Dummy");
+>>>>>>> 27190a2598042ca476e4f4d4ebbd8b89e006216f
 	}
 
 	@Test
 	void testBearOff() {
 		board = BackgammonBoard.createTestBoard("BEAR OFF");
 		board.setRolls(6, 2, blackPlayer);
+<<<<<<< HEAD
 		List<Move> testMoves = new ArrayList<Move>(
 				List.of(new Move(2, 2, 0), new Move(2, 3, 1), new Move(2, 4, 2), new Move(6, 4, 0)));
+=======
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(2,2,0),new Move(2,3,1),new Move(2,4,2),new Move(6,4,0)));
+>>>>>>> 27190a2598042ca476e4f4d4ebbd8b89e006216f
 		Collection<Move> actualMoves = board.getLegalMoves();
 		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves)
 				&& actualMoves.containsAll(testMoves));
@@ -34,10 +47,16 @@ class BackgammonBoardTest {
 	void testOnlyLargerRoll() {
 		BackgammonBoard testboard = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
 		testboard.setRolls(5, 3, blackPlayer);
+<<<<<<< HEAD
 		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5, 15, 10)));
 		Collection<Move> actualMoves = testboard.getLegalMoves();
 		assertEquals(testMoves.size(), actualMoves.size());
 		assertTrue(testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+=======
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5,15,10)));
+		Collection<Move> actualMoves = testboard.getLegalMoves();
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+>>>>>>> 27190a2598042ca476e4f4d4ebbd8b89e006216f
 	}
 
 	@Test
@@ -71,6 +90,7 @@ class BackgammonBoardTest {
 			board.selectMove('A', blackPlayer);
 		}
 		assertEquals(true, board.noMoveAvailable(blackPlayer));
+
 	}
 
 	@Test
@@ -103,6 +123,35 @@ class BackgammonBoardTest {
 				+ "G) [4]  13->9\n"
 				+ "H) [4]  24->20\n";
 		assertEquals(expectedString, board.legalMovesToString(blackPlayer));
+	}
+	
+	void testWinSingle() {
+		board = BackgammonBoard.createTestBoard("SINGLE WIN");
+		board.setRolls(1, 1, whitePlayer);
+		board.selectMove('A', whitePlayer);
+		assertEquals(true, board.isWon(whitePlayer));
+		assertEquals(false, board.isGammon(blackPlayer));
+		assertEquals(false, board.isBackgammon(blackPlayer));
+	}
+	
+	@Test
+	void testWinGammon() {
+		board = BackgammonBoard.createTestBoard("GAMMON WIN");
+		board.setRolls(1, 1, whitePlayer);
+		board.selectMove('A', whitePlayer);
+		assertEquals(true, board.isWon(whitePlayer));
+		assertEquals(true, board.isGammon(blackPlayer));
+		assertEquals(false, board.isBackgammon(blackPlayer));
+	}
+	
+	@Test
+	void testWinBackgammon() {
+		board = BackgammonBoard.createTestBoard("BACKGAMMON WIN");
+		board.setRolls(1, 1, whitePlayer);
+		board.selectMove('A', whitePlayer);
+		assertEquals(true, board.isWon(whitePlayer));
+		assertEquals(true, board.isGammon(blackPlayer));
+		assertEquals(true, board.isBackgammon(blackPlayer));
 	}
 	
 	@Test
