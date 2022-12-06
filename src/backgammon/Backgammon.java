@@ -1,7 +1,5 @@
 package backgammon;
 
-import java.util.Scanner;
-
 public class Backgammon {
 
 	public static void main(String[] args) {

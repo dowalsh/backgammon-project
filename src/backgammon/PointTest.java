@@ -41,8 +41,6 @@ class PointTest {
 	
 		assertEquals(15, sumBlack);
 		assertEquals(15, sumWhite);
-
-
 	}
 
 	@Test

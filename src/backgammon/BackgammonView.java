@@ -13,7 +13,7 @@ import java.util.Scanner;
  * The BackgammonBoardView Class is used to display a game of Backgammon in the
  * console
  */
-public class BackgammonBoardView {
+public class BackgammonView {
 
 	public final static int DISPLAY_WIDTH = 51;
 	public final static int MAX_DISPLAY_CHECKERS = 5;
@@ -30,11 +30,18 @@ public class BackgammonBoardView {
 	 * @param board  the BackgammonBoard object
 	 * @param player the player to print the board perspective for
 	 */
+	//TODO refactor
 	public static void printBoard(BackgammonGame game, Player player) {
+
 
 		BackgammonBoard board = game.getBoard();
 		BoardSpace[] bs = board.getBoardSpaces();
+		
+		boolean isGameOver = game.isGameOver();
+		boolean isDoublingCubeInPlay = game.isDoublingCubeInPlay();
+		int doublingCubePosition = game.getDoublingCubePosition();
 
+		
 		// 2D array to display game
 
 		// 2 rows for the top, 2 for the bottom, 1 for space and N for each side of
@@ -54,7 +61,7 @@ public class BackgammonBoardView {
 		int centre_row_index = num_rows / 2; // Integer division to round down
 
 		// Doubling Cube
-		if (game.isDoublingCubeInPlay()) {
+		if (isDoublingCubeInPlay) {
 			int displayIntegerValue = board.getDoublingCubeMultiplier();
 			;
 			if (displayIntegerValue == 1) {
@@ -62,7 +69,7 @@ public class BackgammonBoardView {
 			}
 			String displayString = Integer.toString(displayIntegerValue);
 
-			switch (game.getDoublingCubePosition()) {
+			switch (doublingCubePosition) {
 			case 1:
 				// Player 1 (WHITE) has the cube
 				table[top_checkers_row_index][DOUBLING_CUBE_COLUMN_INDEX] = displayString;
@@ -144,7 +151,7 @@ public class BackgammonBoardView {
 		// Create output format String & print
 		final StringBuilder formatString = new StringBuilder("");
 
-		if (!game.isGameOver()) {
+		if (!isGameOver) {
 			if (board.isDiceRolled()) {
 				int[] diceRoll = board.getLatestDiceRoll();
 				formatString.append(board.legalMovesToString(player));
@@ -370,7 +377,7 @@ public class BackgammonBoardView {
 				inputInteger = Integer.parseInt(inputString);
 				isValidInteger = true;
 			} catch (NumberFormatException e) {
-				BackgammonBoardView.printError("Please Enter an Integer Value");
+				BackgammonView.printError("Please Enter an Integer Value");
 			}
 		} while (isValidInteger == false);
 

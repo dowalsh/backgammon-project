@@ -24,15 +24,15 @@ public class BackgammonMatch {
 
 		createPlayers();
 
-		matchLength = BackgammonBoardView.getIntegerFromUser("Please Enter The Desired Match Length", scan);
+		matchLength = BackgammonView.getIntegerFromUser("Please Enter The Desired Match Length", scan);
 
 		boolean isMatchOver = false;
 		while (!isMatchOver) {
 			BackgammonGame game = new BackgammonGame(scan, player1, player2, matchLength);
-			BackgammonBoardView.printInfo(
+			BackgammonView.printInfo(
 					"Starting Game");
 			game.playGame();
-			BackgammonBoardView.pressEnterToContinue();
+			BackgammonView.pressEnterToContinue();
 		}
 
 		// close input
@@ -41,9 +41,9 @@ public class BackgammonMatch {
 
 	private void createPlayers() {
 		// Create players and get names
-		BackgammonBoardView.promptForPlayerName(1);
+		BackgammonView.promptForPlayerName(1);
 		player1 = new Player(Colour.WHITE, scan.next());
-		BackgammonBoardView.promptForPlayerName(2);
+		BackgammonView.promptForPlayerName(2);
 		player2 = new Player(Colour.BLACK, scan.next());
 	}
 }
