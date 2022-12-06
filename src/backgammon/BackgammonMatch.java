@@ -14,6 +14,8 @@ public class BackgammonMatch {
 
 	// length of match - the score that a player must get to win
 	private int matchLength;
+	
+	private boolean hasCrawfordHappened = false;
 
 	public BackgammonMatch() {
 
@@ -29,7 +31,7 @@ public class BackgammonMatch {
 
 		boolean isMatchOver = false;
 		while (!isMatchOver) {
-			BackgammonGame game = new BackgammonGame(scan, player1, player2, matchLength);
+			BackgammonGame game = new BackgammonGame(scan, player1, player2, this);
 			BackgammonBoardView.printInfo(
 					"Starting Game");
 			game.playGame();
@@ -47,4 +49,17 @@ public class BackgammonMatch {
 		BackgammonBoardView.promptForPlayerName(2);
 		player2 = new Player(Colour.BLACK, scan.next());
 	}
+	
+	public boolean hasCrawfordHappened() {
+		return this.hasCrawfordHappened;
+	}
+	
+	public void setHasCrawfordHappened(boolean crawford) {
+		this.hasCrawfordHappened = crawford;
+	}
+	
+	public int getMatchLength() {
+		return this.matchLength;
+	}
+	
 }
