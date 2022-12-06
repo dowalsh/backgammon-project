@@ -1,11 +1,18 @@
 package backgammon;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+
 
 public class BackgammonGame {
 
 	// user input scanner
 	private Scanner scan;
+	private Scanner filescan;
+	
+	private boolean testMode = false;
 
 	// Players of the match
 	private Player player1;
@@ -16,6 +23,9 @@ public class BackgammonGame {
 	private Player inactivePlayer;
 
 	private int matchLength;
+	
+	private BackgammonMatch match;
+	
 
 	// board for the game
 	private BackgammonBoard board = new BackgammonBoard();
@@ -28,22 +38,23 @@ public class BackgammonGame {
 	// Store whether the game is over
 	boolean isGameOver = false;
 
-	public BackgammonGame(Scanner s, Player p1, Player p2, int m) {
-		this.scan = s;
-		this.player1 = p1;
-		this.player2 = p2;
-		this.matchLength = m;
+	public BackgammonGame(BackgammonMatch m) {
+		this.scan = m.getScanner();
+		this.player1 = m.getPlayer1();
+		this.player2 = m.getPlayer2();
+		this.matchLength = m.getMatchLength();
+		this.match = m;
 	}
 
-	public void playGame() {
+	public void playGame(){
 
 		this.chooseFirstPlayerToMove();
-		BackgammonView.pressEnterToContinue();
 
-		this.resetDoublingCube();
+		BackgammonView.pressEnterToContinue();
+		
+		this.setDoublingCube();
 
 		BackgammonView.printInputOptions(activePlayer);
-
 		// Game control loop
 		while (!isGameOver) {
 
@@ -59,8 +70,14 @@ public class BackgammonGame {
 
 				BackgammonView.promptPlayerForInput();
 
+				String input = "";
 				// convert input string to upper case in order to accept lower case inputs
-				String input = scan.next().toUpperCase();
+				if(testMode && filescan.hasNextLine()) {
+					input = filescan.nextLine().toUpperCase();
+				} else {
+					input = scan.nextLine().toUpperCase();
+					testMode = false;
+				}
 
 				if (input.equals("QUIT")) {
 					// Quit Game
@@ -94,17 +111,28 @@ public class BackgammonGame {
 				} else if (input.equals("HINT")) {
 					BackgammonView.printInputOptions(activePlayer);
 				} else if (input.matches("DICE[1-6][1-6]")) {
+
 					if (board.isDiceRolled()) {
 						BackgammonView.printError("Cannot re-roll dice");
 					} else {
 						// set roll
-						int roll1 = Character.getNumericValue(input.charAt(4));
-						int roll2 = Character.getNumericValue(input.charAt(5));
+						int roll1 = Character.getNumericValue(input.charAt(5));
+						int roll2 = Character.getNumericValue(input.charAt(7));
 						board.setRolls(roll1, roll2, activePlayer);
 						int[] roll = { roll1, roll2 };
 						BackgammonView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 					}
+				} else if (input.contains("TEST")) { 
+					try {
+						File file = new File(input.split(" ")[1].toLowerCase());
+						if(file.isFile()) {
+							filescan = new Scanner(file);
+							testMode = true;
+						}						}
+						catch(Exception e) {
+						  //  Block of code to handle errors
+						}
 				} else if (input.equals("DOUBLE") && activePlayer.canOfferDoubles()) {
 					BackgammonView.printDoubleOffer(activePlayer, inactivePlayer);
 					BackgammonView.printDoubleOptions();
@@ -137,8 +165,23 @@ public class BackgammonGame {
 					BackgammonView.printInputOptions(activePlayer);
 				}
 				if (board.isWon(activePlayer)) {
-					BackgammonView.printInfo(
-							"Game Completed, " + activePlayer.toString() + " is the winner! Thanks for playing!");
+
+					if (board.isBackgammon(inactivePlayer)) {
+						int stake = 3*board.getDoublingCubeMultiplier();
+						activePlayer.addScore(stake);
+						BackgammonView.printInfo(
+								"Game Completed, " + activePlayer.toString() + " wins a backgammon! "+stake+" is added to their score");
+					} else if (board.isGammon(inactivePlayer)) {
+						int stake = 2*board.getDoublingCubeMultiplier();
+						activePlayer.addScore(stake);
+						BackgammonView.printInfo(
+								"Game Completed, " + activePlayer.toString() + " wins a gammon! "+stake+" is added to their score");
+					} else {
+						int stake = board.getDoublingCubeMultiplier();
+						activePlayer.addScore(stake);
+						BackgammonView.printInfo(
+								"Game Completed, " + activePlayer.toString() + " wins a single! "+stake+" is added to their score");
+					}
 					isTurnOver = true;
 					isGameOver = true;
 				}
@@ -146,7 +189,6 @@ public class BackgammonGame {
 		}
 		// print the game one last time
 		BackgammonView.printBoard(this, activePlayer);
-
 	}
 
 	private void switchActivePlayer() {
@@ -159,9 +201,14 @@ public class BackgammonGame {
 		}
 	}
 
-	private void resetDoublingCube() {
-		player1.setCanOfferDoubles(true);
-		player2.setCanOfferDoubles(true);
+	private void setDoublingCube() {
+		if(this.isDoublingCubeInPlay()) {
+			player1.setCanOfferDoubles(true);
+			player2.setCanOfferDoubles(true);
+		} else {
+			player1.setCanOfferDoubles(false);
+			player2.setCanOfferDoubles(false);
+		}
 	}
 
 	private void chooseFirstPlayerToMove() {
@@ -196,7 +243,12 @@ public class BackgammonGame {
 
 	public boolean isDoublingCubeInPlay() {
 		// TODO Auto-generated method stub
-		return true;
+		boolean inPlay = true;
+		if (!match.hasCrawfordHappened() && ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
+			inPlay = false;
+			match.setHasCrawfordHappened(true);
+		}
+		return inPlay;
 	}
 
 	public int getDoublingCubePosition() {

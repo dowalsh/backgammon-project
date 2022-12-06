@@ -15,7 +15,8 @@ public class BackgammonViewTest {
 		System.setOut(new PrintStream(outContent));
 		// Now System.out.println() statements will come to outContent stream
 
-		BackgammonGame game = new BackgammonGame(null, new Player(Colour.WHITE,"Dummy"), new Player(Colour.BLACK,"Dummy"),5);
+		BackgammonMatch match = new BackgammonMatch();
+		BackgammonGame game = new BackgammonGame(match);
 		BackgammonView.printBoard(game, new Player(Colour.WHITE, "Dummy"));
 
 		String expectedOutput = "To roll the dice enter command 'roll'\n"+

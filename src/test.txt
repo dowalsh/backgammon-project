@@ -1,0 +1,12 @@
+dice 1 5
+a
+a
+dice 2 2
+a
+a
+a
+a
+dice 6 3
+a
+a
+quit

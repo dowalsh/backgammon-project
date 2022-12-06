@@ -78,4 +78,8 @@ public class Player {
 		 this.score=0;
 	}
 
+	public void setName(String s) {
+		this.name = s;
+	}
+
 }

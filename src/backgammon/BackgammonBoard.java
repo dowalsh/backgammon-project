@@ -314,14 +314,35 @@ public class BackgammonBoard {
 		return bearOff;
 	}
 
-	public boolean isWon(Player player) {
+	public boolean isWon(Player activePlayer) {
 		boolean gameWon = false;
-		if (getBearedOffSpaceByColour(player.getColour()).isFull()) {
+		if (getBearedOffSpaceByColour(activePlayer.getColour()).isFull()) {
 			gameWon = true;
 		}
 		return gameWon;
 	}
 
+	public boolean isBackgammon(Player inactivePlayer) {
+		boolean backgammon = false;
+		if (!this.getBarByColour(inactivePlayer.getColour()).isEmpty()) {
+			backgammon = true;
+		} else {
+			for(int i = 24; i > 18;i--) {
+				if (((Point) boardSpaces[inactivePlayer.getAlternateIndex(i) - 1]).hasCheckerOfColour(inactivePlayer.getColour())) {
+					backgammon = true;
+				}
+			}
+		}
+		return backgammon;
+	}
+	
+	public boolean isGammon(Player inactivePlayer) {
+		boolean gammon = false;
+		if (this.getBearedOffSpaceByColour(inactivePlayer.getColour()).isEmpty()) {
+			gammon = true;
+		}
+		return gammon;
+	}
 
 	private void endTurn() {
 		this.latestDiceRoll[0] = 0;
