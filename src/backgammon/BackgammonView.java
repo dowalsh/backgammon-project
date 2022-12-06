@@ -327,7 +327,6 @@ public class BackgammonView {
 		print("pip = Display Pip Counts");
 		print("Enter a letter A,B,C etc to make a move");
 		print("hint = Display all command options");
-		print("dice<int><int> = Enter your desired roll");
 		if (activePlayer.canOfferDoubles()) {
 			print("double = Offer a double to the other player");
 		}

@@ -110,7 +110,7 @@ public class BackgammonGame {
 
 				} else if (input.equals("HINT")) {
 					BackgammonView.printInputOptions(activePlayer);
-				} else if (input.matches("DICE[1-6][1-6]")) {
+				} else if (input.matches("DICE [1-6] [1-6]")) {
 
 					if (board.isDiceRolled()) {
 						BackgammonView.printError("Cannot re-roll dice");
