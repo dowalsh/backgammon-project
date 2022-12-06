@@ -25,7 +25,8 @@ public class BackgammonGame {
 
 	// board for the game
 	private BackgammonBoard board = new BackgammonBoard();
-//	private BackgammonBoard board = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
+	//TODO remove test comment
+//	private BackgammonBoard board = BackgammonBoard.createTestBoard("HIT");
 
 	public BackgammonBoard getBoard() {
 		return board;
