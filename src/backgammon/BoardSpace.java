@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  * This program is the BoardSpace class
  * @author Sam Lynch
- *
  */
 
 /**
- * A {@code BoardSpace} represents a space on the Backgammon Board.
+ * A {@code BoardSpace} represents any space where a checker can reside on the
+ * Backgammon Board.
  */
 
 public abstract class BoardSpace {
@@ -20,10 +20,11 @@ public abstract class BoardSpace {
 	 * Constructor for the class
 	 */
 	public BoardSpace() {
-
 	}
 
-	// Copy Constructor
+	/**
+	 * Copy Constructor for the class
+	 */
 	public BoardSpace(BoardSpace b) {
 		this.setColour(b.getColour());
 		if (!b.isEmpty())
@@ -31,19 +32,19 @@ public abstract class BoardSpace {
 	}
 
 	/**
-	 * Checks if checker can be placed on the space.
+	 * Checks if a given checker can be placed on the space.
 	 * 
 	 * @param start checker to be moved.
 	 * @return Whether or not a checker can be placed on this space.
 	 */
-	public abstract boolean canPlace(Checker start);
+	public abstract boolean canPlace(Checker checkerToBePlaced);
 
 	/**
-	 * Checks if a checker can be taken from the stack.
+	 * Checks if a given player can take checker can be taken from the stack.
 	 * 
 	 * @return Whether or not a checker can be taken from the stack.
 	 */
-	public abstract boolean canTake(Player player);
+	public abstract boolean canTake(Colour playerColour);
 
 	/**
 	 * Returns a string representation of this boardSpace
@@ -55,8 +56,11 @@ public abstract class BoardSpace {
 
 	/**
 	 * Get the pip value for this board space.
-	 * @param playerColour the colour of the player whose perspective the pip values should refer to
-	 * @return the pip value for this boardSpace (ie how many spaces away from beared off this space is)
+	 * 
+	 * @param playerColour the colour of the player whose perspective the pip values
+	 *                     should refer to
+	 * @return the pip value for this boardSpace (ie how many spaces away from
+	 *         beared off this space is)
 	 */
 	public abstract int getPipValue(Colour playerColour);
 
@@ -101,11 +105,10 @@ public abstract class BoardSpace {
 		return empty;
 	}
 
-
 	/**
 	 * Adds a checker to the space.
 	 * 
-	 * @param ToAdd Checker to be added to space.
+	 * @param toAdd Checker to be added to space.
 	 */
 	public void addChecker(Checker toAdd) {
 		stackOfCheckers.add(toAdd);

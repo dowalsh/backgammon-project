@@ -76,11 +76,11 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public boolean canPlace(Checker start) {
+	public boolean canPlace(Checker checkerToBePlaced) {
 		boolean place = false;
 		if (this.isEmpty()) {
 			place = true;
-		} else if (start.getColour().equals(getTopChecker().getColour())) {
+		} else if (checkerToBePlaced.getColour().equals(getTopChecker().getColour())) {
 			place = true;
 		} else if (this.getNumCheckers() == 1) {
 			place = true;
@@ -90,11 +90,11 @@ public class Point extends BoardSpace {
 
 
 	@Override
-	public boolean canTake(Player player) {
+	public boolean canTake(Colour playerColour) {
 		boolean take;
 		if (this.isEmpty()) {
 			take = false;
-		} else if (!player.getColour().equals(this.getTopChecker().getColour())) {
+		} else if (!playerColour.equals(this.getTopChecker().getColour())) {
 			take = false;
 		} else {
 			take = true;
@@ -103,8 +103,8 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public int getPipValue(Colour colour) {
-		return colour.getAlternateIndex(whiteIndex);
+	public int getPipValue(Colour playerColour) {
+		return playerColour.getAlternateIndex(whiteIndex);
 	}
 
 	/**

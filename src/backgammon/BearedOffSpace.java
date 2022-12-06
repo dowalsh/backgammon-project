@@ -27,21 +27,21 @@ public class BearedOffSpace extends BoardSpace {
 	}
 
 	@Override
-	public boolean canPlace(Checker start) {
+	public boolean canPlace(Checker checkerToBePlaced) {
 		boolean place = false;
-		if(start.getColour().equals(this.getColour())) {
+		if(checkerToBePlaced.getColour().equals(this.getColour())) {
 			place = true;
 		}
 		return place;
 	}
 	
 	@Override
-	public boolean canTake(Player player) {
+	public boolean canTake(Colour playerColour) {
 		return false;
 	}
 	
 	@Override
-	public int getPipValue(Colour colour) {
+	public int getPipValue(Colour playerColour) {
 		return 0;
 	}
 	

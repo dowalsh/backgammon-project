@@ -34,10 +34,11 @@ class PointTest {
 	@Test
 	void testCanTake() {
 		//cannot take from empty
-		assertEquals(false, emptyPoint.canTake(new Player(Colour.WHITE, "Dummy")));
+		assertEquals(false, emptyPoint.canTake(Colour.WHITE));
+
 		//can only take if checker same colour as player
-		assertEquals(true, oneBlackCheckerPoint.canTake(new Player(Colour.BLACK, "Dummy")));
-		assertEquals(false, oneBlackCheckerPoint.canTake(new Player(Colour.WHITE, "Dummy")));
+		assertEquals(true, oneBlackCheckerPoint.canTake(Colour.BLACK));
+		assertEquals(false, oneBlackCheckerPoint.canTake(Colour.WHITE));
 	}
 
 	@Test

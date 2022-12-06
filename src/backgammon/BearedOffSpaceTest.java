@@ -29,11 +29,13 @@ class BearedOffSpaceTest {
 	void testCanTake() {
 		blackBearedOffSpace.addChecker(black);
 		//cannot take from empty
-		assertEquals(false, whiteBearedOffSpace.canTake(new Player(Colour.WHITE, "Dummy")));
-		//can never take even if checker same colour as player
-		assertEquals(false, blackBearedOffSpace.canTake(new Player(Colour.BLACK, "Dummy")));
-		assertEquals(false, blackBearedOffSpace.canTake(new Player(Colour.WHITE, "Dummy")));
-	}
+		assertEquals(false, whiteBearedOffSpace.canTake(Colour.WHITE));
+		
+		//can only take if checker same colour as player
+		assertEquals(true, blackBearedOffSpace.canTake(Colour.BLACK));
+		assertEquals(false, blackBearedOffSpace.canTake(Colour.WHITE));
+	}	
+
 
 	@Test
 	void testIsFull() {
