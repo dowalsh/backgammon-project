@@ -29,22 +29,23 @@ public class Move implements Comparable<Move> {
 	}
 
 	/**
-	 * Returns where checker is moving from.
+	 * Returns the boardspace the checker is moving from.
 	 * 
-	 * @return Source of checker.
+	 * @param board the board being played on
+	 * @param colour the player whose perspective this move is for
+	 * @return Source boardspace of checker.
 	 */
 	public BoardSpace getSource(BackgammonBoard board, Colour colour) {
-		// TODO logic to return the boardSpace
 		return board.getBoardSpaceByPipValue(sourcePipValue, colour);
 	}
 
 	/**
-	 * Returns where checker is moving to.
+	 * Returns the boardspace the checker is moving to.
 	 * 
-	 * @param colour
+	 * @param board the board being played on
 	 * @param board
-	 * 
-	 * @return Destination of checker.
+	 * @param colour the player whose perspective this move is for
+	 * @return Destination boardspace of checker.
 	 */
 	public BoardSpace getDestination(BackgammonBoard board, Colour colour) {
 		return board.getBoardSpaceByPipValue(destinationPipValue, colour);
@@ -60,12 +61,15 @@ public class Move implements Comparable<Move> {
 		} else {
 			moveString = "[" + roll + "]  " + sourcePipValue + "->" + destinationPipValue;
 		}
-			
 		return moveString;
 	}
 
+	/**
+	 * get the distance that is being moved in this move
+	 * 
+	 * @return the roll amount
+	 */
 	public Object getRoll() {
-
 		return this.roll;
 	}
 
@@ -75,9 +79,6 @@ public class Move implements Comparable<Move> {
 		
 		if (comp == 0) {
 			comp = sourcePipValue - o.sourcePipValue;
-			if(comp == 0) {
-				comp = destinationPipValue - o.destinationPipValue;
-			}
 		}
 
 		return comp;

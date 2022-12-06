@@ -153,7 +153,7 @@ public class BackgammonView {
 			if (board.isDiceRolled()) {
 				int[] diceRoll = board.getLatestDiceRoll();
 				formatString.append(board.legalMovesToString(player));
-				formatString.append(Dice.getDiceAsString(diceRoll));
+				formatString.append(Dice.getDiceAsString(diceRoll[0],diceRoll[1]));
 
 			} else {
 				formatString.append("To roll the dice enter command 'roll'\n");

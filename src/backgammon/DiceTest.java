@@ -53,21 +53,8 @@ public class DiceTest {
 				+indent+ "|   o   |     |   o   |\n"
 				+indent+ "|       |     | o   o |\n"
 				+indent+ "+-------+     +-------+\n";
-		int diceValues[] = {1,5};
-		assertEquals(expectedResult, Dice.getDiceAsString(diceValues));
+		assertEquals(expectedResult, Dice.getDiceAsString(1,5));
 	}
 
 
 }
-/*
-
-
-
-+-------+     +-------+
-|       |     | o   o |
-|   o   |     |   o   |
-|       |     | o   o |
-+-------+     +-------+
-
-
-*/
