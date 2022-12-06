@@ -49,6 +49,12 @@ public class BackgammonGame {
 		BackgammonView.pressEnterToContinue(scan);
 
 		this.setDoublingCube();
+		
+		if(this.isDoublingCubeInPlay()) {
+			BackgammonView.printInfo("Doubles in Play");
+		} else {
+			BackgammonView.printInfo("No Doubles in Play");
+		}
 
 		BackgammonView.printInputOptions(activePlayer);
 		// Game control loop
@@ -77,7 +83,7 @@ public class BackgammonGame {
 					// Quit Game
 					BackgammonView.printQuitMessage();
 					isTurnOver = true;
-					isGameOver = false;
+					isGameOver = true;
 				} else if (input.equals("ROLL")) {
 					if (board.isDiceRolled()) {
 						BackgammonView.printError("Cannot re-roll dice");
@@ -234,10 +240,17 @@ public class BackgammonGame {
 
 	public boolean isDoublingCubeInPlay() {
 		boolean inPlay = true;
+<<<<<<< HEAD
 		if (!match.hasCrawfordHappened()
 				&& ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
+=======
+		System.out.println(player1.getScore());
+		System.out.println(player2.getScore());
+		System.out.println(matchLength);
+		System.out.println(match.hasCrawfordHappened());
+		if (!match.hasCrawfordHappened() && ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
+>>>>>>> 8c4e23ac94cdac288a3b6d89062ade5ecfe07838
 			inPlay = false;
-			match.setHasCrawfordHappened(true);
 		}
 		return inPlay;
 	}

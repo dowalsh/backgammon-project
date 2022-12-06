@@ -7,6 +7,7 @@ public class Backgammon {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 
+
 		boolean run = true;
 		while (run) {
 			BackgammonMatch match = new BackgammonMatch(scan);
