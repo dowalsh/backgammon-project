@@ -32,10 +32,19 @@ class BackgammonBoardTest {
 	
 	@Test
 	void testOnlyLargerRoll() {
-		BackgammonBoard testboard = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
-		testboard.setRolls(5, 3, blackPlayer);
+		board = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
+		board.setRolls(5, 3, blackPlayer);
 		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5,15,10)));
-		Collection<Move> actualMoves = testboard.getLegalMoves();
+		Collection<Move> actualMoves = board.getLegalMoves();
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+	}
+	
+	@Test
+	void testOnlyDoubleMove() {
+		board = BackgammonBoard.createTestBoard("ONLY DOUBLE ROLL MOVES");
+		board.setRolls(5, 3, blackPlayer);
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5,10,5),new Move(3,15,12)));
+		Collection<Move> actualMoves = board.getLegalMoves();
 		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
 	}
 

@@ -154,6 +154,13 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(15, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
 			testBoard.getBoardSpaceByPipValue(18, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
 			break;
+			
+		case "ONLY DOUBLE ROLL MOVES":
+			testBoard.getBoardSpaceByPipValue(15, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(10, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(18, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
+			break;
+			
 		}
 		// call constructor
 		return testBoard;
@@ -469,11 +476,13 @@ public class BackgammonBoard {
 		}
 		if (canUseBothRolls) {
 			// Remove any moveSets where only 1 roll is used
+			List<MoveSet> trimmedLegalMoveSets = new ArrayList<MoveSet>();
 			for (MoveSet moveSet : legalMoveSets) {
-				if (moveSet.size() == 1) {
-					legalMoveSets.remove(moveSet);
+				if (moveSet.size() != 1) {
+					trimmedLegalMoveSets.add(moveSet);
 				}
 			}
+			legalMoveSets = trimmedLegalMoveSets;
 		} else {
 			boolean canUseLargerRoll = false;
 			for (MoveSet moveSet : legalMoveSets) {

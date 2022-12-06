@@ -24,8 +24,8 @@ public class BackgammonGame {
 	private BackgammonMatch match;
 
 	// board for the game
-	private BackgammonBoard board = new BackgammonBoard();
-//	private BackgammonBoard board = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
+	//private BackgammonBoard board = new BackgammonBoard();
+	private BackgammonBoard board = BackgammonBoard.createTestBoard("ONLY DOUBLE ROLL MOVES");
 
 	public BackgammonBoard getBoard() {
 		return board;
