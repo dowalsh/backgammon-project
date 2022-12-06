@@ -126,6 +126,7 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
 			break;
+
 			
 		case "GAMMON WIN":
 			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
@@ -138,7 +139,6 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(22, Colour.BLACK).addNewCheckers(15, Colour.BLACK);
 			break;
-			
 		case "BEAR OFF":
 			// can implement any number of specific test scenarios here
 			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(3, Colour.BLACK);
@@ -161,6 +161,11 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(18, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
 			break;
 			
+
+		case "HIT":
+			testBoard.getBoardSpaceByPipValue(14, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(13, Colour.BLACK).addNewCheckers(1, Colour.WHITE);
+			break;
 		}
 		// call constructor
 		return testBoard;

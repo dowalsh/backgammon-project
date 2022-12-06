@@ -27,9 +27,10 @@ class BackgammonBoardTest {
 		board.setRolls(6, 2, blackPlayer);
 		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(2,2,0),new Move(2,3,1),new Move(2,4,2),new Move(6,4,0)));
 		Collection<Move> actualMoves = board.getLegalMoves();
-		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves)
+				&& actualMoves.containsAll(testMoves));
 	}
-	
+
 	@Test
 	void testOnlyLargerRoll() {
 		board = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
@@ -64,27 +65,54 @@ class BackgammonBoardTest {
 	void testIsTurnOver() {
 		board.beginTurn();
 		assertEquals(false, board.isTurnOver());
-		//TODO endTurn()
+		board.setRolls(1, 1, blackPlayer);
+		for (int i = 1; i <= 4; i++) {
+			board.selectMove('A', blackPlayer);
+		}
+		assertEquals(true, board.isTurnOver());
 	}
 
 	@Test
 	void testNoMoveAvailable() {
-		board.rollDice(blackPlayer);
+		board.setRolls(6, 6, blackPlayer);
 		assertEquals(false, board.noMoveAvailable(blackPlayer));
+		for (int i = 1; i <= 4; i++) {
+			board.selectMove('A', blackPlayer);
+		}
+		assertEquals(true, board.noMoveAvailable(blackPlayer));
+
+	}
+
+	@Test
+	void testDoublingCube() {
+		assertEquals(1, board.getDoublingCubeMultiplier());
+		board.applyDouble();
+		assertEquals(2, board.getDoublingCubeMultiplier());
+		board.applyDouble();
+		assertEquals(4, board.getDoublingCubeMultiplier());
+	}
+
+	@Test
+	void testSetRolls() {
+		board.setRolls(3, 4, blackPlayer);
+		assertArrayEquals(new int[] { 3, 4 }, board.getLatestDiceRoll());
 	}
 	
 	@Test
-	void testDoublingCube() {
-//TODO applyDouble
-		//getDoublingCubeMultiplier
-		}
-	
-	@Test
-	void testSetRolls() {
-		
-		
-//TODO setRolls and getLatestDiceRoll
-		//legalMovesToString
+	void testLegalMovesToString() {
+		board.setRolls(3, 4, blackPlayer);
+		String expectedString = 
+				"Remaining Rolls: [3, 4]\n"
+				+ "MOVE OPTIONS: \n" 
+				+ "A) [3]  6->3\n"
+				+ "B) [3]  8->5\n"
+				+ "C) [3]  13->10\n" 
+				+ "D) [3]  24->21\n" 
+				+ "E) [4]  6->2\n" 
+				+ "F) [4]  8->4\n"
+				+ "G) [4]  13->9\n"
+				+ "H) [4]  24->20\n";
+		assertEquals(expectedString, board.legalMovesToString(blackPlayer));
 	}
 	
 	@Test
@@ -118,14 +146,40 @@ class BackgammonBoardTest {
 	}
 	
 	@Test
-	void testHit() {
-		// set up hitting board
-		// roll 1 1 for player
-		//check bar empty
-		// selectMove A
-		//check bar has exactly one checker of that colour
+	void testWins() {
 
 	}
 
+	@Test
+	void testHit() {
+		// set up hitting board
+		board = BackgammonBoard.createTestBoard("HIT");
+		// roll 1 1 for player
+		board.setRolls(1, 1, blackPlayer);
+		// get number of white checkers on the white bar
+		int num_before = board.getBoardSpaceByPipValue(25, Colour.WHITE).getNumCheckers();
+		// selectMove A (only move available)
+		board.selectMove('A', blackPlayer);
+		int num_after = board.getBoardSpaceByPipValue(25, Colour.WHITE).getNumCheckers();
+		// check bar has exactly one more white checker
+		assertEquals(num_before+1,num_after);
+	}
+	
+	@Test
+	void testGetMoveKeys() {
+		board.setRolls(3, 4, blackPlayer);
+		List<Character> expectedKeys1 = new ArrayList<Character>(List.of('A','B','C','D','E','F','G','H'));
+		Collection<Character> actualKeys1 = board.getMoveKeys();
+		assertTrue(expectedKeys1.size() == actualKeys1.size() && expectedKeys1.containsAll(actualKeys1)
+				&& actualKeys1.containsAll(expectedKeys1));
+
+		board.selectMove('B', blackPlayer);
+
+		List<Character> expectedKeys2 = new ArrayList<Character>(List.of('A','B','C','D'));
+		Collection<Character> actualKeys2 = board.getMoveKeys();
+		assertTrue(expectedKeys2.size() == actualKeys2.size() && expectedKeys2.containsAll(actualKeys2)
+				&& actualKeys2.containsAll(expectedKeys2));
+
+	}
 
 }
