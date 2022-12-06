@@ -32,7 +32,8 @@ public class BackgammonGame {
 	}
 
 	// Store whether the game is over
-	boolean isGameOver = false;
+	boolean isGameCompleted = false;
+	boolean isGameQuit = false;
 
 	public BackgammonGame(BackgammonMatch m) {
 		this.scan = m.getScanner();
@@ -49,8 +50,8 @@ public class BackgammonGame {
 		BackgammonView.pressEnterToContinue(scan);
 
 		this.setDoublingCube();
-		
-		if(this.isDoublingCubeInPlay()) {
+
+		if (this.isDoublingCubeInPlay()) {
 			BackgammonView.printInfo("Doubles in Play");
 		} else {
 			BackgammonView.printInfo("No Doubles in Play");
@@ -58,14 +59,14 @@ public class BackgammonGame {
 
 		BackgammonView.printInputOptions(activePlayer);
 		// Game control loop
-		while (!isGameOver) {
+		while (!isGameCompleted && !isGameQuit) {
 
 			this.switchActivePlayer();
 			board.beginTurn();
 
 			// Turn control loop
 			boolean isTurnOver = false;
-			while (!isTurnOver) {
+			while (!isTurnOver && !isGameQuit) {
 				BackgammonView.printInfo(activePlayer.toString() + " it is your turn!");
 				BackgammonView.printScores(matchLength, player1, player2);
 				BackgammonView.printBoard(this, activePlayer);
@@ -82,8 +83,7 @@ public class BackgammonGame {
 				if (input.equals("QUIT")) {
 					// Quit Game
 					BackgammonView.printQuitMessage();
-					isTurnOver = true;
-					isGameOver = true;
+					isGameQuit = true;
 				} else if (input.equals("ROLL")) {
 					if (board.isDiceRolled()) {
 						BackgammonView.printError("Cannot re-roll dice");
@@ -148,7 +148,7 @@ public class BackgammonGame {
 							BackgammonView.printInfo("Double Refused");
 							validAnswer = true;
 							isTurnOver = true;
-							isGameOver = true;
+							isGameCompleted = true;
 						} else {
 							// input error
 							BackgammonView.printError("INVALID INPUT");
@@ -161,31 +161,32 @@ public class BackgammonGame {
 				}
 				if (board.isWon(activePlayer)) {
 					isTurnOver = true;
-					isGameOver = true;
+					isGameCompleted = true;
 				}
 			}
 		}
 
 		// Calculate score addition
-		int baseScore = 1; // for a single
-		String winTypeString = "Single";
-		if (board.isWon(activePlayer)) {
-			if (board.isBackgammon(inactivePlayer)) {
-				baseScore = 2;
-				winTypeString = "Backgammon";
-			} else if (board.isGammon(inactivePlayer)) {
-				baseScore = 3;
-				winTypeString = "Gammon";
+		if (!isGameQuit) {
+			int baseScore = 1; // for a single
+			String winTypeString = "Single";
+			if (board.isWon(activePlayer)) {
+				if (board.isBackgammon(inactivePlayer)) {
+					baseScore = 2;
+					winTypeString = "Backgammon";
+				} else if (board.isGammon(inactivePlayer)) {
+					baseScore = 3;
+					winTypeString = "Gammon";
+				}
 			}
+			int stake = baseScore * board.getDoublingCubeMultiplier();
+			activePlayer.addScore(stake);
+			BackgammonView.printInfo("Game Completed, " + activePlayer.toString() + " wins a " + winTypeString + "! "
+					+ stake + " is added to their score");
+
+			// print the game one last time
+			BackgammonView.printBoard(this, activePlayer);
 		}
-		int stake = baseScore * board.getDoublingCubeMultiplier();
-		activePlayer.addScore(stake);
-		BackgammonView.printInfo(
-				"Game Completed, " + activePlayer.toString() + " wins a "+winTypeString+ "! " + stake + " is added to their score");
-
-		// print the game one last time
-		BackgammonView.printBoard(this, activePlayer);
-
 	}
 
 	private void switchActivePlayer() {
@@ -235,7 +236,7 @@ public class BackgammonGame {
 	}
 
 	public boolean isGameOver() {
-		return isGameOver;
+		return isGameCompleted;
 	}
 
 	public boolean isDoublingCubeInPlay() {
@@ -244,7 +245,8 @@ public class BackgammonGame {
 		System.out.println(player2.getScore());
 		System.out.println(matchLength);
 		System.out.println(match.hasCrawfordHappened());
-		if (!match.hasCrawfordHappened() && ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
+		if (!match.hasCrawfordHappened()
+				&& ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
 			inPlay = false;
 		}
 		return inPlay;
