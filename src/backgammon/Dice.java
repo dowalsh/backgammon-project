@@ -9,9 +9,8 @@ package backgammon;
 /**
  * A {@code Dice} represents a dice
  */
-public class Dice {
+public final class Dice {
 	private final static double SIDES_ON_DICE = 6.0;
-
 
 	/**
 	 * Rolls the dice.
@@ -23,7 +22,7 @@ public class Dice {
 		return (int) roll;
 	}
 
-	public final static String toString(int results[]) {
+	public final static String getDiceAsString(int results[]) {
 
 		String indent = " ".repeat(15);
 		String gap = " ".repeat(5);

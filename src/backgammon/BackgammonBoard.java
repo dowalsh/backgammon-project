@@ -233,7 +233,7 @@ public class BackgammonBoard {
 		for (Map.Entry<Character, Move> m : legalMoves.entrySet()) {
 			char key = m.getKey();
 			Move move = m.getValue();
-			moveString.append(key + ") " + move.toString(activePlayer) + "\n");
+			moveString.append(key + ") " + move.toString() + "\n");
 		}
 		return moveString.toString();
 	}
