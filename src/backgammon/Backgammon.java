@@ -1,10 +1,11 @@
 package backgammon;
 
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 public class Backgammon {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException{
 
 		boolean run = true;
 		while(run) {

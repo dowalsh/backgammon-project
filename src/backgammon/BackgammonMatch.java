@@ -1,6 +1,7 @@
 package backgammon;
 
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 public class BackgammonMatch {
 
@@ -18,7 +19,7 @@ public class BackgammonMatch {
 
 	}
 
-	public void playMatch() {
+	public void playMatch() throws FileNotFoundException{
 
 		scan = new Scanner(System.in);
 
