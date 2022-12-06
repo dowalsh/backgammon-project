@@ -54,6 +54,7 @@ class BackgammonBoardTest {
 	void testIsTurnOver() {
 		board.beginTurn();
 		assertEquals(false, board.isTurnOver());
+		//TODO endTurn()
 	}
 
 	@Test
@@ -61,5 +62,35 @@ class BackgammonBoardTest {
 		board.rollDice(activePlayer);
 		assertEquals(false, board.noMoveAvailable(activePlayer));
 	}
+	
+	@Test
+	void testDoublingCube() {
+//TODO applyDouble
+		//getDoublingCubeMultiplier
+		}
+	
+	@Test
+	void testSetRolls() {
+		
+		
+//TODO setRolls and getLatestDiceRoll
+		//legalMovesToString
+	}
+	
+	@Test
+	void testWins() {
+		
+	}
+	
+	@Test
+	void testHit() {
+		// set up hitting board
+		// roll 1 1 for player
+		//check bar empty
+		// selectMove A
+		//check bar has exactly one checker of that colour
+
+	}
+
 
 }

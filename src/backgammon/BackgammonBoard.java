@@ -120,13 +120,13 @@ public class BackgammonBoard {
 		BackgammonBoard testBoard = new BackgammonBoard(points, whiteBar, blackBar, whiteBearedOffSpace, blackBearedOffSpace);
 
 		switch (testScenarioString) {
-		case "EXAMPLE TEST":
+//		case "EXAMPLE TEST":
 			// This example test shows the format of how a test board can be configured
 			// In this example we want to add 5 checkers to the white beared off space
 			// To do so, we get the white beared off space using getBoardSpaceByPipValue(0, Colour.WHITE)
 			// then we add 5 white checkers to this space using addNewCheckers(5, Colour.WHITE)
-			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
-			break;
+//			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+//			break;
 		case "NEARLY OVER":
 			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(0, Colour.BLACK).addNewCheckers(14, Colour.BLACK);
@@ -251,7 +251,6 @@ public class BackgammonBoard {
 
 	private Collection<Integer> getUniqueAvailableRolls() {
 		Collection<Integer> uniqueRolls = new HashSet<Integer>(availableRolls);
-
 		return uniqueRolls;
 	}
 
@@ -362,7 +361,7 @@ public class BackgammonBoard {
 		return gammon;
 	}
 
-	private void endTurn() {
+	protected void endTurn() {
 		this.latestDiceRoll[0] = 0;
 		this.latestDiceRoll[1] = 0;
 		isDiceRolled = false;
@@ -464,6 +463,7 @@ public class BackgammonBoard {
 			}
 		}
 		if (canUseBothRolls) {
+			// Remove any moveSets where only 1 roll is used
 			for (MoveSet moveSet : legalMoveSets) {
 				if (moveSet.size() == 1) {
 					legalMoveSets.remove(moveSet);
