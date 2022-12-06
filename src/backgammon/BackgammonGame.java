@@ -241,12 +241,7 @@ public class BackgammonGame {
 
 	public boolean isDoublingCubeInPlay() {
 		boolean inPlay = true;
-		System.out.println(player1.getScore());
-		System.out.println(player2.getScore());
-		System.out.println(matchLength);
-		System.out.println(match.hasCrawfordHappened());
-		if (!match.hasCrawfordHappened()
-				&& ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
+		if (!match.hasCrawfordHappened() && ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
 			inPlay = false;
 		}
 		return inPlay;
