@@ -13,8 +13,16 @@ package backgammon;
 public enum Colour {
 	BLACK,
 	WHITE;
-
-	int getAlternateIndex(int index) {
+	
+	/**
+	 * Converts both ways between player perspective indexing and universal indexing.
+	 * Players perspective indexing is equivalent to their own pip values
+	 * Universal indexing is arbitrarily chosen as white's perspective for use in this program
+	 * 
+	 * @param index the index to be converted from player perspective to universal perspective OR the universal perspective index to be converted to player's perspective
+	 * @return index in the alternate form.
+	 */
+	public int getAlternateIndex(int index) {
 		int alternateIndex;
 		if (this == Colour.WHITE) {
 			alternateIndex = index;

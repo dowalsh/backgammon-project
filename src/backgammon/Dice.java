@@ -13,22 +13,29 @@ public final class Dice {
 	private final static double SIDES_ON_DICE = 6.0;
 
 	/**
-	 * Rolls the dice.
+	 * Rolls a dice
 	 * 
 	 * @return The result of the roll
 	 */
 	public final static int roll() {
-		double roll = (Math.random()*SIDES_ON_DICE) + 1.0;
+		double roll = (Math.random() * SIDES_ON_DICE) + 1.0;
 		return (int) roll;
 	}
 
-	public final static String getDiceAsString(int results[]) {
+	/**
+	 * Returns a string representation of 2 Dice
+	 * 
+	 * @param roll1 the value of the first die
+	 * @param roll2 the value of the second die
+	 * @return String representing the two dice
+	 */
+	public final static String getDiceAsString(int roll1, int roll2) {
 
 		String indent = " ".repeat(15);
 		String gap = " ".repeat(5);
 
-		String[][] diceFace1 = getDiceFace(results[0]);
-		String[][] diceFace2 = getDiceFace(results[1]);
+		String[][] diceFace1 = getDiceFace(roll1);
+		String[][] diceFace2 = getDiceFace(roll2);
 
 		final StringBuilder formatString = new StringBuilder("");
 		// header line
@@ -55,6 +62,13 @@ public final class Dice {
 		return formatString.toString();
 	}
 
+	/**
+	 * Returns a 2D String array representation representation of the face of a die,
+	 * where circles represent the dots of the face of a die
+	 * 
+	 * @param n the value of the die
+	 * @return 2D String array representation the face of the die
+	 */
 	public final static String[][] getDiceFace(int n) {
 
 		String[][] diceFace = { { " ", " ", " " }, { " ", " ", " " }, { " ", " ", " " } };

@@ -2,18 +2,10 @@ package backgammon;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 public class MoveTest {
-	Move move_1_between_13_12 = new Move(1, 13, 12);
-	BackgammonBoard board = new BackgammonBoard();
-
-	
-	@BeforeEach
-	void setUp() {
-
-
-	}
+	private Move move_1_between_13_12 = new Move(1, 13, 12);
+	private BackgammonBoard board = new BackgammonBoard();
 	
 	@Test
 	void testEquals() {
