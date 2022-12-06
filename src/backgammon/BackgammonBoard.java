@@ -126,11 +126,13 @@ public class BackgammonBoard {
 			// To do so, we get the white beared off space using getBoardSpaceByPipValue(0, Colour.WHITE)
 			// then we add 5 white checkers to this space using addNewCheckers(5, Colour.WHITE)
 			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+			break;
 		case "NEARLY OVER":
 			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(0, Colour.BLACK).addNewCheckers(14, Colour.BLACK);
 			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+			break;
 
 		case "BEAR OFF":
 			// can implement any number of specific test scenarios here
@@ -141,8 +143,13 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(25, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(19, Colour.WHITE).addNewCheckers(4, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(16, Colour.WHITE).addNewCheckers(10, Colour.WHITE);
-		}
+			break;
 		
+		case "ONLY LARGER ROLL":
+			testBoard.getBoardSpaceByPipValue(15, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(18, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
+			break;
+		}
 		// call constructor
 		return testBoard;
 	}
@@ -237,6 +244,10 @@ public class BackgammonBoard {
 		}
 		return moveString.toString();
 	}
+	
+	protected Collection<Move> getLegalMoves(){
+		return this.legalMoves.values();
+	}
 
 	private Collection<Integer> getUniqueAvailableRolls() {
 		Collection<Integer> uniqueRolls = new HashSet<Integer>(availableRolls);
@@ -311,7 +322,7 @@ public class BackgammonBoard {
 		return destination;
 	}
 
-	public boolean canBearOff(Player activePlayer) {
+	private boolean canBearOff(Player activePlayer) {
 		boolean bearOff = true;
 		for (int i = 24; i > 6; i--) {
 			if (((Point) boardSpaces[activePlayer.getAlternateIndex(i) - 1]).hasCheckerOfColour(activePlayer.getColour())) {
@@ -400,7 +411,7 @@ public class BackgammonBoard {
 		return legalMoves.keySet();
 	}
 
-	public void updateLegalMoves(Player activePlayer) {
+	private void updateLegalMoves(Player activePlayer) {
 
 		List<Move> possibleNextMoves = getPossibleNextMoves(activePlayer);
 		if (possibleNextMoves.isEmpty()) {

@@ -1,5 +1,9 @@
 package backgammon;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,19 +16,26 @@ class BackgammonBoardTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		board = new BackgammonBoard();
-		activePlayer = new Player(Colour.WHITE, "Dummy");
-	}
-
-
-	@Test
-	void testCanBearOff() {
-		
-		assertEquals(false, board.canBearOff(activePlayer));
+		activePlayer = new Player(Colour.BLACK,"Dummy");
 	}
 
 	@Test
-	void testIsWon() {
-		assertEquals(false, board.isWon(activePlayer));
+	void testBearOff() {
+		board = BackgammonBoard.createTestBoard("BEAR OFF");
+		board.setRolls(6, 2, activePlayer);
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(2,2,0),new Move(2,3,1),new Move(2,4,2),new Move(6,4,0)));
+		Collection<Move> actualMoves = board.getLegalMoves();
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
+	}
+	
+	@Test
+	void testOnlyLargerRoll() {
+		BackgammonBoard testboard = BackgammonBoard.createTestBoard("ONLY LARGER ROLL");
+		testboard.setRolls(5, 3, activePlayer);
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(5,15,10)));
+		Collection<Move> actualMoves = testboard.getLegalMoves();
+		assertEquals(testMoves.size() ,actualMoves.size());
+		assertTrue(testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
 	}
 
 	@Test
