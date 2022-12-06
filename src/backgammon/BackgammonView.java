@@ -30,18 +30,16 @@ public class BackgammonView {
 	 * @param board  the BackgammonBoard object
 	 * @param player the player to print the board perspective for
 	 */
-	//TODO refactor
+	// TODO refactor
 	public static void printBoard(BackgammonGame game, Player player) {
-
 
 		BackgammonBoard board = game.getBoard();
 		BoardSpace[] bs = board.getBoardSpaces();
-		
+
 		boolean isGameOver = game.isGameOver();
 		boolean isDoublingCubeInPlay = game.isDoublingCubeInPlay();
 		int doublingCubePosition = game.getDoublingCubePosition();
 
-		
 		// 2D array to display game
 
 		// 2 rows for the top, 2 for the bottom, 1 for space and N for each side of
@@ -278,10 +276,6 @@ public class BackgammonView {
 
 	}
 
-	public static void promptPlayerForInput() {
-		print("\nPlease Enter Input: ");
-	}
-
 	/**
 	 * Formats and prints an error message to the console
 	 * 
@@ -340,15 +334,6 @@ public class BackgammonView {
 
 	}
 
-	public static void promptForPlayerName(int i) {
-		Colour colour;
-		if (i == 1)
-			colour = Colour.WHITE;
-		else
-			colour = Colour.BLACK;
-		print("Enter the name for player " + i + " (" + colour + "): ");
-	}
-
 	public static void printPipCounts(BackgammonBoard board, Player player1, Player player2) {
 		printInfo("Pip Counts");
 		print(player1 + ": " + board.getPipCount(player1.getColour()));
@@ -361,18 +346,12 @@ public class BackgammonView {
 				+ " has offered you a double.\nWould you like to accept this offer and the stakes will be doubled?\nOr would you like to refuse and concede this game?");
 	}
 
-	public static void printDoubleOptions() {
-		printBanner("INPUT OPTIONS", "=");
-		print("accept = Accept the offer and stakes will be doubled");
-		print("refuse = Refuse the offer and concede the game");
-	}
-
 	public static int getIntegerFromUser(String prompt, Scanner inputScanner) {
 		int inputInteger = 0;
 		boolean isValidInteger = false;
 		do {
 			print("\n" + prompt + ": ");
-			String inputString = inputScanner.next();
+			String inputString = inputScanner.nextLine();
 			try {
 				inputInteger = Integer.parseInt(inputString);
 				isValidInteger = true;
@@ -384,18 +363,50 @@ public class BackgammonView {
 		return inputInteger;
 	}
 
-	public static void pressEnterToContinue() {
+	public static void pressEnterToContinue(Scanner scan) {
 		print("\n> Press Enter To Continue: ");
-		try {
-			System.in.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		scan.nextLine();
 	}
 
 	public static void printScores(int matchLength, Player player1, Player player2) {
 		print("\n~~~ SCORES ~~~\n" + player1.toString() + ": " + player1.getScore() + "\n" + player2.toString() + ": "
 				+ player2.getScore() + "\nMatch Length: " + matchLength + "\n");
+	}
+
+	public static String promptPlayerForInput(Scanner scan) {
+		return promptForString("Please Enter Input", scan);
+	}
+
+	public static String promptForRematch(Scanner scan) {
+		return promptForString("Would you like to play another match of Backgammon?\nEnter YES or NO", scan);
+	}
+
+	public static String promptForDoublesAnswer(Scanner scan) {
+		return promptForString("!!!!  INPUT OPTIONS !!!!\n"
+			+"accept = Accept the offer and stakes will be doubled\n"
+			+"refuse = Refuse the offer and concede the game\n"
+			+"Do you accept?", scan);
+	}
+
+	private static String promptForString(String prompt, Scanner inputScanner) {
+		print("\n" + prompt + ": ");
+		// convert input string to upper case in order to accept lower case inputs
+		String inputString = inputScanner.nextLine().toUpperCase();
+		return inputString;
+	}
+	
+
+	public static String promptForPlayerName(int i, Scanner scan) {
+		Colour colour;
+		if (i == 1)
+			colour = Colour.WHITE;
+		else
+			colour = Colour.BLACK;
+		return promptForString("Enter the name for player " + i + " (" + colour + "): ", scan);
+	}
+
+	public static void printQuitMessage() {
+		print("\nThanks For Playing!");
 	}
 
 }

@@ -2,16 +2,13 @@ package backgammon;
 
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-
 
 public class BackgammonGame {
 
 	// user input scanner
 	private Scanner scan;
 	private Scanner filescan;
-	
+
 	private boolean testMode = false;
 
 	// Players of the match
@@ -23,9 +20,8 @@ public class BackgammonGame {
 	private Player inactivePlayer;
 
 	private int matchLength;
-	
+
 	private BackgammonMatch match;
-	
 
 	// board for the game
 //	private BackgammonBoard board = new BackgammonBoard();
@@ -46,12 +42,12 @@ public class BackgammonGame {
 		this.match = m;
 	}
 
-	public void playGame(){
+	public void playGame() {
 
 		this.chooseFirstPlayerToMove();
 
-		BackgammonView.pressEnterToContinue();
-		
+		BackgammonView.pressEnterToContinue(scan);
+
 		this.setDoublingCube();
 		
 		if(this.isDoublingCubeInPlay()) {
@@ -74,20 +70,18 @@ public class BackgammonGame {
 				BackgammonView.printScores(matchLength, player1, player2);
 				BackgammonView.printBoard(this, activePlayer);
 
-				BackgammonView.promptPlayerForInput();
-
 				String input = "";
-				// convert input string to upper case in order to accept lower case inputs
-				if(testMode && filescan.hasNextLine()) {
+				if (testMode && filescan.hasNextLine()) {
+					// convert input string to upper case in order to accept lower case inputs
 					input = filescan.nextLine().toUpperCase();
 				} else {
-					input = scan.nextLine().toUpperCase();
+					input = BackgammonView.promptPlayerForInput(scan);
 					testMode = false;
 				}
 
 				if (input.equals("QUIT")) {
 					// Quit Game
-					BackgammonView.printInfo("Game terminated, thanks for playing!");
+					BackgammonView.printQuitMessage();
 					isTurnOver = true;
 					isGameOver = true;
 				} else if (input.equals("ROLL")) {
@@ -129,22 +123,20 @@ public class BackgammonGame {
 						BackgammonView.printInfo(activePlayer + " Rolled: " + Integer.toString(roll[0]) + " & "
 								+ Integer.toString(roll[1]));
 					}
-				} else if (input.contains("TEST")) { 
+					// TODO should change logic here to use regex - not .contains
+				} else if (input.contains("TEST")) {
 					try {
 						File file = new File(input.split(" ")[1].toLowerCase());
-						if(file.isFile()) {
-							filescan = new Scanner(file);
-							testMode = true;
-						}						}
-						catch(Exception e) {
-						  //  Block of code to handle errors
-						}
+						filescan = new Scanner(file);
+						testMode = true;
+					} catch (Exception e) {
+						BackgammonView.printError(e.getMessage());
+					}
 				} else if (input.equals("DOUBLE") && activePlayer.canOfferDoubles()) {
 					BackgammonView.printDoubleOffer(activePlayer, inactivePlayer);
-					BackgammonView.printDoubleOptions();
 					boolean validAnswer = false;
 					while (!validAnswer) {
-						String answer = scan.next().toUpperCase();
+						String answer = BackgammonView.promptForDoublesAnswer(scan);
 						if (answer.equals("ACCEPT")) {
 							board.applyDouble();
 							BackgammonView.printInfo("Double Accepted");
@@ -154,56 +146,46 @@ public class BackgammonGame {
 							validAnswer = true;
 						} else if (answer.equals("REFUSE")) {
 							BackgammonView.printInfo("Double Refused");
-							int stake = board.getDoublingCubeMultiplier();
-							if(!this.isDoublingCubeInPlay()) {
-								match.setHasCrawfordHappened(true);
-							}
-							activePlayer.addScore(stake);
-							BackgammonView.printInfo(
-									"Game Completed, " + activePlayer.toString() + " wins by refusal! "+stake+" is added to their score");
 							validAnswer = true;
 							isTurnOver = true;
 							isGameOver = true;
 						} else {
 							// input error
 							BackgammonView.printError("INVALID INPUT");
-							BackgammonView.printDoubleOptions();
 						}
 					}
 				} else {
 					// input error
-					BackgammonView.printError("INVALID INPUT");
+					BackgammonView.printError("INVALID INPUT: " + input);
 					BackgammonView.printInputOptions(activePlayer);
 				}
 				if (board.isWon(activePlayer)) {
-					
-					if(!this.isDoublingCubeInPlay()) {
-						match.setHasCrawfordHappened(true);
-					}
-					
-					if (board.isBackgammon(inactivePlayer)) {
-						int stake = 3*board.getDoublingCubeMultiplier();
-						activePlayer.addScore(stake);
-						BackgammonView.printInfo(
-								"Game Completed, " + activePlayer.toString() + " wins a backgammon! "+stake+" is added to their score");
-					} else if (board.isGammon(inactivePlayer)) {
-						int stake = 2*board.getDoublingCubeMultiplier();
-						activePlayer.addScore(stake);
-						BackgammonView.printInfo(
-								"Game Completed, " + activePlayer.toString() + " wins a gammon! "+stake+" is added to their score");
-					} else {
-						int stake = board.getDoublingCubeMultiplier();
-						activePlayer.addScore(stake);
-						BackgammonView.printInfo(
-								"Game Completed, " + activePlayer.toString() + " wins a single! "+stake+" is added to their score");
-					}
 					isTurnOver = true;
 					isGameOver = true;
 				}
 			}
 		}
+
+		// Calculate score addition
+		int baseScore = 1; // for a single
+		String winTypeString = "Single";
+		if (board.isWon(activePlayer)) {
+			if (board.isBackgammon(inactivePlayer)) {
+				baseScore = 2;
+				winTypeString = "Backgammon";
+			} else if (board.isGammon(inactivePlayer)) {
+				baseScore = 3;
+				winTypeString = "Gammon";
+			}
+		}
+		int stake = baseScore * board.getDoublingCubeMultiplier();
+		activePlayer.addScore(stake);
+		BackgammonView.printInfo(
+				"Game Completed, " + activePlayer.toString() + " wins a "+winTypeString+ "! " + stake + " is added to their score");
+
 		// print the game one last time
 		BackgammonView.printBoard(this, activePlayer);
+
 	}
 
 	private void switchActivePlayer() {
@@ -217,7 +199,7 @@ public class BackgammonGame {
 	}
 
 	private void setDoublingCube() {
-		if(this.isDoublingCubeInPlay()) {
+		if (this.isDoublingCubeInPlay()) {
 			player1.setCanOfferDoubles(true);
 			player2.setCanOfferDoubles(true);
 		} else {
@@ -257,7 +239,6 @@ public class BackgammonGame {
 	}
 
 	public boolean isDoublingCubeInPlay() {
-		// TODO Auto-generated method stub
 		boolean inPlay = true;
 		if (!match.hasCrawfordHappened() && ((matchLength - player1.getScore() == 1) || (matchLength - player2.getScore() == 1))) {
 			inPlay = false;
@@ -269,12 +250,12 @@ public class BackgammonGame {
 		int position;
 		if (player1.canOfferDoubles() && player2.canOfferDoubles()) {
 			position = 0;
-		}else if(player1.canOfferDoubles()) {
+		} else if (player1.canOfferDoubles()) {
 			position = 1;
-		}else if(player2.canOfferDoubles()) {
+		} else if (player2.canOfferDoubles()) {
 			position = 2;
-		}else {
-			//error? //TODO 
+		} else {
+			// error? //TODO
 			position = 0;
 		}
 		// TODO Auto-generated method stub

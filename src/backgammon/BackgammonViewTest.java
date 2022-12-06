@@ -15,7 +15,7 @@ public class BackgammonViewTest {
 		System.setOut(new PrintStream(outContent));
 		// Now System.out.println() statements will come to outContent stream
 
-		BackgammonMatch match = new BackgammonMatch();
+		BackgammonMatch match = new BackgammonMatch(null);
 		BackgammonGame game = new BackgammonGame(match);
 		BackgammonView.printBoard(game, new Player(Colour.WHITE, "Dummy"));
 
