@@ -120,20 +120,25 @@ public class BackgammonBoard {
 		BackgammonBoard testBoard = new BackgammonBoard(points, whiteBar, blackBar, whiteBearedOffSpace, blackBearedOffSpace);
 
 		switch (testScenarioString) {
-//		case "EXAMPLE TEST":
-			// This example test shows the format of how a test board can be configured
-			// In this example we want to add 5 checkers to the white beared off space
-			// To do so, we get the white beared off space using getBoardSpaceByPipValue(0, Colour.WHITE)
-			// then we add 5 white checkers to this space using addNewCheckers(5, Colour.WHITE)
-//			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
-//			break;
-		case "NEARLY OVER":
+		case "SINGLE WIN":
 			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(0, Colour.BLACK).addNewCheckers(14, Colour.BLACK);
 			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
 			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
 			break;
-
+			
+		case "GAMMON WIN":
+			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(15, Colour.BLACK).addNewCheckers(15, Colour.BLACK);
+			break;
+			
+		case "BACKGAMMON WIN":
+			testBoard.getBoardSpaceByPipValue(0, Colour.WHITE).addNewCheckers(14, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(1, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(22, Colour.BLACK).addNewCheckers(15, Colour.BLACK);
+			break;
+			
 		case "BEAR OFF":
 			// can implement any number of specific test scenarios here
 			testBoard.getBoardSpaceByPipValue(1, Colour.BLACK).addNewCheckers(3, Colour.BLACK);
