@@ -169,6 +169,9 @@ public class BackgammonGame {
 
 		// Calculate score addition
 		if (!isGameQuit) {
+			if(!this.isDoublingCubeInPlay()) {
+				match.setHasCrawfordHappened(true);
+			}
 			int baseScore = 1; // for a single
 			String winTypeString = "Single";
 			if (board.isWon(activePlayer)) {
