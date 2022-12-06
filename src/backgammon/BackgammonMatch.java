@@ -31,7 +31,7 @@ public class BackgammonMatch {
 
 		boolean isMatchOver = false;
 		while (!isMatchOver) {
-			BackgammonGame game = new BackgammonGame(scan, player1, player2, this);
+			BackgammonGame game = new BackgammonGame(this);
 			BackgammonBoardView.printInfo(
 					"Starting Game");
 			game.playGame();
@@ -60,6 +60,18 @@ public class BackgammonMatch {
 	
 	public int getMatchLength() {
 		return this.matchLength;
+	}
+	
+	public Player getPlayer1() {
+		return this.player1;
+	}
+	
+	public Player getPlayer2() {
+		return this.player2;
+	}
+	
+	public Scanner getScanner() {
+		return this.scan;
 	}
 	
 }

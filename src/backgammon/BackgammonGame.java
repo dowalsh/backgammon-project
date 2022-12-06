@@ -38,10 +38,10 @@ public class BackgammonGame {
 	// Store whether the game is over
 	boolean isGameOver = false;
 
-	public BackgammonGame(Scanner s ,Player p1, Player p2, BackgammonMatch m) {
-		this.scan = s;
-		this.player1 = p1;
-		this.player2 = p2;
+	public BackgammonGame(BackgammonMatch m) {
+		this.scan = m.getScanner();
+		this.player1 = m.getPlayer1();
+		this.player2 = m.getPlayer2();
 		this.matchLength = m.getMatchLength();
 		this.match = m;
 	}
