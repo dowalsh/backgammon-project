@@ -18,6 +18,7 @@ class BackgammonBoardTest {
 
 	@Test
 	void testCanBearOff() {
+		
 		assertEquals(false, board.canBearOff(activePlayer));
 	}
 

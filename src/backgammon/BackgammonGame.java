@@ -24,8 +24,8 @@ public class BackgammonGame {
 	private BackgammonMatch match;
 
 	// board for the game
-//	private BackgammonBoard board = new BackgammonBoard();
-	private BackgammonBoard board = BackgammonBoard.createTestBoard("NEARLY OVER");
+	//private BackgammonBoard board = new BackgammonBoard();
+	private BackgammonBoard board = BackgammonBoard.createTestBoard("BEAR OFF");
 
 	public BackgammonBoard getBoard() {
 		return board;
@@ -182,7 +182,6 @@ public class BackgammonGame {
 		activePlayer.addScore(stake);
 		BackgammonView.printInfo(
 				"Game Completed, " + activePlayer.toString() + " wins a "+winTypeString+ "! " + stake + " is added to their score");
-
 		// print the game one last time
 		BackgammonView.printBoard(this, activePlayer);
 
