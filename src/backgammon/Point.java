@@ -6,8 +6,8 @@ package backgammon;
  */
 
 /**
- * A {@code Point} is a subclass of the BoardSpace class, representing 
- * a single point on the backgammon board
+ * A {@code Point} is a subclass of the BoardSpace class, representing a single
+ * point on the backgammon board
  */
 public class Point extends BoardSpace {
 
@@ -18,21 +18,24 @@ public class Point extends BoardSpace {
 
 	/**
 	 * Constructor
-	 * @param n the value/index of this point according to the white players perspective
+	 * 
+	 * @param n the value/index of this point according to the white players
+	 *          perspective
 	 */
 	public Point(int n) {
 
 		this.whiteIndex = n;
-	
+
 		if (n % 2 == 0) {
 			this.setColour(Colour.BLACK);
 		} else {
 			this.setColour(Colour.WHITE);
 		}
 	}
-	
+
 	/**
-	 * Add the appropriate checkers (if any) to this point for the initial state of backgammon board
+	 * Add the appropriate checkers (if any) to this point for the initial state of
+	 * backgammon board
 	 */
 	public void addInitialCheckers() {
 		int n = whiteIndex;
@@ -63,11 +66,12 @@ public class Point extends BoardSpace {
 			addNewCheckers(5, Colour.BLACK);
 			break;
 		}
-		
+
 	}
 
 	/**
 	 * copy constructor
+	 * 
 	 * @param point Point to copy
 	 */
 	public Point(Point point) {
@@ -76,11 +80,11 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public boolean canPlace(Checker start) {
+	public boolean canPlace(Checker checkerToBePlaced) {
 		boolean place = false;
 		if (this.isEmpty()) {
 			place = true;
-		} else if (start.getColour().equals(getTopChecker().getColour())) {
+		} else if (checkerToBePlaced.getColour().equals(getTopChecker().getColour())) {
 			place = true;
 		} else if (this.getNumCheckers() == 1) {
 			place = true;
@@ -88,13 +92,12 @@ public class Point extends BoardSpace {
 		return place;
 	}
 
-
 	@Override
-	public boolean canTake(Player player) {
+	public boolean canTake(Colour playerColour) {
 		boolean take;
 		if (this.isEmpty()) {
 			take = false;
-		} else if (!player.getColour().equals(this.getTopChecker().getColour())) {
+		} else if (!playerColour.equals(this.getTopChecker().getColour())) {
 			take = false;
 		} else {
 			take = true;
@@ -103,8 +106,8 @@ public class Point extends BoardSpace {
 	}
 
 	@Override
-	public int getPipValue(Colour colour) {
-		return colour.getAlternateIndex(whiteIndex);
+	public int getPipValue(Colour playerColour) {
+		return playerColour.getAlternateIndex(whiteIndex);
 	}
 
 	/**
@@ -121,13 +124,19 @@ public class Point extends BoardSpace {
 		return hit;
 	}
 
-	@Override
+	/**
+	 * Returns a string representation of the pip value of this point
+	 * 
+	 * @param playerColour The colour of the player whose perspective it is
+	 * @return String representation of this boardSpace
+	 */
 	public String toString(Colour colour) {
 		return Integer.toString(getPipValue(colour));
 	}
-	
+
 	/**
 	 * Check if this point has a checker of a certain colour on it
+	 * 
 	 * @param colourOfPlayer
 	 * @return
 	 */

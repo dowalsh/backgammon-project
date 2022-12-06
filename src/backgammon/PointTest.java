@@ -17,10 +17,32 @@ class PointTest {
 		populatedWhitePoint = new Point(13);
 		populatedWhitePoint.addInitialCheckers();
 		emptyPoint = new Point(2);
-		
+
 		oneBlackCheckerPoint = new Point(3);
 		Checker added = new Checker(Colour.BLACK);
 		oneBlackCheckerPoint.addChecker(added);
+	}
+
+	@Test
+	void testInitialCheckersTotal() {
+		int sumBlack = 0;
+		int sumWhite = 0;
+		for (int i = 1; i <= 24; i++) {
+			Point newPoint = new Point(i);
+			newPoint.addInitialCheckers();
+			if (!newPoint.isEmpty()) {
+				if (newPoint.getTopChecker().getColour() == Colour.BLACK) {
+					sumBlack += newPoint.getNumCheckers();
+				} else {
+					sumWhite += newPoint.getNumCheckers();
+				}
+			}
+		}
+	
+		assertEquals(15, sumBlack);
+		assertEquals(15, sumWhite);
+
+
 	}
 
 	@Test
@@ -33,11 +55,12 @@ class PointTest {
 
 	@Test
 	void testCanTake() {
-		//cannot take from empty
-		assertEquals(false, emptyPoint.canTake(new Player(Colour.WHITE, "Dummy")));
-		//can only take if checker same colour as player
-		assertEquals(true, oneBlackCheckerPoint.canTake(new Player(Colour.BLACK, "Dummy")));
-		assertEquals(false, oneBlackCheckerPoint.canTake(new Player(Colour.WHITE, "Dummy")));
+		// cannot take from empty
+		assertEquals(false, emptyPoint.canTake(Colour.WHITE));
+
+		// can only take if checker same colour as player
+		assertEquals(true, oneBlackCheckerPoint.canTake(Colour.BLACK));
+		assertEquals(false, oneBlackCheckerPoint.canTake(Colour.WHITE));
 	}
 
 	@Test
@@ -79,44 +102,44 @@ class PointTest {
 	@Test
 	void testAddNewCheckers() {
 		emptyPoint.addNewCheckers(2, Colour.BLACK);
-		assertEquals(2,emptyPoint.getNumCheckers());
+		assertEquals(2, emptyPoint.getNumCheckers());
 	}
 
 	@Test
 	void testGetTopChecker() {
-		assertEquals(null,emptyPoint.getTopChecker());
+		assertEquals(null, emptyPoint.getTopChecker());
 		emptyPoint.addChecker(white);
 		assertEquals(white, emptyPoint.getTopChecker());
 	}
 
 	@Test
 	void testRemoveChecker() {
-		assertEquals(null,emptyPoint.removeChecker());
+		assertEquals(null, emptyPoint.removeChecker());
 		Checker removed = populatedWhitePoint.removeChecker();
-		assertEquals(4,populatedWhitePoint.getNumCheckers());
-		assertEquals(4,populatedWhitePoint.getNumCheckers());
+		assertEquals(4, populatedWhitePoint.getNumCheckers());
+		assertEquals(4, populatedWhitePoint.getNumCheckers());
 		assertNotNull(removed);
 	}
-	
+
 	@Test
 	void testHasColour() {
-		assertEquals(false,emptyPoint.hasCheckerOfColour(Colour.BLACK));
-		assertEquals(true,populatedWhitePoint.hasCheckerOfColour(Colour.WHITE));
-		assertEquals(false,populatedWhitePoint.hasCheckerOfColour(Colour.BLACK));
+		assertEquals(false, emptyPoint.hasCheckerOfColour(Colour.BLACK));
+		assertEquals(true, populatedWhitePoint.hasCheckerOfColour(Colour.WHITE));
+		assertEquals(false, populatedWhitePoint.hasCheckerOfColour(Colour.BLACK));
 	}
-	
+
 	@Test
 	void testCopy() {
 		Point copiedPoint = new Point(populatedWhitePoint);
-		assertEquals(copiedPoint.getColour(),populatedWhitePoint.getColour());
-		assertEquals(copiedPoint.getNumCheckers(),populatedWhitePoint.getNumCheckers());
-		assertEquals(copiedPoint.getTopChecker().getColour(),populatedWhitePoint.getTopChecker().getColour());
+		assertEquals(copiedPoint.getColour(), populatedWhitePoint.getColour());
+		assertEquals(copiedPoint.getNumCheckers(), populatedWhitePoint.getNumCheckers());
+		assertEquals(copiedPoint.getTopChecker().getColour(), populatedWhitePoint.getTopChecker().getColour());
 	}
-	
+
 	@Test
 	void testToString() {
-		assertEquals("13",populatedWhitePoint.toString(Colour.WHITE));
-		assertEquals("12",populatedWhitePoint.toString(Colour.BLACK));
+		assertEquals("13", populatedWhitePoint.toString(Colour.WHITE));
+		assertEquals("12", populatedWhitePoint.toString(Colour.BLACK));
 	}
 
 }

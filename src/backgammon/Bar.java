@@ -31,20 +31,20 @@ public class Bar extends BoardSpace {
 	}
 
 	@Override
-	public boolean canPlace(Checker start) {
+	public boolean canPlace(Checker checkerToBePlaced) {
 		boolean place = false;
-		if (start.getColour().equals(this.getColour())) {
+		if (checkerToBePlaced.getColour().equals(this.getColour())) {
 			place = true;
 		}
 		return place;
 	}
 
 	@Override
-	public boolean canTake(Player player) {
+	public boolean canTake(Colour playerColour) {
 		boolean take;
 		if (this.isEmpty()) {
 			take = false;
-		} else if (!player.getColour().equals(this.getColour())) {
+		} else if (!playerColour.equals(this.getColour())) {
 			take = false;
 		} else {
 			take = true;
@@ -53,13 +53,9 @@ public class Bar extends BoardSpace {
 	}
 
 	@Override
-	public int getPipValue(Colour colour) {
+	public int getPipValue(Colour playerColour) {
 		return 25;
 	}
-
-	@Override
-	public String toString(Colour playerColour) {
-		return "Bar";
-	}
+	
 
 }

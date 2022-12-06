@@ -248,7 +248,7 @@ public class BackgammonBoard {
 		Bar activePlayersBar = getBarByColour(colour);
 		BoardSpace destSpace;
 		for (int roll : uniqueRolls) {
-			if (activePlayersBar.canTake(activePlayer)) {
+			if (activePlayersBar.canTake(activePlayer.getColour())) {
 				destSpace = getDestinationBoardSpace(activePlayer, activePlayersBar, roll);
 				if (destSpace.canPlace(activePlayersBar.getTopChecker())) {
 					Move legalMove = new Move(roll, activePlayersBar.getPipValue(colour), destSpace.getPipValue(colour) );
@@ -256,7 +256,7 @@ public class BackgammonBoard {
 				}
 			} else {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
-					if (boardSpaces[i].canTake(activePlayer)) {
+					if (boardSpaces[i].canTake(activePlayer.getColour())) {
 						// TODO
 						// canMove(activePlayer, boardSpaces[i], roll)
 						destSpace = getDestinationBoardSpace(activePlayer, boardSpaces[i], roll);

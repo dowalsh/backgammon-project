@@ -29,11 +29,11 @@ class BarTest {
 	@Test
 	void testCanTake() {
 		//cannot take from empty
-		assertEquals(false, whiteBar.canTake(new Player(Colour.WHITE, "Dummy")));
+		assertEquals(false, whiteBar.canTake(Colour.WHITE));
 		
 		//can only take if checker same colour as player
-		assertEquals(true, blackBar.canTake(new Player(Colour.BLACK, "Dummy")));
-		assertEquals(false, blackBar.canTake(new Player(Colour.WHITE, "Dummy")));
+		assertEquals(true, blackBar.canTake(Colour.BLACK));
+		assertEquals(false, blackBar.canTake(Colour.WHITE));
 	}
 	
 	@Test
@@ -42,4 +42,13 @@ class BarTest {
 		assertEquals(25, blackBar.getPipValue(Colour.BLACK));
 	}
 
+	
+	@Test
+	void testCopy() {
+		Bar copiedBar = new Bar(blackBar);
+		assertEquals(copiedBar.getColour(),blackBar.getColour());
+		assertEquals(copiedBar.getNumCheckers(),blackBar.getNumCheckers());
+		assertEquals(copiedBar.getTopChecker().getColour(),blackBar.getTopChecker().getColour());
+	}
+	
 }
