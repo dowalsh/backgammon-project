@@ -144,11 +144,6 @@ class BackgammonBoardTest {
 		assertEquals(true, board.isGammon(blackPlayer));
 		assertEquals(true, board.isBackgammon(blackPlayer));
 	}
-	
-	@Test
-	void testWins() {
-
-	}
 
 	@Test
 	void testHit() {
@@ -163,6 +158,15 @@ class BackgammonBoardTest {
 		int num_after = board.getBoardSpaceByPipValue(25, Colour.WHITE).getNumCheckers();
 		// check bar has exactly one more white checker
 		assertEquals(num_before+1,num_after);
+	}
+	
+	@Test
+	void testBar() {
+		board = BackgammonBoard.createTestBoard("CHECKER ON BAR");
+		board.setRolls(2, 4, whitePlayer);
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(2,25,23),new Move(4,25,21)));
+		Collection<Move> actualMoves = board.getLegalMoves();
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
 	}
 	
 	@Test

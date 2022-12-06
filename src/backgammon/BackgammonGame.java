@@ -27,7 +27,7 @@ public class BackgammonGame {
 
 	private BackgammonBoard board = new BackgammonBoard();
 	//TODO remove test comment
-//	private BackgammonBoard board = BackgammonBoard.createTestBoard("HIT");
+//	private BackgammonBoard board = BackgammonBoard.createTestBoard("CHECKER ON BAR");
 
 	public BackgammonBoard getBoard() {
 		return board;

@@ -166,6 +166,18 @@ public class BackgammonBoard {
 			testBoard.getBoardSpaceByPipValue(14, Colour.BLACK).addNewCheckers(1, Colour.BLACK);
 			testBoard.getBoardSpaceByPipValue(13, Colour.BLACK).addNewCheckers(1, Colour.WHITE);
 			break;
+			
+		case "CHECKER ON BAR":
+			testBoard.getBoardSpaceByPipValue(25, Colour.WHITE).addNewCheckers(1, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(13, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(11, Colour.WHITE).addNewCheckers(6, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(19, Colour.WHITE).addNewCheckers(3, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(16, Colour.WHITE).addNewCheckers(2, Colour.WHITE);
+			testBoard.getBoardSpaceByPipValue(22, Colour.BLACK).addNewCheckers(3, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(21, Colour.BLACK).addNewCheckers(4, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(23, Colour.BLACK).addNewCheckers(5, Colour.BLACK);
+			testBoard.getBoardSpaceByPipValue(24, Colour.BLACK).addNewCheckers(3, Colour.BLACK);
+			break;
 		}
 		// call constructor
 		return testBoard;
