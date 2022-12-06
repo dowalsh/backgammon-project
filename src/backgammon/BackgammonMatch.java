@@ -16,36 +16,44 @@ public class BackgammonMatch {
 
 	private boolean hasCrawfordHappened = false;
 
-	public BackgammonMatch() {
-
+	public BackgammonMatch(Scanner s) {
+		this.scan = s;
 	}
 
 	public void playMatch() {
-
-		scan = new Scanner(System.in);
 
 		setPlayerNames();
 
 		matchLength = BackgammonView.getIntegerFromUser("Please Enter The Desired Match Length", scan);
 
-		boolean isMatchOver = false;
-		while (!isMatchOver) {
+		while (!isMatchOver()) {
+			BackgammonView.pressEnterToContinue(scan);
 			BackgammonGame game = new BackgammonGame(this);
 			BackgammonView.printInfo("Starting Game");
 			game.playGame();
-			BackgammonView.pressEnterToContinue();
 		}
+		
+		BackgammonView.printInfo("Match Over. "+ getWinner().toString() + " is the winner!");
+		BackgammonView.printScores(matchLength, player1, player2);
 
-		// close input
-		scan.close();
+	}
+
+	private Player getWinner() {
+		Player winner;
+		if(player1.getScore()>player2.getScore())
+			winner = player1;
+		else winner = player2;
+		return winner;
+	}
+
+	private boolean isMatchOver() {
+		return (player1.getScore()>=matchLength ||player2.getScore()>=matchLength);
 	}
 
 	private void setPlayerNames() {
 		// Create players and get names
-		BackgammonView.promptForPlayerName(1);
-		player1.setName(scan.next());
-		BackgammonView.promptForPlayerName(2);
-		player2.setName(scan.next());
+		player1.setName(BackgammonView.promptForPlayerName(1,scan));
+		player2.setName(BackgammonView.promptForPlayerName(2,scan));
 	}
 
 	public boolean hasCrawfordHappened() {
@@ -70,6 +78,11 @@ public class BackgammonMatch {
 
 	public Scanner getScanner() {
 		return this.scan;
+	}
+
+	public boolean isQuit() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
