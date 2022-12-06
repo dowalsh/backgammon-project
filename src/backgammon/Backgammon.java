@@ -13,7 +13,7 @@ public class Backgammon {
 			BackgammonMatch match = new BackgammonMatch(scan);
 			match.playMatch();
 
-			if (match.isQuit()) {
+			if (match.isMatchQuit()) {
 				run = false;
 			} else {
 				// Ask if user wants to play another match and set run accordingly

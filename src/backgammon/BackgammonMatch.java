@@ -16,6 +16,8 @@ public class BackgammonMatch {
 
 	private boolean hasCrawfordHappened = false;
 
+	private boolean isMatchQuit = false;
+
 	public BackgammonMatch(Scanner s) {
 		this.scan = s;
 	}
@@ -26,34 +28,37 @@ public class BackgammonMatch {
 
 		matchLength = BackgammonView.getIntegerFromUser("Please Enter The Desired Match Length", scan);
 
-		while (!isMatchOver()) {
+		while (!isMatchOver() && !isMatchQuit()) {
 			BackgammonView.pressEnterToContinue(scan);
 			BackgammonGame game = new BackgammonGame(this);
 			BackgammonView.printInfo("Starting Game");
 			game.playGame();
 		}
-		
-		BackgammonView.printInfo("Match Over. "+ getWinner().toString() + " is the winner!");
-		BackgammonView.printScores(matchLength, player1, player2);
+
+		if (!isMatchQuit) {
+			BackgammonView.printInfo("Match Over. " + getWinner().toString() + " is the winner!");
+			BackgammonView.printScores(matchLength, player1, player2);
+		}
 
 	}
 
 	private Player getWinner() {
 		Player winner;
-		if(player1.getScore()>player2.getScore())
+		if (player1.getScore() > player2.getScore())
 			winner = player1;
-		else winner = player2;
+		else
+			winner = player2;
 		return winner;
 	}
 
 	private boolean isMatchOver() {
-		return (player1.getScore()>=matchLength ||player2.getScore()>=matchLength);
+		return (player1.getScore() >= matchLength || player2.getScore() >= matchLength);
 	}
 
 	private void setPlayerNames() {
 		// Create players and get names
-		player1.setName(BackgammonView.promptForPlayerName(1,scan));
-		player2.setName(BackgammonView.promptForPlayerName(2,scan));
+		player1.setName(BackgammonView.promptForPlayerName(1, scan));
+		player2.setName(BackgammonView.promptForPlayerName(2, scan));
 	}
 
 	public boolean hasCrawfordHappened() {
@@ -80,9 +85,12 @@ public class BackgammonMatch {
 		return this.scan;
 	}
 
-	public boolean isQuit() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isMatchQuit() {
+		return isMatchQuit;
+	}
+
+	public void quit() {
+		isMatchQuit = true;
 	}
 
 }

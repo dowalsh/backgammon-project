@@ -84,6 +84,7 @@ public class BackgammonGame {
 					// Quit Game
 					BackgammonView.printQuitMessage();
 					isGameQuit = true;
+					match.quit();
 				} else if (input.equals("ROLL")) {
 					if (board.isDiceRolled()) {
 						BackgammonView.printError("Cannot re-roll dice");
