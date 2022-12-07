@@ -1,5 +1,12 @@
 package backgammon;
+/**
+ * This program is the PlayerTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code PlayerTest} Class is a test for the Player Class
+ */
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

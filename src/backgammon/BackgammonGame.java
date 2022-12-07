@@ -2,7 +2,14 @@ package backgammon;
 
 import java.util.Scanner;
 import java.io.File;
+/**
+ * This program is the BackgammonGame class
+ *
+ */
 
+/**
+ * The {@code BackgammonGame} Class is used to represent a game of Backgammon
+ */
 public class BackgammonGame {
 
 	// user input scanner
@@ -178,10 +185,10 @@ public class BackgammonGame {
 			String winTypeString = "Single";
 			if (board.isWon(activePlayer)) {
 				if (board.isBackgammon(inactivePlayer)) {
-					baseScore = 2;
+					baseScore = 3;
 					winTypeString = "Backgammon";
 				} else if (board.isGammon(inactivePlayer)) {
-					baseScore = 3;
+					baseScore = 2;
 					winTypeString = "Gammon";
 				}
 			}

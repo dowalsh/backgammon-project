@@ -2,7 +2,15 @@ package backgammon;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * This program is the MoveSet class.
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code MoveSet} class represents a  set of moves that a player can do on their turn
+ *
+ */
 public class MoveSet {
 
 	private List<Move> moves = new ArrayList<Move>();

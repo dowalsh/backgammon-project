@@ -8,7 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the BackgammonBoardTest class
+ * @author dylan
+ *
+ */
 
+/**
+ * A {@code BackgammonBoardTest} Class is a test for BackgammonBoardTest class
+ */
 class BackgammonBoardTest {
 	private BackgammonBoard board;
 	private Player blackPlayer;

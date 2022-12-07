@@ -1,0 +1,74 @@
+
+dice 6 3
+c
+d
+dice 3 5
+a
+b
+dice 6 6
+d
+c
+c
+b
+dice 5 5
+c
+c
+c
+b
+dice 6 6
+b
+b
+a
+a
+dice 5 5
+c
+b
+a
+a
+dice 6 6
+b
+c
+b
+a
+dice 2 3
+a
+e
+dice 6 6
+a
+a
+a
+a
+dice 3 3
+a
+b
+c
+c
+dice 6 6
+a
+a
+a
+a
+dice 2 3
+e
+d
+dice 6 6
+a
+a
+a
+a
+dice 6 5
+c
+b
+dice 5 5
+a
+a
+a
+a
+dice 4 3
+h
+e
+dice 1 1
+a
+a
+a
+a

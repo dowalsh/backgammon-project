@@ -4,7 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the CheckerTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code CheckerTest} Class is a test for the Checker Class
+ */
 class CheckerTest {
 	private Checker checker1, checker2;
 

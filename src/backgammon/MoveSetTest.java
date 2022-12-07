@@ -1,5 +1,12 @@
 package backgammon;
+/**
+ * This program is the MoveSetTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code MoveSetTest} Class is a test for the MoveSet Class
+ */
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 

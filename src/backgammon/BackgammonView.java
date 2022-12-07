@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 
 /**
- * The BackgammonBoardView Class is used to display a game of Backgammon in the
+ * The {@code BackgammonBoardView} Class is used to display a game of Backgammon in the
  * console
  */
 public class BackgammonView {
