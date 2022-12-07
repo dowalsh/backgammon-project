@@ -24,6 +24,8 @@ public class BackgammonMatch {
 	private boolean hasCrawfordHappened = false;
 
 	private boolean isMatchQuit = false;
+	
+	private boolean testMode = false;
 
 	/**
 	 * @param s
@@ -31,7 +33,7 @@ public class BackgammonMatch {
 	public BackgammonMatch(Scanner s) {
 		this.scan = s;
 	}
-
+	
 	/**
 	 * 
 	 */
@@ -138,5 +140,21 @@ public class BackgammonMatch {
 	public void quit() {
 		isMatchQuit = true;
 	}
+
+	/**
+	 * put the match in testing mode
+	 */
+	public void testMode() {
+		this.testMode = true;
+	}
+
+	/**
+	 * returns whether this is a test match
+	 * @return true if this is a test match
+	 */
+	public boolean getTestMode() {
+		return testMode;
+	}
+
 
 }

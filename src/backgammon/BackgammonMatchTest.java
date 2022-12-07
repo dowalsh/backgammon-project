@@ -8,14 +8,14 @@ import org.junit.rules.TemporaryFolder;
 import static org.junit.Assert.*;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class BackgammonMatchTest {
 
 	File matchTestFile1;
 
-
 	/*
-	 * Temp folder and  files created in it will be deleted after tests are run
+	 * Temp folder and files created in it will be deleted after tests are run
 	 */
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
@@ -33,7 +33,7 @@ public class BackgammonMatchTest {
 	 * Write to the test files and test Match
 	 */
 	@Test
-	public void testGame() {
+	public void testMatch() {
 
 		// write out data to the test files
 		try {
@@ -41,41 +41,28 @@ public class BackgammonMatchTest {
 
 			BufferedWriter bw1 = new BufferedWriter(fw1);
 
-//			bw1.write(getSimpleWinGame());
+			bw1.write(getMatchString());
 
 			bw1.close();
 
-			
+			Scanner filescan = new Scanner(matchTestFile1);
+
+			BackgammonMatch match1 = new BackgammonMatch(filescan);
+			match1.testMode();
+			assertTrue(matchTestFile1.exists());
+			match1.playMatch();
+			assertEquals(0, match1.getPlayer2().getScore());
+			assertEquals(4, match1.getPlayer1().getScore());
+
 		} catch (IOException ioe) {
 			System.err.println("error creating temporary test file");
 		}
 
-//		assertTrue(matchTestFile1.exists());
-//		assertTrue(gameTestFile2.exists());
-//
-//		
-//		BackgammonGame game1 = new BackgammonGame(matchTestFile1);	
-//		assertFalse(game1.getBoard().isWon(Colour.WHITE)); //Game not won by either player yet
-//		assertFalse(game1.getBoard().isWon(Colour.BLACK)); 
-//		game1.playGame();
-//		assertTrue(game1.getBoard().isWon(Colour.WHITE)); //Game won by white
-//		assertFalse(game1.getBoard().isWon(Colour.BLACK)); 
-//
-//		
-//		assertFalse(game1.getBoard().isGammon(Colour.WHITE)); //Neither player has been gammoned
-//		assertFalse(game1.getBoard().isGammon(Colour.WHITE)); 
-//		
-//		assertFalse(game1.getBoard().isBackgammon(Colour.WHITE));
-//		assertTrue(game1.getBoard().isBackgammon(Colour.BLACK));// Black has been backgammoned, not white
-//
-//		BackgammonGame game2 = new BackgammonGame(gameTestFile2);		
-//		game2.playGame();
-//		assertFalse(game2.getBoard().isWon(Colour.WHITE)); //Game hasn't been won by either player as it has ended due to double refusal
-//		assertFalse(game2.getBoard().isWon(Colour.BLACK)); 
+	}
 
-		
-		}
-	
-	
+	public static String getMatchString() {
+		return "mario\n" + "luigi\n" + "3\n" + "\n" + "\n" + BackgammonGameTest.getDoublingGame() + "\n"
+				+ BackgammonGameTest.getSimpleWinGame() + "\n";
+	}
 
 }

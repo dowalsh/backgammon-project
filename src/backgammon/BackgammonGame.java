@@ -19,6 +19,13 @@ public class BackgammonGame {
 	private Scanner filescan;
 
 	private boolean testMode = false;
+	private boolean fixFirstPlayerToMove = false;
+	/*
+	 * Put the game into testMode
+	 */
+	public void testMode() {
+		this.testMode = true;
+	}
 
 	// Players of the match
 	private Player player1;
@@ -48,6 +55,7 @@ public class BackgammonGame {
 		this.player2 = m.getPlayer2();
 		this.matchLength = m.getMatchLength();
 		this.match = m;
+		this.fixFirstPlayerToMove = m.getTestMode();
 	}
 
 	protected BackgammonGame(File testFile) {
@@ -72,12 +80,6 @@ public class BackgammonGame {
 		BackgammonView.pressEnterToContinue(getScanner());
 
 		this.setDoublingCube();
-
-		if (this.isDoublingCubeInPlay()) {
-			BackgammonView.printInfo("Doubles in Play");
-		} else {
-			BackgammonView.printInfo("No Doubles in Play");
-		}
 
 		BackgammonView.printInputOptions(activePlayer);
 		// Game control loop
@@ -143,8 +145,7 @@ public class BackgammonGame {
 							BackgammonView.printInfo("No Moves Available, Ending Turn");
 						}
 					}
-					// TODO should change logic here to use regex - not .contains
-				} else if (input.contains("TEST")) {
+				} else if (input.split(" ")[0].toUpperCase().equals("TEST")) {
 					try {
 						File file = new File(input.split(" ")[1].toLowerCase());
 						filescan = new Scanner(file);
@@ -234,7 +235,7 @@ public class BackgammonGame {
 	}
 
 	private void chooseFirstPlayerToMove() {
-		if (!testMode) {
+		if (!fixFirstPlayerToMove) {
 			BackgammonView.printInfo("Rolling Dice to see who goes first");
 
 			int[] initialRolls = new int[2];
@@ -298,5 +299,6 @@ public class BackgammonGame {
 			testMode = false;
 			return scan;
 		}
+		
 	}
 }

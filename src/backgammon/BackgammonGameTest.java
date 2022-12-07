@@ -60,7 +60,8 @@ public class BackgammonGameTest {
 		assertTrue(gameTestFile2.exists());
 
 		
-		BackgammonGame game1 = new BackgammonGame(gameTestFile1);	
+		BackgammonGame game1 = new BackgammonGame(gameTestFile1);
+		game1.testMode();
 		assertFalse(game1.getBoard().isWon(Colour.WHITE)); //Game not won by either player yet
 		assertFalse(game1.getBoard().isWon(Colour.BLACK)); 
 		game1.playGame();
@@ -74,7 +75,8 @@ public class BackgammonGameTest {
 		assertFalse(game1.getBoard().isBackgammon(Colour.WHITE));
 		assertTrue(game1.getBoard().isBackgammon(Colour.BLACK));// Black has been backgammoned, not white
 
-		BackgammonGame game2 = new BackgammonGame(gameTestFile2);		
+		BackgammonGame game2 = new BackgammonGame(gameTestFile2);	
+		game2.testMode();
 		game2.playGame();
 		assertFalse(game2.getBoard().isWon(Colour.WHITE)); //Game hasn't been won by either player as it has ended due to double refusal
 		assertFalse(game2.getBoard().isWon(Colour.BLACK)); 
