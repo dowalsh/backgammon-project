@@ -120,9 +120,9 @@ class BackgammonBoardTest {
 		board = BackgammonBoard.createTestBoard("SINGLE WIN");
 		board.setRolls(1, 1, whitePlayer);
 		board.selectMove('A', whitePlayer);
-		assertEquals(true, board.isWon(whitePlayer));
-		assertEquals(false, board.isGammon(blackPlayer));
-		assertEquals(false, board.isBackgammon(blackPlayer));
+		assertEquals(true, board.isWon(Colour.WHITE));
+		assertEquals(false, board.isGammon(Colour.BLACK));
+		assertEquals(false, board.isBackgammon(Colour.BLACK));
 	}
 	
 	@Test
@@ -130,9 +130,9 @@ class BackgammonBoardTest {
 		board = BackgammonBoard.createTestBoard("GAMMON WIN");
 		board.setRolls(1, 1, whitePlayer);
 		board.selectMove('A', whitePlayer);
-		assertEquals(true, board.isWon(whitePlayer));
-		assertEquals(true, board.isGammon(blackPlayer));
-		assertEquals(false, board.isBackgammon(blackPlayer));
+		assertEquals(true, board.isWon(Colour.WHITE));
+		assertEquals(true, board.isGammon(Colour.BLACK));
+		assertEquals(false, board.isBackgammon(Colour.BLACK));
 	}
 	
 	@Test
@@ -140,9 +140,9 @@ class BackgammonBoardTest {
 		board = BackgammonBoard.createTestBoard("BACKGAMMON WIN");
 		board.setRolls(1, 1, whitePlayer);
 		board.selectMove('A', whitePlayer);
-		assertEquals(true, board.isWon(whitePlayer));
-		assertEquals(true, board.isGammon(blackPlayer));
-		assertEquals(true, board.isBackgammon(blackPlayer));
+		assertEquals(true, board.isWon(Colour.WHITE));
+		assertEquals(true, board.isGammon(Colour.BLACK));
+		assertEquals(true, board.isBackgammon(Colour.BLACK));
 	}
 	
 	@Test

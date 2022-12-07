@@ -25,8 +25,6 @@ public class BackgammonBoard {
 
 	private BoardSpace[] boardSpaces = new BoardSpace[NUMBER_OF_POINTS + 2 + 2];
 
-	// TODO update bars and bearedOff storage to be simpler data structure than
-	// dictionary
 	// Bars and BearedOffSpaces
 	private Map<Colour, Bar> bars_dict = new HashMap<Colour, Bar>();
 	private Map<Colour, BearedOffSpace> bearedOffSpaces_dict = new HashMap<Colour, BearedOffSpace>();
@@ -43,7 +41,6 @@ public class BackgammonBoard {
 	
 	private int doublingCubeMultiplier = 1;
 
-	// TODO Get rid
 	public BoardSpace[] getBoardSpaces() {
 		return boardSpaces;
 	}
@@ -54,10 +51,6 @@ public class BackgammonBoard {
 	public BackgammonBoard() {
 		this(createInitialPoints(), new Bar(Colour.WHITE), new Bar(Colour.BLACK), new BearedOffSpace(Colour.WHITE),
 				new BearedOffSpace(Colour.BLACK));
-		// TODO remove these testing lines for display
-//		this.getBearedOffSpaceByColour(Colour.WHITE).addNewCheckers(3, Colour.WHITE);
-//		this.getBearedOffSpaceByColour(Colour.BLACK).addNewCheckers(7, Colour.BLACK);
-
 	}
 
 	private static Point[] createInitialPoints() {
@@ -289,10 +282,7 @@ public class BackgammonBoard {
 			} else {
 				for (int i = 0; i < NUMBER_OF_POINTS; i++) {
 					if (boardSpaces[i].canTake(activePlayer.getColour())) {
-						// TODO
-						// canMove(activePlayer, boardSpaces[i], roll)
 						destSpace = getDestinationBoardSpace(activePlayer, boardSpaces[i], roll);
-						// TODO remove test of != null ; not groot practice according to notes I think
 						if (destSpace != null && destSpace.canPlace(boardSpaces[i].getTopChecker())) {
 							Move legalMove = new Move(roll, boardSpaces[i].getPipValue(colour), destSpace.getPipValue(colour));
 							nextPossibleMoves.add(legalMove);
@@ -348,21 +338,21 @@ public class BackgammonBoard {
 		return bearOff;
 	}
 
-	public boolean isWon(Player activePlayer) {
+	public boolean isWon(Colour playerColour) {
 		boolean gameWon = false;
-		if (getBearedOffSpaceByColour(activePlayer.getColour()).isFull()) {
+		if (getBearedOffSpaceByColour(playerColour).isFull()) {
 			gameWon = true;
 		}
 		return gameWon;
 	}
 
-	public boolean isBackgammon(Player inactivePlayer) {
+	public boolean isBackgammon(Colour playerColour) {
 		boolean backgammon = false;
-		if (!this.getBarByColour(inactivePlayer.getColour()).isEmpty()) {
+		if (!this.getBarByColour(playerColour).isEmpty()) {
 			backgammon = true;
 		} else {
 			for(int i = 24; i > 18;i--) {
-				if (((Point) boardSpaces[inactivePlayer.getAlternateIndex(i) - 1]).hasCheckerOfColour(inactivePlayer.getColour())) {
+				if (((Point) boardSpaces[playerColour.getAlternateIndex(i) - 1]).hasCheckerOfColour(playerColour)) {
 					backgammon = true;
 				}
 			}
@@ -370,9 +360,9 @@ public class BackgammonBoard {
 		return backgammon;
 	}
 	
-	public boolean isGammon(Player inactivePlayer) {
+	public boolean isGammon(Colour playerColour) {
 		boolean gammon = false;
-		if (this.getBearedOffSpaceByColour(inactivePlayer.getColour()).isEmpty()) {
+		if (this.getBearedOffSpaceByColour(playerColour).isEmpty()) {
 			gammon = true;
 		}
 		return gammon;
@@ -471,7 +461,6 @@ public class BackgammonBoard {
 		}
 
 		// If any movesets use both rolls, delete others
-		// TODO test this
 		boolean canUseBothRolls = false;
 		for (MoveSet moveSet : legalMoveSets) {
 			if (moveSet.size() == 2) {
@@ -565,7 +554,6 @@ public class BackgammonBoard {
 	}
 
 	public boolean noMoveAvailable(Player activePlayer) {
-		// TODO try think of a more elegant solution
 		return getPossibleNextMoves(activePlayer).isEmpty();
 	}
 
