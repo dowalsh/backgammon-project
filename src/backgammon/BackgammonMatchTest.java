@@ -10,6 +10,15 @@ import static org.junit.Assert.*;
 import java.io.*;
 import java.util.Scanner;
 
+
+/**
+ * This program is the BackgammonMatchTest class
+ * @author Dylan Walsh
+ */
+
+/**
+ * A {@code BackgammonMatchTest} Class is an integration test for BackgammonMatch class
+ */
 public class BackgammonMatchTest {
 
 	File matchTestFile1;

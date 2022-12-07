@@ -9,6 +9,14 @@ import static org.junit.Assert.*;
 
 import java.io.*;
 
+/**
+ * This program is the BackgammonGameTest class
+ * @author Dylan Walsh
+ */
+
+/**
+ * A {@code BackgammonGameTest} Class is an integration test for BackgammonGame class
+ */
 public class BackgammonGameTest {
 
 	File gameTestFile1;
