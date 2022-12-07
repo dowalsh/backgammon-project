@@ -4,7 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the PointTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code PointTest} Class is a test for the Point Class
+ */
 class PointTest {
 	private Point populatedWhitePoint;
 	private Point emptyPoint;

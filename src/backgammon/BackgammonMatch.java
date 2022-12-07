@@ -1,7 +1,14 @@
 package backgammon;
 
 import java.util.Scanner;
+/**
+ * This program is the BackgammonMatch class
+ *
+ */
 
+/**
+ * The {@code BackgammonMatch} Class is used to represent a match of Backgammon
+ */
 public class BackgammonMatch {
 
 	// user input scanner

@@ -4,7 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the BoardSpaceTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code BoardSpaceTest} Class is a test for BoardSpace class
+ */
 class BearedOffSpaceTest {
 	private BearedOffSpace emptyWhiteBearedOffSpace;
 	private BearedOffSpace populatedBlackBearedOffSpace;

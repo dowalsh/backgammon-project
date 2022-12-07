@@ -4,6 +4,14 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * This program is the BackgammonGame class
+ *
+ */
+
+/**
+ * The {@code BackgammonGame} Class is used to represent a game of Backgammon
+ */
 public class BackgammonGame {
 
 	// user input scanner
@@ -26,7 +34,6 @@ public class BackgammonGame {
 
 	// board for the game
 	private BackgammonBoard board = new BackgammonBoard();
-
 	public BackgammonBoard getBoard() {
 		return board;
 	}
@@ -192,6 +199,7 @@ public class BackgammonGame {
 					winTypeString = "Backgammon";
 				} else if (board.isGammon(inactivePlayer.getColour())) {
 					baseScore = 3;
+
 					winTypeString = "Gammon";
 				}
 			}

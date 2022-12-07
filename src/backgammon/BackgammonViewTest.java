@@ -2,7 +2,14 @@ package backgammon;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the BackgammonViewTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code BackgammonViewTest} Class is a test for BackgammonView class
+ */
 public class BackgammonViewTest {
 
 	@Test
@@ -31,7 +38,6 @@ public class BackgammonViewTest {
 				+ "       12 11 10  9  8  7     B     6  5  4  3  2  1      \n";
 
 		assertEquals(expectedOutput, actualOutput);
-
 	}
 
 }

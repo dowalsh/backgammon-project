@@ -8,7 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the BackgammonBoardTest class
+ * @author dylan
+ *
+ */
 
+/**
+ * A {@code BackgammonBoardTest} Class is a test for BackgammonBoardTest class
+ */
 class BackgammonBoardTest {
 	private BackgammonBoard board;
 	private Player blackPlayer;
@@ -144,11 +152,6 @@ class BackgammonBoardTest {
 		assertEquals(true, board.isGammon(Colour.BLACK));
 		assertEquals(true, board.isBackgammon(Colour.BLACK));
 	}
-	
-	@Test
-	void testWins() {
-
-	}
 
 	@Test
 	void testHit() {
@@ -163,6 +166,15 @@ class BackgammonBoardTest {
 		int num_after = board.getBoardSpaceByPipValue(25, Colour.WHITE).getNumCheckers();
 		// check bar has exactly one more white checker
 		assertEquals(num_before+1,num_after);
+	}
+	
+	@Test
+	void testBar() {
+		board = BackgammonBoard.createTestBoard("CHECKER ON BAR");
+		board.setRolls(2, 4, whitePlayer);
+		List<Move> testMoves = new ArrayList<Move>(List.of(new Move(2,25,23),new Move(4,25,21)));
+		Collection<Move> actualMoves = board.getLegalMoves();
+		assertTrue(testMoves.size() == actualMoves.size() && testMoves.containsAll(actualMoves) && actualMoves.containsAll(testMoves));
 	}
 	
 	@Test

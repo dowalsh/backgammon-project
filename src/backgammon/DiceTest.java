@@ -4,7 +4,14 @@ package backgammon;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+/**
+ * This program is the DiceTest class
+ * @author Sam Lynch
+ */
 
+/**
+ * A {@code DiceTest} Class is a test for the Dice Class
+ */
 public class DiceTest {
 
 	@Test

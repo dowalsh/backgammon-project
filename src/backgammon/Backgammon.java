@@ -1,7 +1,14 @@
 package backgammon;
 
 import java.util.Scanner;
+/**
+ * This program is the Backgammon class
+ *
+ */
 
+/**
+ * The {@code Backgammon} Class is the main controller for the program
+ */
 public class Backgammon {
 
 	public static void main(String[] args) {
